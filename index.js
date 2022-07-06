@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
     i = socket.id
 
     if(msg === "!DEV /_"){
-      io.to(i).emit("sys-info chat message","[伺服器訊息][重要!]你已經是開發人員")
+      io.to(i).emit("sys-info chat message","[伺服器回應][重要!]你已經是開發人員")
       io.to(i).emit('typeing', "開發人員模式已啟用")
     }else{
 
