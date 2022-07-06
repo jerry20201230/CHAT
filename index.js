@@ -149,6 +149,22 @@ i = socket.id
 
   socket.on('disconnect', function(){
     i = socket.id
+ 
+    typeing =  arrayRemove(typeing,i)
+    _display = ""
+
+     console.log(typeing)
+     for(let a=0; a<typeing.length; a++){
+ 
+       _display = _display + nickname[user.indexOf(typeing[a])]+" ("+typeing[a]+")"
+     }
+   
+     console.log( _display+" 正在輸入...")
+     io.emit('typeing', _display+" 正在輸入...")
+
+
+
+    
     console.log(`user[${socket.id}] disconnected`);
     io.emit("sys-info chat message",nickname[user.indexOf(i)]+" ("+i+") 已離線")
     people -= 1
