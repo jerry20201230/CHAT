@@ -2,7 +2,11 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Socket.IO chat</title>
+  <link rel="shortcut icon" href="favicon.ico" /> 
   <style>
     body {
       margin: 0;
@@ -119,7 +123,7 @@ tfoot {
       &nbsp; &nbsp; &nbsp; &nbsp;
       你的 ID: &nbsp; <span id="Sid">未知</span>
       &nbsp; &nbsp; &nbsp; &nbsp;
-      連線狀態: &nbsp; <span id="connectStatue">正在連線...</span>
+      連線狀態: &nbsp; <span id="connectStatue">未連線</span>
       &nbsp; &nbsp; &nbsp; &nbsp;
       <a onclick="
       dialog.style.display = '';
@@ -153,7 +157,7 @@ tfoot {
    <button onclick="dialog.style.display='none'">關閉</button>
   </div>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
   <script>
     var socket = io();
