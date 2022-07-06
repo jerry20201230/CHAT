@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    body {
+      margin: 0;
+      padding-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    #bottom{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    #form {
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.25rem;
+
+      display: flex;
+      height: 3rem;
+      box-sizing: border-box;
+      backdrop-filter: blur(10px);
+    }
+
+    #input {
+      border: none;
+      padding: 0 1rem;
+      flex-grow: 1;
+      border-radius: 2rem;
+      margin: 0.25rem;
+    }
+
+    #input:focus {
+      outline: none;
+    }
+
+    button {
+      background: #333;
+      border: none;
+      padding: 0 1rem;
+      margin: 0.25rem;
+      border-radius: 3px;
+      outline: none;
+      color: #fff;
+    }
+
+    #messages,ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages>li {
+      padding: 0.5rem 1rem;
+      border-bottom:1px #333 solid;
+    }
+    #messages>li:first {
+      padding: 0.5rem 1rem;
+      border-bottom:1px ;
+      border-top: 1px #333 solid;
+    }
+    
+
+    .statue-bar {
+      position: sticky;
+      top: 0px;
+      background-color: #fff;
+
+
+    }
+
+    .flex {
+      display: flex;
+    }
+    .warn{
+      background-color: #ffbcbc !important;
+    }
+    .success{
+      background-color: #ccffbc !important;
+    }
+    .info{
+      background-color: rgb(154, 235, 255) !important;
+    }
+
+    #dialog{
+      position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    }
+    table,
+td {
+    border: 1px solid #333;
+}
+
+thead,
+tfoot {
+    background-color: #333;
+    color: #fff;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="statue-bar">
+    <h1>CHAT</h1>
+    <div class="flex">
+      <form id="rename_nickname_farm" action="">
+        暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
+        <button id="changeNM">送出更改</button>
+      </form>
+      &nbsp; &nbsp; &nbsp; &nbsp;
+      你的 ID: &nbsp; <span id="Sid">未知</span>
+      &nbsp; &nbsp; &nbsp; &nbsp;
+      連線狀態: &nbsp; <span id="connectStatue">未連線</span>
+      &nbsp; &nbsp; &nbsp; &nbsp;
+      <a onclick="
+      dialog.style.display = '';
+      socket.emit('GetUsers',socket.id)" href="#">線上人數:</a> &nbsp; <span id="onlinePeople">未知</span>
+    </div>
+  </div>
+  <ul id="messages">
+
+    <li>正在連接至伺服器...</li>
+  </ul>
+
+  <div id="bottom">
+    <span id="isTypeing" style="background-color: #efefef"></span>
+  <form id="form" action="">
+    <input id="input" autocomplete="off" placeholder="輸入新訊息" 
+    oninput="socket.emit('typeing', socket.id);"
+    onblur="socket.emit('typeing-end',socket.id)" /><button>送出訊息</button>
+  </form>
+  </div>
+  <div id="dialog" style="display: none; background-color: #ccffbc;">
+   <h1>線上人員</h1>
+   <table>
+    <thead>
+      <tr><td>ID</td>
+        <td>暱稱</td>
+        
+      </tr>
+      <tbody id="PeopleOnLine">
+      </tbody>
+   </table>
+   <button onclick="dialog.style.display='none'">關閉</button>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+  <script>
+    var socket = io();
+
+    var messages = document.getElementById('messages');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    var rename_nickname_farm = document.getElementById('rename_nickname_farm');
+    var dialog = document.getElementById("dialog")
+   var my_nickname = ""
+   var last_nickname = ""
+    var isConnected = false
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', input.value);
+        if(!isConnected){
+          var item = document.createElement('li');
+          item.textContent = "訊息發送失敗! 無法發送的訊息: " +input.value ;
+          messages.appendChild(item);
+          item.setAttribute("class","warn")
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+        input.value = '';
+        socket.emit("typeing-end",socket.id)
+        
+      }
+    });
+
+    rename_nickname_farm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
+        socket.emit('rename_nickname', document.getElementById("NMinput").value);
+        last_nickname = my_nickname
+        my_nickname = document.getElementById("NMinput").value
+        
+        if(!isConnected){
+          var item = document.createElement('li');
+          item.textContent = " : ( 與伺服器連接失敗! " ;
+          messages.appendChild(item);
+          item.setAttribute("class","warn")
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+      }
+    });
+
+    socket.on("UserList",function(msg){
+      $("#PeopleOnLine").html("")
+      for(let r=0;r< (msg.userID).length;r++){
+      
+        $("#PeopleOnLine").html($("#PeopleOnLine").html()+"<tr>"+"<td>"+msg.userID[r]+"</td>"+"<td>"+msg.nickname[r]+"</td>"+"</tr>")
+        
+
+      }
+    })
+
+    socket.on('chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+     
+
+    });
+    socket.on('sys-info chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      item.setAttribute("class","info")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      if(msg.includes("請勿使用與別人相同的暱稱")){
+        my_nickname = last_nickname
+      }
+     
+
+    });
+
+    socket.on('sys-warn chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      item.setAttribute("class","warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+     
+
+    });
+    socket.on('nickname', function (msg) {
+      document.getElementById("NMinput").setAttribute("value",msg)
+      var item = document.createElement('li');
+      item.textContent = "系統自動生成暱稱: "+msg;
+      messages.appendChild(item);
+      item.setAttribute("class","info")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      my_nickname = msg
+      
+    });
+    socket.on("BAN",function(msg){
+      
+      var item = document.createElement('li');
+      item.textContent = "你的連接已被伺服器中斷 [原因]大量發送相同訊息/洗版"
+      messages.appendChild(item);
+      item.setAttribute("class","warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      socket.disconnect()
+    })
+
+    socket.on('people online', function (msg) {
+      document.getElementById("onlinePeople").innerHTML = msg
+      isConnected = true
+    });
+    socket.on('typeing', function (msg) {
+      if(msg == " 正在輸入..."){
+        document.getElementById("isTypeing").innerHTML = " "
+      }else{
+          document.getElementById("isTypeing").innerHTML = msg
+      }
+    
+    });
+    socket.on('typeing-end', function (msg) {
+      if(msg == " 正在輸入..."){
+        document.getElementById("isTypeing").innerHTML = " "
+      }else{
+          document.getElementById("isTypeing").innerHTML = msg
+      }
+    
+    });
+
+    
+    socket.on("connect", () => {
+      isConnected = true
+      console.log(socket.id);
+      console.log("connected")
+      var item = document.createElement('li');
+      item.textContent = "裝置已連接到伺服器,id是:" + socket.id;
+      messages.appendChild(item);
+      item.setAttribute("class","success")
+      window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById("Sid").innerHTML = socket.id
+      document.getElementById("connectStatue").innerHTML = "已連線"
+      document.getElementById("connectStatue").style.color = "#39ef2f"
+      document.getElementById("isTypeing").innerHTML = " "
+    });
+
+    socket.on("disconnect", () => {
+      isConnected = false
+      console.log("disconnected")
+      var item = document.createElement('li');
+      item.textContent = "裝置未連接到伺服器,正在嘗試連接...";
+      messages.appendChild(item);
+      item.setAttribute("class","warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
+      document.getElementById("connectStatue").style.color = "#ce3434"
+      document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
+    });
+  </script>
+</body>
+
+</html>
