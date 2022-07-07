@@ -132,7 +132,7 @@ tfoot {
       
       <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
         </li>
-      <li class="flex"><span>線上人數:</span> &nbsp; <span id="onlinePeople">未知</span>
+      <li class="flex"><span>線上人數:&nbsp;</span><span id="onlinePeople">未知</span>
         <button class="btn btn-outline-light" onclick="
       dialog.style.display = '';
       socket.emit('GetUsers',socket.id)">人員清單</button>
@@ -151,7 +151,9 @@ tfoot {
 
   <div class="container-fluid"> 
     <h1 style="color:#fff">CHAT</h1>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button"
+            onclick="window.scrollTo(0,0)"
+            data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
