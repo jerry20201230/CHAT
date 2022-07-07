@@ -121,16 +121,18 @@ tfoot {
       <ul>
       <li><form id="rename_nickname_farm" action="">
         暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
-        <button id="changeNM">送出更改</button>
+        <button id="changeNM" class="btn btn-outline-light">送出更改</button>
         </form></li>
       
-        <li>你的 ID: &nbsp; <pre id="Sid">未知</pre></li>
+        <li style="display:flex">你的 ID: &nbsp; <pre id="Sid">未知</pre></li>
       
       <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
         </li>
-      <li><span onclick="
+      <li class="flex"><span>線上人數:</span> &nbsp; <span id="onlinePeople">未知</span>
+        <button class="btn btn-outline-light" onclick="
       dialog.style.display = '';
-      socket.emit('GetUsers',socket.id)">線上人數:</span> &nbsp; <span id="onlinePeople">未知</span></li>
+      socket.emit('GetUsers',socket.id)">人員清單</button>
+        </li>
     </div>
   </div>
 </div>
