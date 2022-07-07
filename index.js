@@ -135,7 +135,7 @@ i = socket.id
   /*********************/
   socket.on('MyUA', function (msg) {
 
-    UA.push(msg)
+    UA.push(msg.OS+" "+msg.BR)
   });
 
   
