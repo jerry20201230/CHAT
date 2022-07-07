@@ -308,7 +308,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
     if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
     
   
-   socket.emit("MyUA",{(browserName+" "+majorVersion) , OSName})
+   socket.emit("MyUA",{"BR":(browserName+" "+majorVersion) ,"OS": OSName})
 
 
 
