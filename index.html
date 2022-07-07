@@ -378,6 +378,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
     });
 
     socket.on("UserList",function(msg){
+    console.log(msg)
       $("#PeopleOnLine").html("")
       $("#PeopleOnLineCount").html(msg.count)
       for(let r=0;r< (msg.userID).length;r++){
