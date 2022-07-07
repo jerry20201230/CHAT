@@ -193,7 +193,7 @@ i = socket.id
     UA =  arrayRemove(UA,_UA)
    console.log(user)
    console.log(nickname)
-   io.emit("UserList",{"userID":user,"nickname":nickname})
+   io.emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
     
    })
   
