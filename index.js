@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 });
   var user = []
   var nickname = []
+  var UA = []
   var people = 0
   var typeing = []
 
@@ -84,7 +85,7 @@ i = socket.id
   io.emit('people online',people)
 
   io.to(i).emit("sys-info chat message","[伺服器回應] "+ nickname.at(-1)+" ("+i+") 歡迎來到聊天室~")
-  io.emit("UserList",{"userID":user,"nickname":nickname})
+  io.emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
   socket.on('typeing', msg => {
     i = socket.id || msg
     _display = ""
@@ -130,9 +131,19 @@ i = socket.id
     io.emit('typeing', _display+" 正在輸入...")
   });
 
+  
+  /*********************/
+  socket.on('MyUA', function (msg) {
+
+    UA.push(msg)
+  });
+
+  
+  
+  
 
   socket.on('GetUsers',msg =>{
-     io.to(i).emit("UserList",{"userID":user,"nickname":nickname})
+     io.to(i).emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
   })
   socket.on('rename_nickname', msg => {
     i = socket.id
@@ -155,6 +166,7 @@ i = socket.id
     i = socket.id
  
     typeing =  arrayRemove(typeing,i)
+    
     _display = ""
 
      console.log(typeing)
@@ -173,9 +185,12 @@ i = socket.id
     io.emit("sys-info chat message",nickname[user.indexOf(i)]+" ("+i+") 已離線")
     people -= 1
     io.emit('people online',people)
-   let _nickname = nickname[user.indexOf(i)]
+   let _nickname = nickname[user.indexOf(i)],
+       _UA = UA[user.indexOf(i)]
+   
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
+    UA =  arrayRemove(UA,_UA)
    console.log(user)
    console.log(nickname)
    io.emit("UserList",{"userID":user,"nickname":nickname})
