@@ -122,8 +122,10 @@ tfoot {
       <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
         <p></p>
         <button class="btn btn-outline-light" onclick="
-      dialog.style.display = '';
-      socket.emit('GetUsers',socket.id)">人員清單</button>
+     
+      socket.emit('GetUsers',socket.id)"
+      data-bs-toggle="modal" data-bs-target="#Modal-1"
+                >人員清單</button>
         
     </div>
   </div>
@@ -167,9 +169,22 @@ tfoot {
 <button class="btn btn-outline-dark">送出訊息</button>
   </form>
   </div>
-  <div id="dialog" style="display: none; background-color: #ccffbc; padding:8px;">
-   <h1>線上人員</h1>
-    <p >線上人數:<span id="PeopleOnLineCount"></span></p>
+
+    
+    
+    
+    <!-- Modal -->
+<div class="modal fade" id="Modal-1" tabindex="-1" aria-labelledby="Modal-1Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Modal-1Label">線上人員</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+  
+   
+    <p>線上人數:<span class="onlinePeople"></span></p>
     
    <table>
     <thead>
@@ -181,10 +196,23 @@ tfoot {
       <tbody id="PeopleOnLine">
       </tbody>
    </table>
-    <p></p>
-    <p></p>
-   <button onclick="dialog.style.display='none'" class="btn btn-outline-dark">關閉</button>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+  
+      </div>
+    </div>
   </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
   <script src="/socket.io/socket.io.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>-->
  <script src="/js/jquery.js"></script>
@@ -198,7 +226,7 @@ tfoot {
     var form = document.getElementById('form');
     var input = document.getElementById('input');
     var rename_nickname_farm = document.getElementById('rename_nickname_farm');
-    var dialog = document.getElementById("dialog")
+
    var my_nickname = ""
    var last_nickname = ""
     var isConnected = false
