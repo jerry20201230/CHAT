@@ -67,12 +67,7 @@
       padding: 0.5rem 1rem;
       border-bottom:1px #333 solid;
     }
-    #messages>li:first {
-      padding: 0.5rem 1rem;
-      border-bottom:1px ;
-      border-top: 1px #333 solid;
-    }
-    
+
 
     .statue-bar {
       position: sticky;
@@ -123,18 +118,19 @@ tfoot {
   <div>
    
     <div class="flex" style="color:#fff">
-      <form id="rename_nickname_farm" action="">
+      <ul>
+      <li><form id="rename_nickname_farm" action="">
         暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
         <button id="changeNM">送出更改</button>
-      </form>
-      &nbsp; &nbsp; &nbsp; &nbsp;
-      你的 ID: &nbsp; <pre id="Sid">未知</pre>
-      &nbsp; &nbsp; &nbsp; &nbsp;
-      連線狀態: &nbsp; <span id="connectStatue">未連線</span>
-      &nbsp; &nbsp; &nbsp; &nbsp;
-      <a onclick="
+        </form></li>
+      
+        <li>你的 ID: &nbsp; <pre id="Sid">未知</pre></li>
+      
+      <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
+        </li>
+      <li><span onclick="
       dialog.style.display = '';
-      socket.emit('GetUsers',socket.id)" href="#">線上人數:</a> &nbsp; <span id="onlinePeople">未知</span>
+      socket.emit('GetUsers',socket.id)">線上人數:</span> &nbsp; <span id="onlinePeople">未知</span></li>
     </div>
   </div>
 </div>
@@ -146,7 +142,7 @@ tfoot {
   <nav class="navbar navbar-dark bg-dark flex">
 
   <div class="container-fluid"> 
-    <h1 style="color:fff">CHAT</h1>
+    <h1 style="color:#fff">CHAT</h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
