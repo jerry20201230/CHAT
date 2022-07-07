@@ -119,11 +119,12 @@ tfoot {
       
       <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
         </li>
-      <li class="flex"><span>線上人數:&nbsp;</span><span id="onlinePeople">未知</span>
+      <li class="flex"><span>線上人數:&nbsp;</span><span id="onlinePeople">未知</span></li>
+        <p></p>
         <button class="btn btn-outline-light" onclick="
       dialog.style.display = '';
       socket.emit('GetUsers',socket.id)">人員清單</button>
-        </li>
+        
     </div>
   </div>
 </div>
@@ -178,6 +179,7 @@ tfoot {
       <tbody id="PeopleOnLine">
       </tbody>
    </table>
+    <p></p>
     <p></p>
    <button onclick="dialog.style.display='none'" class="btn btn-outline-dark">關閉</button>
   </div>
