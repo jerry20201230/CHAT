@@ -124,7 +124,7 @@ tfoot {
         <button id="changeNM">送出更改</button>
       </form>
       &nbsp; &nbsp; &nbsp; &nbsp;
-      你的 ID: &nbsp; <span id="Sid">未知</span>
+      你的 ID: &nbsp; <pre id="Sid">未知</pre>
       &nbsp; &nbsp; &nbsp; &nbsp;
       連線狀態: &nbsp; <span id="connectStatue">未連線</span>
       &nbsp; &nbsp; &nbsp; &nbsp;
@@ -168,7 +168,6 @@ tfoot {
   <!--BS5 JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script>
-    import jquery from "js/jquery.js"
     var socket = io();
 
     var messages = document.getElementById('messages');
