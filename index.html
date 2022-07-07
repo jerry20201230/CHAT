@@ -11,7 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <style>
     body {
-      margin: 0;
+      margin: 8px;
       padding-bottom: 3rem;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -118,9 +118,10 @@ tfoot {
 </head>
 
 <body>
-
-  <div class="statue-bar">
-    <h1>CHAT</h1>
+  <div class="collapse" id="navbarToggleExternalContent">
+  <div class="bg-dark p-4">
+  <div>
+   
     <div class="flex">
       <form id="rename_nickname_farm" action="">
         暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
@@ -136,16 +137,30 @@ tfoot {
       socket.emit('GetUsers',socket.id)" href="#">線上人數:</a> &nbsp; <span id="onlinePeople">未知</span>
     </div>
   </div>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+  <h1>CHAT</h1>
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+  </div>
+</nav>
+
+
+
+  </div>
   <ul id="messages">
 
     <li>正在連接至伺服器...</li>
   </ul>
 
   <div id="bottom">
-    
+    <label id="isTypeing" ></label>
   <form id="form" action="">
    
-      <label id="isTypeing" ></label>
+      
     
       <input id="input" autocomplete="off" placeholder="輸入新訊息" 
        oninput="socket.emit('typeing', socket.id);"
