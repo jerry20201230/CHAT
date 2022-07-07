@@ -32,7 +32,9 @@
       backdrop-filter: blur(10px);
     }
 
-
+ #input{
+    width:95vw !important;
+    }
 
 
 
@@ -131,13 +133,13 @@ tfoot {
   </ul>
 
   <div id="bottom">
-    <span id="isTypeing" style="background-color: #efefef"></span>
+    
   <form id="form" action="">
     <div class="form-floating mb-3">
       <input id="input" autocomplete="off" placeholder="輸入新訊息" class="form-control"   
        oninput="socket.emit('typeing', socket.id);"
     onblur="socket.emit('typeing-end',socket.id)">
-     <label for="floatingInput">輸入新訊息</label>
+     <label for="floatingInput"  id="isTypeing" >輸入新訊息</label>
     </div>
 <button class="btn btn-outline-dark">送出訊息</button>
   </form>
