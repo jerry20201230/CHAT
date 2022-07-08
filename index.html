@@ -259,8 +259,8 @@ tfoot {
                   
                   onclick='
                   if(isfile){
-                  socket.emit("send img",img.attr(src))
-                  console.log(img.attr(src))
+                  socket.emit("send img",img.attr("src"))
+                  console.log(img.attr("src"))
                   
                   
                   }
