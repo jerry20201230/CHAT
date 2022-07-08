@@ -336,7 +336,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
     if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
     
   
-   socket.emit("MyUA",{"BR":(browserName+" "+majorVersion) ,"OS": OSName})
+
 
 
 
@@ -431,6 +431,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
       my_nickname = msg
+       
       
     });
     socket.on("BAN",function(msg){
@@ -478,6 +479,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
       document.getElementById("connectStatue").innerHTML = "已連線"
       document.getElementById("connectStatue").style.color = "#39ef2f"
       document.getElementById("isTypeing").innerHTML = " "
+         socket.emit("MyUA",{"BR":(browserName+" "+majorVersion) ,"OS": OSName})
     });
 
     socket.on("disconnect", () => {
