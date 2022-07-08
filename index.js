@@ -142,6 +142,14 @@ i = socket.id
     console.log( _display+" 正在輸入...")
     io.emit('typeing', _display+" 正在輸入...")
   });
+  
+  
+  
+  
+   socket.on('send img', function (msg) {
+
+    io.emit('send img',{nickname["text":(user.indexOf(i)]+" ("+i+") 發送了圖片:"),"src":msg})
+  });
 
   
   /*********************/
