@@ -181,7 +181,8 @@ tfoot {
   
   <button class="btn btn-outline-dark" 
       data-bs-toggle="modal" data-bs-target="#Modal-2"
-       style="flex-shrink:1; min-width:90px">傳送圖片</button>
+       style="flex-shrink:1; min-width:90px"
+          onclick='socket.emit("typeing",socket.id)'>傳送圖片</button>
   
   <form id="form" action="" class="flex" style="width:100%">
    
@@ -257,14 +258,16 @@ tfoot {
           
      <img >
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  onclick='socket.emit("typeing-end",socket.id)'
+                  >關閉</button>
           <button type="button" class="btn btn-warning"   data-bs-dismiss="modal"
                   
                   onclick='
                   if(isfile){
                   socket.emit("send img",img.attr("src"))
                   console.log(img.attr("src"))
-                  
+                  socket.emit("typeing-end",socket.id)
                   
                   }
                   '
@@ -571,17 +574,17 @@ document.getElementById('upload-input').addEventListener('change', readfichier, 
     });
     socket.on('typeing', function (msg) {
       if(msg == " 正在輸入..."){
-        document.getElementById("isTypeing").innerHTML = " "
+         $("#isTypeing").html("")
       }else{
-          document.getElementById("isTypeing").innerHTML = msg
+          $("#isTypeing").html(msg)
       }
     
     });
     socket.on('typeing-end', function (msg) {
       if(msg == " 正在輸入..."){
-        document.getElementById("isTypeing").innerHTML = " "
+         $("#isTypeing").html("")
       }else{
-          document.getElementById("isTypeing").innerHTML = msg
+         $("#isTypeing").html(msg)
       }
     
     });
