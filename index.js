@@ -85,7 +85,7 @@ i = socket.id
   io.emit('people online',people)
 
   io.to(i).emit("sys-info chat message","[伺服器回應] "+ nickname.at(-1)+" ("+i+") 歡迎來到聊天室~")
-  io.emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
+ 
   socket.on('typeing', msg => {
     i = socket.id || msg
     _display = ""
@@ -136,6 +136,7 @@ i = socket.id
   socket.on('MyUA', function (msg) {
 
     UA.push(msg.OS+"/"+msg.BR)
+     io.emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
   });
 
   
