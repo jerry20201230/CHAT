@@ -191,7 +191,7 @@ i = socket.id
    
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
-    UA =  arrayRemove(UA,_UA)
+    UA =  filteredItems = items.slice(0, user.index(i).concat(items.slice(user.index(i)+1, items.length))
     console.log(_UA)
    console.log(user)
    console.log(nickname)
