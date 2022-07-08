@@ -156,7 +156,7 @@ i = socket.id
     nickname[user.indexOf(i)] = msg
     io.emit("NM",user+nickname)
     io.emit('sys-info chat message', _nic+" ("+i+") 已更改暱稱為: "+msg);
-    io.emit("UserList",{"userID":user,"nickname":nickname})
+    io.emit("UserList",{"userID":user,"nickname":nickname,"UA":UA})
     }
 
   });
@@ -191,6 +191,7 @@ i = socket.id
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
     UA =  arrayRemove(UA,_UA)
+    console.log(_UA)
    console.log(user)
    console.log(nickname)
     console.log(UA)
