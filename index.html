@@ -411,12 +411,12 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
             var _reader = new FileReader();
 
            $("#upload-preview").html(e.target.result)
-
+           
         }
         _reader.readAsDataURL(input.files[i]);
       
       
-           $("#upload-preview").html("<img src='"+e.target.result+"'   >")
+
         
 
 
@@ -429,8 +429,8 @@ function readURL(input) {
 
             reader.onload = function (e) {
                 console.log(e.target.result)
-                // $("#textarea").val(e.target.result);
-                textarea.val(e.target.result)
+$("#upload-preview").html("<img src='"+e.target.result+"'   >")
+    
 
             }
             reader.readAsDataURL(input.files[i]);
