@@ -255,7 +255,16 @@ tfoot {
      <img >
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-          <button type="button" class="btn btn-warning"   data-bs-dismiss="modal">送出</button>
+          <button type="button" class="btn btn-warning"   data-bs-dismiss="modal"
+                  if(isfile){
+                  socket.emit("send img",img.attr(src))
+                  
+                  
+                  }
+                  
+                  
+                  
+                  >送出</button>
             </div>
       </div>
     </div>
@@ -404,6 +413,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
     
     //img input
    var img = $('img');
+    var isfile = false
 img.css('display', 'none');
 
 $('#upload-button').click(function(){
@@ -424,6 +434,7 @@ function readfichier(e) {
     reader.onloadend = function (e) {
       img.attr('src', reader.result);
       img.css('display', 'block');
+      isfile = true;
        img.css("max-width", (img.parent().width()-15))     
     }
   }
@@ -492,6 +503,16 @@ document.getElementById('upload-input').addEventListener('change', readfichier, 
      
 
     });
+    
+   socket.on('send img', function (msg) {
+     $("#messages").append(msg.text + "<br><img src='"+msg.src+"'>")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+     
+
+    });
+    
+    
     socket.on('sys-info chat message', function (msg) {
       var item = document.createElement('li');
       item.textContent = msg;
