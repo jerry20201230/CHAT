@@ -410,11 +410,10 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
         for ( i = 0; i < input.files.length; i++) {
             var _reader = new FileReader();
 
-           $("#upload-preview").html(e.target.result)
+        //   $("#upload-preview").html(e.target.result)
            
         }
-        _reader.readAsDataURL(input.files[i]);
-      
+    console.log(    _reader.readAsDataURL(input.files[i]))      
       
 
         
