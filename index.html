@@ -178,7 +178,9 @@ tfoot {
     <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
   <form id="form" action="">
    
-      
+              <button class="btn btn-outline-dark" 
+      data-bs-toggle="modal" data-bs-target="#Modal-2"
+                >傳送圖片</button>
     
       <input id="input" autocomplete="off" placeholder="輸入新訊息" 
        oninput="socket.emit('typeing', socket.id);"
@@ -245,7 +247,7 @@ tfoot {
 
       </span>
           
-     <img style="max-width:350px">
+     <img >
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           <button type="button" class="btn btn-warning"   data-bs-dismiss="modal">送出</button>
@@ -417,6 +419,7 @@ function readfichier(e) {
     reader.onloadend = function (e) {
       img.attr('src', reader.result);
       img.css('display', 'block');
+       img.css("max-width", (img.parent().width()-15))     
     }
   }
 }
