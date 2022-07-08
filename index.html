@@ -191,7 +191,7 @@ tfoot {
       <tr>
         <td>暱稱</td>
         <td>ID</td>
-        <td>裝置</td>
+       
       </tr>
       <tbody id="PeopleOnLine">
       </tbody>
@@ -383,7 +383,7 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
       $("#PeopleOnLineCount").html(msg.count)
       for(let r=0;r< (msg.userID).length;r++){
       
-        $("#PeopleOnLine").html($("#PeopleOnLine").html()+"<tr>"+"<td>"+msg.nickname[r]+"</td>"+"<td>"+msg.userID[r]+"</td>"+"<td>"+msg.UA[r]+"</td>"+"</tr>")
+        $("#PeopleOnLine").html($("#PeopleOnLine").html()+"<tr>"+"<td>"+msg.nickname[r]+"</td>"+"<td>"+msg.userID[r]+"</td>"+"</tr>")
         
 
       }
