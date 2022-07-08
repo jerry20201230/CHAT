@@ -113,7 +113,7 @@ i = socket.id
    
     for(let a=0; a<typeing.length; a++){
     
-      _display = _display + nickname[user.indexOf(typeing[a])]+" ("+typeing[a]+")"
+      _display = _display + nickname[user.indexOf(typeing[a])]+" ("+typeing[a]+")<br>"
     }
 
     if(_display+" 正在輸入..." == " 正在輸入..."){
@@ -136,7 +136,7 @@ i = socket.id
     console.log(typeing)
     for(let a=0; a<typeing.length; a++){
 
-      _display = _display + nickname[user.indexOf(typeing[a])]+" ("+typeing[a]+")"
+      _display = _display + nickname[user.indexOf(typeing[a])]+" ("+typeing[a]+")<br>"
     }
   
     console.log( _display+" 正在輸入...")
