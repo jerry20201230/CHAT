@@ -268,59 +268,7 @@ tfoot {
     
     
     
-    
-    
-    
-    
-    <script>
-          
- $("#file-input").change(function () {
 
-    _readURL(this);
-  });
-  function _readURL(input) {
-    if (input.files && input.files.length >= 0) {
-        for ( i = 0; i < input.files.length; i++) {
-            var _reader = new FileReader();
-
-           $("#upload-preview").val(e.target.result)
-
-        }
-        _reader.readAsDataURL(input.files[i]);
-      
-        
-
-
-    }
-  }
-function readURL(input) {
-    if (input.files && input.files.length >= 0) {
-        for (var i = 0; i < input.files.length; i++) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                console.log(e.target.result)
-                // $("#textarea").val(e.target.result);
-
-                txtHistory.record(textarea.val())
-
-                is_uploaded_file = true;
-                textarea.val(e.target.result)
-
-
-            }
-            reader.readAsDataURL(input.files[i]);
-
-        }
-    } else {
-
-
-
-    }
-}
-  
-  
- </script>
     
     
     
@@ -450,6 +398,51 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
     if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
     if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
     
+  
+    
+    //img input
+    $("#file-input").change(function () {
+
+    _readURL(this);
+  });
+  function _readURL(input) {
+    if (input.files && input.files.length >= 0) {
+        for ( i = 0; i < input.files.length; i++) {
+            var _reader = new FileReader();
+
+           $("#upload-preview").html(e.target.result)
+
+        }
+        _reader.readAsDataURL(input.files[i]);
+      
+      
+           $("#upload-preview").html("<img src='"+e.target.result+"'   >")
+        
+
+
+    }
+  }
+function readURL(input) {
+    if (input.files && input.files.length >= 0) {
+        for (var i = 0; i < input.files.length; i++) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                console.log(e.target.result)
+                // $("#textarea").val(e.target.result);
+                textarea.val(e.target.result)
+
+            }
+            reader.readAsDataURL(input.files[i]);
+
+        }
+    } else {
+
+
+
+    }
+}
+  
   
 
 
