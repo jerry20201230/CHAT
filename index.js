@@ -198,12 +198,11 @@ i = socket.id
     io.emit("sys-info chat message",nickname[user.indexOf(i)]+" ("+i+") 已離線")
     people -= 1
     io.emit('people online',people)
-   let _nickname = nickname[user.indexOf(i)],
-       _UA = UA[user.indexOf(i)]
+   let _nickname = nickname[user.indexOf(i)]
    
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
-    UA =   arrayRemove_val(UA,user.indexOf(i))
+    UA = arrayRemove_val(UA,user.indexOf(i))
     console.log(_UA)
    console.log(user)
    console.log(nickname)
