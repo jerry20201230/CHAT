@@ -29,6 +29,18 @@ app.get('/', (req, res) => {
     });
 
 }    
+
+function arrayRemove_val(arr, value) {
+ var b = '';
+ for (b in arr) {
+  if (arr[b] === value) {
+   arr.splice(b, 1);
+   break;
+  }
+ }
+ return arr;
+};
+
 Math.getRandomInt = function  (max) {
       return Math.floor(Math.random() * max);
     }
@@ -191,7 +203,7 @@ i = socket.id
    
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
-    UA =  UA.slice(0, user.indexOf(i)).concat(UA.slice(user.indexOf(i)+1, UA.length))
+    UA =   arrayRemove_val(UA,user.indexOf(i))
     console.log(_UA)
    console.log(user)
    console.log(nickname)
