@@ -256,13 +256,15 @@ tfoot {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           <button type="button" class="btn btn-warning"   data-bs-dismiss="modal"
+                  
+                  onclick='
                   if(isfile){
                   socket.emit("send img",img.attr(src))
                   console.log(img.attr(src))
                   
                   
                   }
-                  
+                  '
                   
                   
                   >送出</button>
