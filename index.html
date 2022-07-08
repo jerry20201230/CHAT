@@ -26,7 +26,7 @@ nav{
       left: 0;
       right: 0;
     }
-    #form {
+    #bottom-bar {
       background: rgba(0, 0, 0, 0.15);
       padding: 0.25rem;
 
@@ -177,12 +177,15 @@ tfoot {
   <div id="bottom">
     <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
            
-
-  <form id="form" action="">
-   
-      <button class="btn btn-outline-dark" 
+<div id="bottom-bar">      
+  
+  <button class="btn btn-outline-dark" 
       data-bs-toggle="modal" data-bs-target="#Modal-2"
                 >傳送圖片</button>
+  
+  <form id="form" action="">
+   
+
     
 
     
@@ -193,7 +196,7 @@ tfoot {
    
 <button class="btn btn-outline-dark">送出訊息</button>
   </form>
-   
+    </div>
   </div>
 
     
@@ -508,7 +511,7 @@ document.getElementById('upload-input').addEventListener('change', readfichier, 
     });
     
    socket.on('send img', function (msg) {
-     $("#messages").append(msg.text + "<br><img src='"+msg.src+"'>")
+     $("#messages").append("<li>"+msg.text + "<br><img src='"+msg.src+"'></li>")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
      
