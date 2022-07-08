@@ -149,6 +149,21 @@ i = socket.id
    socket.on('send img', function (msg) {
     i = socket.id
     io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg})
+     
+         if(lastmsg == msg && i == lastID){
+      msgCount += 1
+      if(msgCount == 2){
+        io.to(i).emit('sys-warn chat message',"[伺服器警告!] "+nickname[user.indexOf(i)]+" ("+i+") 請勿洗版，否則我們將斷開你的連線!")
+      }else if(msgCount == 3){
+        io.to(i).emit("BAN","byebye");
+        io.emit("sys-info chat message",nickname[user.indexOf(i)]+" ("+i+") 因大量發送相同訊息/洗版，已被伺服器中斷連線")
+      }
+    }
+    else{
+      lastmsg = msg
+      msgCount = 0
+      lastID = i
+    }
   });
 
   
