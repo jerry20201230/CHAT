@@ -148,7 +148,7 @@ i = socket.id
   
    socket.on('send img', function (msg) {
 
-    io.emit('send img',{nickname["text":(user.indexOf(i)]+" ("+i+") 發送了圖片:"),"src":msg})
+    io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg})
   });
 
   
