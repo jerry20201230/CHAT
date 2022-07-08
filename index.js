@@ -203,7 +203,7 @@ i = socket.id
    user =  arrayRemove(user,socket.id)
    nickname = arrayRemove(nickname,_nickname)
     UA = arrayRemove_val(UA,user.indexOf(i))
-    console.log(_UA)
+   
    console.log(user)
    console.log(nickname)
     console.log(UA)
