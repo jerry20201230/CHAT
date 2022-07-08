@@ -241,16 +241,11 @@ tfoot {
 <span class=" btn-file btn btn-secondary">
 
 
-        選擇檔案 <input type="file" id="file-input" accept="image/jpeg, image/png" multiple>
+        選擇檔案 <input type="file" id="upload-input" accept="image/jpeg, image/png" multiple>
 
       </span>
           
-          <div id="upload-preview"></div>
-
-
-          
-
-        </div>
+     <img>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           <button type="button" class="btn btn-warning"   data-bs-dismiss="modal">送出</button>
@@ -401,48 +396,32 @@ if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
   
     
     //img input
-    $("#file-input").change(function () {
+   var img = $('img');
+img.css('display', 'none');
 
-    _readURL(this);
-  });
-  function _readURL(input) {
-    if (input.files && input.files.length >= 0) {
-        for ( i = 0; i < input.files.length; i++) {
-            var _reader = new FileReader();
+$('#upload-button').click(function(){
+  $('#my-custom-design-upload').trigger('click');                 
+  return false;
+});
 
-        //   $("#upload-preview").html(e.target.result)
-           
-        }
-    console.log(    _reader.readAsDataURL(input.files[i]))      
-      
-
-        
-
-
+function readfichier(e) {
+  if(window.FileReader) {
+    var file  = e.target.files[0];
+    var reader = new FileReader();
+    if (file && file.type.match('image.*')) {
+      reader.readAsDataURL(file);
+    } else {
+      img.css('display', 'none');
+      img.attr('src', '');
+    }
+    reader.onloadend = function (e) {
+      img.attr('src', reader.result);
+      img.css('display', 'block');
     }
   }
-function readURL(input) {
-    if (input.files && input.files.length >= 0) {
-        for (var i = 0; i < input.files.length; i++) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                console.log(e.target.result)
-$("#upload-preview").html("<img src='"+e.target.result+"'   >")
-    
-
-            }
-            reader.readAsDataURL(input.files[i]);
-
-        }
-    } else {
-
-
-
-    }
 }
-  
-  
+
+document.getElementById('upload-input').addEventListener('change', readfichier, false);
 
 
 
