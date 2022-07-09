@@ -178,7 +178,7 @@ io.on('connection', (socket) => {
   socket.on('send txt', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send img', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了文字檔:"), "src": msg, "id": 'txt-' + fileID })
+    io.emit('send txt', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了文字檔:"), "src": msg, "id": 'txt-' + fileID })
 
     if (lastmsg == msg && i == lastID) {
       msgCount += 1

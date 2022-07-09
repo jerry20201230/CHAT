@@ -604,6 +604,14 @@
 
         });
 
+        socket.on('send txt', function (msg) {
+          $("#messages").append("<li>" + msg.text + "<br><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre></li>")
+          window.scrollTo(0, document.body.scrollHeight);
+          isConnected = true
+          $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+
+        });
+
 
         socket.on('sys-info chat message', function (msg) {
           var item = document.createElement('li');
