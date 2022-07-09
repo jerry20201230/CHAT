@@ -514,10 +514,10 @@ document.getElementById('upload-input').addEventListener('change', readfichier, 
     });
     
    socket.on('send img', function (msg) {
-     $("#messages").append("<li>"+msg.text + "<br><img src='"+msg.src+"'></li>")
+     $("#messages").append("<li>"+msg.text + "<br><img src='"+msg.src+"' id='"+msg.id+"'></li>")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
-     
+      $(msg.id).css("max-width", (img.parent().width()-15))    
 
     });
     
