@@ -1,15 +1,5 @@
-# chat-example
+# CHAT
 
-This is the source code for a very simple chat example used for
-the [Getting Started](http://socket.io/get-started/chat/) guide
-of the Socket.IO website.
+這是一個儲存庫，用於heroku的[聊天程式](https:jerry20200815.heroku.com)
 
-Please refer to it to learn how to run this application.
-
-You can also spin up a free Heroku dyno to test it out:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/socketio/chat-example)
-
-Or run it on [Repl.it](https://repl.it/):
-
-[![Run on Repl.it](https://repl.it/badge/github/socketio/chat-example)](https://repl.it/github/socketio/chat-example)
+現在支援*傳送圖片*
