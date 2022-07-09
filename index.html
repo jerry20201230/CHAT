@@ -507,17 +507,17 @@
 
         function readfichier(e) {
           if (window.FileReader) {
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            if (file) {
-              reader.readAsText(file);
-              isfile = true;
+            var tfile = e.target.files[0];
+            var treader = new FileReader();
+            if (tfile) {
+              reader.readAsText(tfile);
+              istxtfile = true;
             } else {
 
             }
-            reader.onloadend = function (e) {
-              preview_txt.html(reader.result)
-              txtfile = reader.result
+            treader.onloadend = function (e) {
+              preview_txt.html(treader.result)
+              txtfile = treader.result
               
 
 
