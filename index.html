@@ -517,7 +517,7 @@ document.getElementById('upload-input').addEventListener('change', readfichier, 
      $("#messages").append("<li>"+msg.text + "<br><img src='"+msg.src+"' id='"+msg.id+"'></li>")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
-      $(msg.id).css("max-width", ($(msg.id).parent().width()-30))    
+      $("#"+msg.id).css("max-width", ($("#"+msg.id).parent().width()-30))    
 
     });
     
