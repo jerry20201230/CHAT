@@ -248,13 +248,13 @@ data-bs-backdrop="static" data-bs-keyboard="false"
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="Modal-2Label">傳送圖片</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 <span class=" btn-file btn btn-secondary">
 
 
-        選擇檔案 <input type="file" id="upload-input" accept="image/jpeg, image/png" multiple>
+        選擇檔案 <input type="file" id="upload-input" accept="image/jpeg, image/png" >
 
       </span>
           
@@ -284,7 +284,45 @@ data-bs-backdrop="static" data-bs-keyboard="false"
     
     
     
-    
+    <div class="modal fade" id="Modal-3" tabindex="-1" aria-labelledby="Modal-3Label" aria-hidden="true"
+data-bs-backdrop="static" data-bs-keyboard="false"
+   >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-3Label">傳送文字檔</h5>
+          <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+<span class=" btn-file btn btn-secondary">
+
+
+        選擇檔案 <input type="file" id="upload-input-txt" accept="text/plain , .txt" >
+
+      </span>
+          
+     <img >
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  onclick='socket.emit("typeing-end",socket.id)'
+                  >關閉</button>
+          <button type="button" class="btn btn-warning"   data-bs-dismiss="modal"
+                  
+                  onclick='
+                  if(istxtfile){
+                  socket.emit("send txt",img.attr("src"))
+                  console.log(img.attr("src"))
+                  socket.emit("typeing-end",socket.id)
+                  
+                  }
+                  '
+                  
+                  
+                  >送出</button>
+            </div>
+      </div>
+    </div>
+  </div>
     
     
     
