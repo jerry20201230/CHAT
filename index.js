@@ -154,7 +154,7 @@ i = socket.id
    socket.on('send img', function (msg) {
     i = socket.id
     imgID ++
-    io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg,"id":imgID})
+    io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg,"id":'img-'+imgID})
      
          if(lastmsg == msg && i == lastID){
       msgCount += 1
