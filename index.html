@@ -505,12 +505,12 @@
         var txtfile = ""
 
 
-        function readfichier(e) {
+        function treadfichier(e) {
           if (window.FileReader) {
             var tfile = e.target.files[0];
             var treader = new FileReader();
             if (tfile) {
-              reader.readAsText(tfile);
+              treader.readAsText(tfile);
               istxtfile = true;
             } else {
 
@@ -525,7 +525,7 @@
           }
         }
 
-        document.getElementById('upload-input-txt').addEventListener('change', readfichier, false);
+        document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
 
 
 
