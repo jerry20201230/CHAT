@@ -24,6 +24,8 @@ app.get('/', (req, res) => {
   var lastmsg = ""
   var msgCount = 0
   var lastID  = ""
+  
+  var imgID = 0
 
   function arrayRemove(arr, value) { 
     
@@ -151,7 +153,8 @@ i = socket.id
   
    socket.on('send img', function (msg) {
     i = socket.id
-    io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg})
+    imgID ++
+    io.emit('send img',{"text":(nickname[(user.indexOf(i))]+" ("+i+") 發送了圖片:"),"src":msg,"id":imgID})
      
          if(lastmsg == msg && i == lastID){
       msgCount += 1
