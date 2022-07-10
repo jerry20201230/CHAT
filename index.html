@@ -606,7 +606,7 @@
         });
 
         socket.on('send txt', function (msg) {
-          $("#messages").append("<li>" + msg.text + "<br><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre></li>")
+          $("#messages").append("<li>" + msg.text + "<br><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre><br>在<a href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=從CHAT導入.txt&data="+encodeURIComponent(msg.src.replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'))+"'>文字編輯器</a>中編輯</li>")
           window.scrollTo(0, document.body.scrollHeight);
           isConnected = true
           $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
