@@ -78,25 +78,17 @@
     }
 
     .warn {
-      background-color: #ffbcbc !important;
+      background-color: var(--bs-red) !important;
     }
 
     .success {
-      background-color: #ccffbc !important;
+      background-color: var(--bs-green) !important;
     }
 
     .info {
-      background-color: rgb(154, 235, 255) !important;
+      background-color: var(--bs-info) !important;
     }
 
-    #dialog {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1040;
-      width: 100vw;
-      height: 100vh;
-    }
 
     table,
     td {
@@ -143,8 +135,9 @@
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
       <div>
+        <div></div>
 
-        <div class="flex" style="color:#fff">
+    
           <ul>
             <li>
               <form id="rename_nickname_farm" action="">
@@ -160,12 +153,17 @@
             <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
             </li>
             <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
-            <p></p>
-            <button class="btn btn-outline-light" onclick="
-     
-      socket.emit('GetUsers',socket.id)" data-bs-toggle="modal" data-bs-target="#Modal-1">人員清單</button>
+          </ul>
 
-        </div>
+          <div class="flex">
+            <button class="btn btn-outline-light" onclick="socket.emit('GetUsers',socket.id)" data-bs-toggle="modal"
+              data-bs-target="#Modal-1">人員清單</button>
+            <a href="https://jerry20200815.herokuapp.com?create=true" target="_blank"
+              class="btn btn-outline-light">建立群組</a>
+            <a href="https://jerry20200815.herokuapp.com?join=true" target="_blank"
+              class="btn btn-outline-light">加入群組</a>
+          </div>
+       
       </div>
     </div>
 
@@ -202,7 +200,7 @@
         style="flex-shrink:1; min-width:90px" onclick='socket.emit("typeing",socket.id)'>傳送圖片</button>
       &nbsp;
       <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
-      style="flex-shrink:1; min-width:90px" onclick='socket.emit("typeing",socket.id)'>傳送文字</button>
+        style="flex-shrink:1; min-width:90px" onclick='socket.emit("typeing",socket.id)'>傳送文字</button>
       <form id="form" action="" class="flex" style="width:100%">
 
 
@@ -297,28 +295,28 @@
 
 
 
-    <div class="modal fade" id="Modal-3" tabindex="-1" aria-labelledby="Modal-3Label" aria-hidden="true"
-      data-bs-backdrop="static" data-bs-keyboard="false">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Modal-3Label">傳送文字檔</h5>
-            <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close"
-              data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <span class=" btn-file btn btn-secondary">
+  <div class="modal fade" id="Modal-3" tabindex="-1" aria-labelledby="Modal-3Label" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-3Label">傳送文字檔</h5>
+          <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span class=" btn-file btn btn-secondary">
 
 
-              選擇檔案 <input type="file" id="upload-input-txt" accept="text/plain , .txt">
+            選擇檔案 <input type="file" id="upload-input-txt" accept="text/plain , .txt">
 
-            </span>
+          </span>
 
-            <pre class="text" id="txt-preview"></pre>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
-              <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
+          <pre class="text" id="txt-preview"></pre>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
               
                    let filename =  document.getElementById("upload-input-txt").files[0].name  
                   socket.emit("send txt",{"src":txtfile,"filename":filename})
@@ -327,11 +325,11 @@
                   
                 
                   '>送出</button>
-            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
 
 
@@ -344,376 +342,364 @@
 
 
 
-      <script src="/socket.io/socket.io.js"></script>
-      <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>-->
-      <script src="/js/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>-->
+  <script src="/js/jquery.js"></script>
 
-      <!--BS5 JavaScript Bundle with Popper -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-        crossorigin="anonymous"></script>
-      <script>
-        var socket = io();
+  <!--BS5 JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  <script>
+    var socket = io();
 
-        var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-        var rename_nickname_farm = document.getElementById('rename_nickname_farm');
+    var messages = document.getElementById('messages');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    var rename_nickname_farm = document.getElementById('rename_nickname_farm');
 
-        var my_nickname = ""
-        var last_nickname = ""
-        var isConnected = false
+    var my_nickname = ""
+    var last_nickname = ""
+    var isConnected = false
 
-        //移動裝置檢測
-        window.mobileAndTabletCheck = function () {
-          let check = false;
-          (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
-          return check;
-        };
-        (function ($) {
-          $.UrlParam = function (name) {
-            //宣告正規表達式
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            /*
-             * window.location.search 獲取URL ?之後的參數(包含問號)
-             * substr(1) 獲取第一個字以後的字串(就是去除掉?號)
-             * match(reg) 用正規表達式檢查是否符合要查詢的參數
-            */
-            var r = window.location.search.substr(1).match(reg);
-            //如果取出的參數存在則取出參數的值否則回穿null
-            if (r != null) return (r[2]); return null;
-          }
-        })(jQuery);
-        if (window.mobileAndTabletCheck() && $.UrlParam("mobile") == null) {
+    //移動裝置檢測
+    window.mobileAndTabletCheck = function () {
+      let check = false;
+      (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+      return check;
+    };
+    (function ($) {
+      $.UrlParam = function (name) {
+        //宣告正規表達式
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        /*
+         * window.location.search 獲取URL ?之後的參數(包含問號)
+         * substr(1) 獲取第一個字以後的字串(就是去除掉?號)
+         * match(reg) 用正規表達式檢查是否符合要查詢的參數
+        */
+        var r = window.location.search.substr(1).match(reg);
+        //如果取出的參數存在則取出參數的值否則回穿null
+        if (r != null) return (r[2]); return null;
+      }
+    })(jQuery);
+   
+
+
+
+
+
+    //OS 檢測
+    var nVer = navigator.appVersion;
+    var nAgt = navigator.userAgent;
+    var browserName = navigator.appName;
+    var fullVersion = '' + parseFloat(navigator.appVersion);
+    var majorVersion = parseInt(navigator.appVersion, 10);
+    var nameOffset, verOffset, ix;
+
+    // In Opera, the true version is after "Opera" or after "Version"
+    if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+      browserName = "Opera";
+      fullVersion = nAgt.substring(verOffset + 6);
+      if ((verOffset = nAgt.indexOf("Version")) != -1)
+        fullVersion = nAgt.substring(verOffset + 8);
+    }
+    // In MSIE, the true version is after "MSIE" in userAgent
+    else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+      browserName = "Microsoft Internet Explorer";
+      fullVersion = nAgt.substring(verOffset + 5);
+    }
+    // In Chrome, the true version is after "Chrome" 
+    else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+      browserName = "Chrome";
+      fullVersion = nAgt.substring(verOffset + 7);
+    }
+    // In Safari, the true version is after "Safari" or after "Version" 
+    else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+      browserName = "Safari";
+      fullVersion = nAgt.substring(verOffset + 7);
+      if ((verOffset = nAgt.indexOf("Version")) != -1)
+        fullVersion = nAgt.substring(verOffset + 8);
+    }
+    // In Firefox, the true version is after "Firefox" 
+    else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+      browserName = "Firefox";
+      fullVersion = nAgt.substring(verOffset + 8);
+    }
+    // In most other browsers, "name/version" is at the end of userAgent 
+    else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
+      (verOffset = nAgt.lastIndexOf('/'))) {
+      browserName = nAgt.substring(nameOffset, verOffset);
+      fullVersion = nAgt.substring(verOffset + 1);
+      if (browserName.toLowerCase() == browserName.toUpperCase()) {
+        browserName = navigator.appName;
+      }
+    }
+    // trim the fullVersion string at semicolon/space if present
+    if ((ix = fullVersion.indexOf(";")) != -1)
+      fullVersion = fullVersion.substring(0, ix);
+    if ((ix = fullVersion.indexOf(" ")) != -1)
+      fullVersion = fullVersion.substring(0, ix);
+
+    majorVersion = parseInt('' + fullVersion, 10);
+    if (isNaN(majorVersion)) {
+      fullVersion = '' + parseFloat(navigator.appVersion);
+      majorVersion = parseInt(navigator.appVersion, 10);
+    }
+
+
+    var OSName = "Unknown OS";
+    if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
+    if (navigator.appVersion.indexOf("Mac") != -1) OSName = "MacOS";
+    if (navigator.appVersion.indexOf("X11") != -1) OSName = "UNIX";
+    if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
+
+
+
+    //img input
+    var img = $('img');
+    var isfile = false
+    img.css('display', 'none');
+
+
+
+    function readfichier(e) {
+      if (window.FileReader) {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        if (file && file.type.match('image.*')) {
+          reader.readAsDataURL(file);
+          isfile = true;
+        } else {
+          img.css('display', 'none');
+          img.attr('src', '');
+        }
+        reader.onloadend = function (e) {
+          img.attr('src', reader.result);
+          img.css('display', 'block');
+
+          img.css("max-width", (img.parent().width() - 15))
+        }
+      }
+    }
+
+    document.getElementById('upload-input').addEventListener('change', readfichier, false);
+
+
+
+    //txt input
+
+    var istxtfile = false
+    var preview_txt = $("#txt-preview")
+    var txtfile = ""
+
+
+    function treadfichier(e) {
+      if (window.FileReader) {
+        var tfile = e.target.files[0];
+        var treader = new FileReader();
+        if (tfile) {
+          treader.readAsText(tfile);
+          istxtfile = true;
+        } else {
+
+        }
+        treader.onloadend = function (e) {
+          preview_txt.html(treader.result)
+          txtfile = treader.result
+
+
+
+        }
+      }
+    }
+
+    document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', (input.value).replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'));
+        if (!isConnected) {
           var item = document.createElement('li');
-          item.textContent = "*";
-          messages.appendChild(item);
-          item.setAttribute("class", "info")
-          item.setAttribute("id", "mobileAlert")
-          document.getElementById("mobileAlert").innerHTML = "系統偵測到你使用移動裝置，請切換到<a href='" + location.href + "?mobile=true'>移動版</a>"
-          window.scrollTo(0, document.body.scrollHeight);
-        } else if ($.UrlParam("mobile") == "true") {
-          if (window.mobileAndTabletCheck()) {
-
-          }
-        }
-
-
-
-
-
-        //OS 檢測
-        var nVer = navigator.appVersion;
-        var nAgt = navigator.userAgent;
-        var browserName = navigator.appName;
-        var fullVersion = '' + parseFloat(navigator.appVersion);
-        var majorVersion = parseInt(navigator.appVersion, 10);
-        var nameOffset, verOffset, ix;
-
-        // In Opera, the true version is after "Opera" or after "Version"
-        if ((verOffset = nAgt.indexOf("Opera")) != -1) {
-          browserName = "Opera";
-          fullVersion = nAgt.substring(verOffset + 6);
-          if ((verOffset = nAgt.indexOf("Version")) != -1)
-            fullVersion = nAgt.substring(verOffset + 8);
-        }
-        // In MSIE, the true version is after "MSIE" in userAgent
-        else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
-          browserName = "Microsoft Internet Explorer";
-          fullVersion = nAgt.substring(verOffset + 5);
-        }
-        // In Chrome, the true version is after "Chrome" 
-        else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
-          browserName = "Chrome";
-          fullVersion = nAgt.substring(verOffset + 7);
-        }
-        // In Safari, the true version is after "Safari" or after "Version" 
-        else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
-          browserName = "Safari";
-          fullVersion = nAgt.substring(verOffset + 7);
-          if ((verOffset = nAgt.indexOf("Version")) != -1)
-            fullVersion = nAgt.substring(verOffset + 8);
-        }
-        // In Firefox, the true version is after "Firefox" 
-        else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
-          browserName = "Firefox";
-          fullVersion = nAgt.substring(verOffset + 8);
-        }
-        // In most other browsers, "name/version" is at the end of userAgent 
-        else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
-          (verOffset = nAgt.lastIndexOf('/'))) {
-          browserName = nAgt.substring(nameOffset, verOffset);
-          fullVersion = nAgt.substring(verOffset + 1);
-          if (browserName.toLowerCase() == browserName.toUpperCase()) {
-            browserName = navigator.appName;
-          }
-        }
-        // trim the fullVersion string at semicolon/space if present
-        if ((ix = fullVersion.indexOf(";")) != -1)
-          fullVersion = fullVersion.substring(0, ix);
-        if ((ix = fullVersion.indexOf(" ")) != -1)
-          fullVersion = fullVersion.substring(0, ix);
-
-        majorVersion = parseInt('' + fullVersion, 10);
-        if (isNaN(majorVersion)) {
-          fullVersion = '' + parseFloat(navigator.appVersion);
-          majorVersion = parseInt(navigator.appVersion, 10);
-        }
-
-
-        var OSName = "Unknown OS";
-        if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
-        if (navigator.appVersion.indexOf("Mac") != -1) OSName = "MacOS";
-        if (navigator.appVersion.indexOf("X11") != -1) OSName = "UNIX";
-        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-
-
-
-        //img input
-        var img = $('img');
-        var isfile = false
-        img.css('display', 'none');
-
-
-
-        function readfichier(e) {
-          if (window.FileReader) {
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            if (file && file.type.match('image.*')) {
-              reader.readAsDataURL(file);
-              isfile = true;
-            } else {
-              img.css('display', 'none');
-              img.attr('src', '');
-            }
-            reader.onloadend = function (e) {
-              img.attr('src', reader.result);
-              img.css('display', 'block');
-
-              img.css("max-width", (img.parent().width() - 15))
-            }
-          }
-        }
-
-        document.getElementById('upload-input').addEventListener('change', readfichier, false);
-
-
-
-        //txt input
-
-        var istxtfile = false
-        var preview_txt = $("#txt-preview")
-        var txtfile = ""
-
-
-        function treadfichier(e) {
-          if (window.FileReader) {
-            var tfile = e.target.files[0];
-            var treader = new FileReader();
-            if (tfile) {
-              treader.readAsText(tfile);
-              istxtfile = true;
-            } else {
-
-            }
-            treader.onloadend = function (e) {
-              preview_txt.html(treader.result)
-              txtfile = treader.result
-              
-
-
-            }
-          }
-        }
-
-        document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (input.value) {
-            socket.emit('chat message', input.value);
-            if (!isConnected) {
-              var item = document.createElement('li');
-              item.textContent = "訊息發送失敗! 無法發送的訊息: " + input.value;
-              messages.appendChild(item);
-              item.setAttribute("class", "warn")
-              window.scrollTo(0, document.body.scrollHeight);
-            }
-            input.value = '';
-            socket.emit("typeing-end", socket.id)
-
-          }
-        });
-
-        rename_nickname_farm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
-            socket.emit('rename_nickname', document.getElementById("NMinput").value);
-            last_nickname = my_nickname
-            my_nickname = document.getElementById("NMinput").value
-
-            if (!isConnected) {
-              var item = document.createElement('li');
-              item.textContent = " : ( 與伺服器連接失敗! ";
-              messages.appendChild(item);
-              item.setAttribute("class", "warn")
-              window.scrollTo(0, document.body.scrollHeight);
-            }
-          }
-        });
-
-        socket.on("UserList", function (msg) {
-          console.log(msg)
-          $("#PeopleOnLine").html("")
-          $("#PeopleOnLineCount").html(msg.count)
-          for (let r = 0; r < (msg.userID).length; r++) {
-
-            $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "</tr>")
-
-
-          }
-        })
-
-        socket.on('chat message', function (msg) {
-          var item = document.createElement('li');
-          item.textContent = msg;
-          messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-
-
-        });
-
-        socket.on('send img', function (msg) {
-             $("#messages").append("<li>" + msg.text + "<br>檔案名稱:"+msg.filename+"<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='"+msg.alt+"'></li>")
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-          $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
-
-        });
-
-        socket.on('send txt', function (msg) {
-          
-   $("#messages").append("<li>" + msg.text + "<br>檔案名稱:"+msg.filename+"<p></p><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name="+encodeURIComponent(msg.filename)+"&data="+encodeURIComponent(msg.src.replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'))+"'>文字編輯器</a>中編輯</li>")
-
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-          $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
-
-        });
-
-
-        socket.on('sys-info chat message', function (msg) {
-          var item = document.createElement('li');
-          item.textContent = msg;
-          messages.appendChild(item);
-          item.setAttribute("class", "info")
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-          if (msg.includes("請勿使用與別人相同的暱稱")) {
-            my_nickname = last_nickname
-          }
-
-
-        });
-
-        socket.on('sys-warn chat message', function (msg) {
-          var item = document.createElement('li');
-          item.textContent = msg;
+          item.textContent = "訊息發送失敗! 無法發送的訊息: " + input.value;
           messages.appendChild(item);
           item.setAttribute("class", "warn")
           window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
+        }
+        input.value = '';
+        socket.emit("typeing-end", socket.id)
 
+      }
+    });
 
-        });
-        socket.on('nickname', function (msg) {
-          document.getElementById("NMinput").setAttribute("value", msg)
+    rename_nickname_farm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
+        socket.emit('rename_nickname', document.getElementById("NMinput").value);
+        last_nickname = my_nickname
+        my_nickname = document.getElementById("NMinput").value
+
+        if (!isConnected) {
           var item = document.createElement('li');
-          item.textContent = "系統自動生成暱稱: " + msg;
-          messages.appendChild(item);
-          item.setAttribute("class", "info")
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-          my_nickname = msg
-
-
-        });
-        socket.on("BAN", function (msg) {
-
-          var item = document.createElement('li');
-          item.textContent = "你的連接已被伺服器中斷 [原因]大量發送相同訊息/洗版"
+          item.textContent = " : ( 與伺服器連接失敗! ";
           messages.appendChild(item);
           item.setAttribute("class", "warn")
           window.scrollTo(0, document.body.scrollHeight);
-          socket.disconnect()
-        })
+        }
+      }
+    });
 
-        socket.on('people online', function (msg) {
-          $(".onlinePeople").html(msg)
-          isConnected = true
-        });
-        socket.on('typeing', function (msg) {
-          if (msg == " 正在輸入...") {
-            $("#isTypeing").html("")
-          } else {
-            $("#isTypeing").html(msg)
-          }
+    socket.on("UserList", function (msg) {
+      console.log(msg)
+      $("#PeopleOnLine").html("")
+      $("#PeopleOnLineCount").html(msg.count)
+      for (let r = 0; r < (msg.userID).length; r++) {
 
-        });
-        socket.on('typeing-end', function (msg) {
-          if (msg == " 正在輸入...") {
-            $("#isTypeing").html("")
-          } else {
-            $("#isTypeing").html(msg)
-          }
-
-        });
+        $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "</tr>")
 
 
-        socket.on("connect", () => {
-          isConnected = true
-          console.log(socket.id);
-          console.log("connected")
-          var item = document.createElement('li');
-          item.textContent = "裝置已連接到伺服器,id是:" + socket.id;
-          messages.appendChild(item);
-          item.setAttribute("class", "success")
-          window.scrollTo(0, document.body.scrollHeight);
-          document.getElementById("Sid").innerHTML = socket.id
-          document.getElementById("connectStatue").innerHTML = "已連線"
-          document.getElementById("connectStatue").style.color = "#39ef2f"
-          document.getElementById("isTypeing").innerHTML = " "
-          socket.emit("MyUA", { "BR": (browserName + " " + majorVersion), "OS": OSName })
-        });
+      }
+    })
 
-        socket.on("disconnect", () => {
-          isConnected = false
-          console.log("disconnected")
-          var item = document.createElement('li');
-          item.textContent = "裝置未連接到伺服器,正在嘗試連接...";
-          messages.appendChild(item);
-          item.setAttribute("class", "warn")
-          window.scrollTo(0, document.body.scrollHeight);
-          document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
-          document.getElementById("connectStatue").style.color = "#ce3434"
-          document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
-        });
-      </script>
+    socket.on('chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = (msg).replace(/<!b>/g,'<br>').replace(/<!t>/g,'&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g,'&nbsp;');
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+
+
+    });
+
+    socket.on('send img', function (msg) {
+      $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+
+    });
+
+    socket.on('send txt', function (msg) {
+
+      $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+
+    });
+
+
+    socket.on('sys-info chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      item.setAttribute("class", "info")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      if (msg.includes("請勿使用與別人相同的暱稱")) {
+        my_nickname = last_nickname
+      }
+
+
+    });
+
+    socket.on('sys-warn chat message', function (msg) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      item.setAttribute("class", "warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+
+
+    });
+    socket.on('nickname', function (msg) {
+      document.getElementById("NMinput").setAttribute("value", msg)
+      var item = document.createElement('li');
+      item.textContent = "系統自動生成暱稱: " + msg;
+      messages.appendChild(item);
+      item.setAttribute("class", "info")
+      window.scrollTo(0, document.body.scrollHeight);
+      isConnected = true
+      my_nickname = msg
+
+
+    });
+    socket.on("BAN", function (msg) {
+
+      var item = document.createElement('li');
+      item.textContent = "你的連接已被伺服器中斷 [原因] 大量發送相同訊息/洗版"
+      messages.appendChild(item);
+      item.setAttribute("class", "warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      socket.disconnect()
+    })
+
+    socket.on('people online', function (msg) {
+      $(".onlinePeople").html(msg)
+      isConnected = true
+    });
+    socket.on('typeing', function (msg) {
+      if (msg == " 正在輸入...") {
+        $("#isTypeing").html("")
+      } else {
+        $("#isTypeing").html(msg)
+      }
+
+    });
+    socket.on('typeing-end', function (msg) {
+      if (msg == " 正在輸入...") {
+        $("#isTypeing").html("")
+      } else {
+        $("#isTypeing").html(msg)
+      }
+
+    });
+
+
+    socket.on("connect", () => {
+      isConnected = true
+      console.log(socket.id);
+      console.log("connected")
+      var item = document.createElement('li');
+      item.textContent = "裝置已連接到伺服器,id是:" + socket.id;
+      messages.appendChild(item);
+      item.setAttribute("class", "success")
+      window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById("Sid").innerHTML = socket.id
+      document.getElementById("connectStatue").innerHTML = "已連線"
+      document.getElementById("connectStatue").style.color = "#39ef2f"
+      document.getElementById("isTypeing").innerHTML = " "
+      socket.emit("MyUA", { "BR": (browserName + " " + majorVersion), "OS": OSName })
+    });
+
+    socket.on("disconnect", () => {
+      isConnected = false
+      console.log("disconnected")
+      var item = document.createElement('li');
+      item.textContent = "裝置未連接到伺服器,正在嘗試連接...";
+      messages.appendChild(item);
+      item.setAttribute("class", "warn")
+      window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
+      document.getElementById("connectStatue").style.color = "#ce3434"
+      document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
+    });
+  </script>
 </body>
 
 </html>

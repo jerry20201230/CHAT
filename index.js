@@ -10,7 +10,6 @@ app.get(/js|icon/, (req, res) => {
   res.sendFile(`${__dirname}/${req.path}`);
 });
 
-
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -49,6 +48,11 @@ function arrayRemove_val(arr, value) {
 Math.getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
 }
+
+
+
+
+
 io.on('connection', (socket) => {
 
   socket.on('chat message', msg => {
@@ -203,9 +207,6 @@ io.on('connection', (socket) => {
     UA.push(msg.OS + "/" + msg.BR)
     io.emit("UserList", { "userID": user, "nickname": nickname, "UA": UA })
   });
-
-
-
 
 
   socket.on('GetUsers', msg => {
