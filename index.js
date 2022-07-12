@@ -154,7 +154,7 @@ io.on('connection', (socket) => {
   socket.on('send img', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send img', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了圖片:"), "src": msg, "id": 'img-' + fileID })
+    io.emit('send img', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了圖片:"), "src": msg.src,"filename":msg.filename, "id": 'img-' + fileID ,"alt": (nickname[(user.indexOf(i))] + " (" + i + ") 發送的圖片")})
 
     if (lastmsg == msg && i == lastID) {
       msgCount += 1
@@ -178,7 +178,7 @@ io.on('connection', (socket) => {
   socket.on('send txt', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send txt', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了文字檔:"), "src": msg, "id": 'txt-' + fileID })
+    io.emit('send txt', { "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID ,"filename":msg.filename})
 
     if (lastmsg == msg && i == lastID) {
       msgCount += 1
