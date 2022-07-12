@@ -282,7 +282,8 @@
               onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
                   if(isfile){
-                  socket.emit("send img",img.attr("src"))
+                  let filename =  document.getElementById("upload-input").files[0].name                                                                        
+                  socket.emit("send img",{"src":img.attr("src"),"filename":filename})
                   console.log(img.attr("src"))
                   socket.emit("typeing-end",socket.id)
                   
@@ -319,8 +320,8 @@
                 onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
               <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
               
-
-                  socket.emit("send txt",txtfile)
+                   let filename =  document.getElementById("upload-input-txt").files[0].name  
+                  socket.emit("send txt",{"src":txtfile,"filename":filename})
                   
                   socket.emit("typeing-end",socket.id)
                   
@@ -598,7 +599,7 @@
         });
 
         socket.on('send img', function (msg) {
-          $("#messages").append("<li>" + msg.text + "<br><img src='" + msg.src + "' id='" + msg.id + "'></li>")
+             $("#messages").append("<li>" + msg.text + "<br>檔案名稱:"+msg.filename+"<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='"+msg.alt+"'></li>")
           window.scrollTo(0, document.body.scrollHeight);
           isConnected = true
           $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
@@ -606,7 +607,9 @@
         });
 
         socket.on('send txt', function (msg) {
-          $("#messages").append("<li>" + msg.text + "<br><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name="+encodeURIComponent("從CHAT導入.txt")+"&data="+encodeURIComponent(msg.src.replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'))+"'>文字編輯器</a>中編輯</li>")
+          
+   $("#messages").append("<li>" + msg.text + "<br>檔案名稱:"+msg.filename+"<p></p><pre class='text'"+"' id='" + msg.id + "'>"+msg.src+"</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name="+encodeURIComponent(msg.filename)+"&data="+encodeURIComponent(msg.src.replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'))+"'>文字編輯器</a>中編輯</li>")
+
           window.scrollTo(0, document.body.scrollHeight);
           isConnected = true
           $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
