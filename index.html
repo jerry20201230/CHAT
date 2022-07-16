@@ -249,7 +249,7 @@
           </div>
 
           <div class="flex">
-            <button class="btn btn-outline-light" onclick="socket.emit('GetUsers',{'room':MyRooom})" data-bs-toggle="modal"
+            <button class="btn btn-outline-light" onclick="$('#getuser-connecting').show();socket.emit('GetUsers',{'room':MyRooom})" data-bs-toggle="modal"
               data-bs-target="#Modal-1">人員清單</button>
             <a href="https://jerry20200815.herokuapp.com?create=true" target="_blank"
               class="btn btn-outline-light">建立群組</a>
@@ -464,9 +464,10 @@
               <td colspan="3">正在取得資料...</td>
             </tbody>
           </table>
-          <br><p></p>
-          <p><button class="btn btn-outline-primary" onclick="socket.emit('GetUsers',{'room':MyRooom})">重新整理</button></p>
-
+          <br>
+          <p><button class="btn btn-outline-primary" onclick="$('#getuser-connecting').show(); socket.emit('GetUsers',{'room':MyRooom})">重新整理</button></p>
+          <br>
+          <p><span class="badge bg-primary " id="getuser-connecting">正在連線...</span></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
@@ -607,6 +608,7 @@
         if (r != null) return (r[2]); return null;
       }
     })(jQuery);
+
 
 
 
@@ -779,7 +781,8 @@
         }
 
       }  
-      $(".onlinePeople").html(count)
+      $(".onlinePeople").html(count);
+      $('#getuser-connecting').hide();
       
       }
 
@@ -826,10 +829,7 @@
    console.log(msg) ;
     if(msg.to == MyRooom ||msg.to == localStorage.getItem("MyID") || msg.to == "you" ){
      
-        var item = document.createElement('li');
-      item.textContent = msg.msg;
-      messages.appendChild(item);
-      item.setAttribute("class", "info")
+      $("#messages").append("<li class='info'>"+msg.msg+"</li>")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
       if (msg.msg.includes("請勿使用與別人相同的暱稱")) {
@@ -841,10 +841,9 @@
     });
 
     socket.on('sys-warn chat message', function (msg) {
-      var item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
-      item.setAttribute("class", "warn")
+
+      $("#messages").append("<li class='warn'>"+msg+"</li>")
+
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
 
@@ -971,6 +970,27 @@
         $("#contxtmenu").show()
       }
     }
+
+
+
+
+
+    if($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true'){
+      $("#dl-file-2").attr("checked",true)
+      $("#dl-file-1").attr("checked",false)
+      $("#joinRoom").hide();
+      $("#createRoom").show();
+    }else
+    if($.UrlParam("join") == 'true' && $.UrlParam("create") !== 'true'){
+      $("#dl-file-2").attr("checked",false)
+      $("#dl-file-1").attr("checked",true)
+      $("#joinRoom").show();
+      $("#createRoom").hide();
+    }else
+    if($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true' ){
+      $("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
+    }
+
   </script>
 </body>
 
