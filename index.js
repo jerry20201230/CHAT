@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 var user = ["admin01"]
-var nickname = ["🔧聊天室管理員<span class='badge bg-secondary text-light'>機器人</span>"]
+var nickname = ["🔧聊天室管理員<span class='badge bg-secondary text-light'>機器人</span><span class='badge bg-success text-light'>官方帳號</span>"]
 var socketID = ["server"]
 var statue = ["線上"]
 
