@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="title">CHAT - 主聊天室</title>
+  <title id="title">CHAT - 即時的聊天系統</title>
   <link rel="shortcut icon" href="/icon/favicon.ico" />
   <!--BS CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -78,15 +78,15 @@
     }
 
     .warn {
-      background-color: var(--bs-red) !important;
+      background-color: #f4a3ab !important;
     }
 
     .success {
-      background-color: var(--bs-green) !important;
+      background-color: #98f9b1 !important;
     }
 
     .info {
-      background-color: var(--bs-info) !important;
+      background-color: #94e3ff !important;
     }
 
 
@@ -128,98 +128,318 @@
       border-radius: 5px;
       max-height: 500px;
     }
+
+    .badge>h6 {
+      margin: 0;
+    }
+
+    .radio input[type="radio"] {
+    display: none;
+  }
+
+  .checkbox input[type="checkbox"] {
+    display: none;
+  }
+
+  .radio input:checked+.button {
+    background: #3296d4;
+    color: #fff;
+    cursor: default;
+  }
+
+  .checkbox input:checked+.button {
+    background: #3296d4;
+    color: #fff;
+    cursor: pointer;
+
+  }
+
+  .radio .button,
+  .checkbox .button {
+    display: inline-block;
+
+
+    margin: 0 0.5vw 0.5vw 0;
+    padding: 0.25vw 0.5vw;
+    background: #f7f7f7;
+    color: #333;
+    cursor: pointer;
+    border: 1px solid #8b8b8b;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .radio .button:hover,
+  .checkbox .button:hover {
+    background-color: #bbb;
+    color: #fff;
+  }
+
+  .radio .round,
+  .checkbox .round {
+    border-radius: 5px;
+  }
+  
   </style>
 </head>
 
-<body>
-  <div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-dark p-4">
-      <div>
-        <div></div>
+<body >
+  <div id="logined-ui" style="display: none;">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <div>
+          <div class="flex">
+            <div>
+              <div class="position-relative">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width: 3em; height:3em; color:#fff" fill="currentColor"
+                  class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                  <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                </svg>
+                <span id="statue-circle"
+                  class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
 
-    
-          <ul>
-            <li>
-              <form id="rename_nickname_farm" action="">
-                暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
-                <button id="changeNM" class="btn btn-outline-light">送出更改</button>
-              </form>
-            </li>
+                </span>
+              </div>
+            </div>
 
-            <li style="display:flex">你的 ID: &nbsp;
-              <pre id="Sid" style="margin:0">未知</pre>
-            </li>
 
-            <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
-            </li>
-            <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
-          </ul>
+            <ul style="color: #fff; margin-left: 1em;">
+              <li hidden>
+                <form id="rename_nickname_farm" action="">
+                  暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
+                  <button id="changeNM" class="btn btn-outline-light">送出更改</button>
+                </form>
+              </li>
+              <li>
+                <h3 class="nickname"></h3>
+               <div class="flex"> <h6>@</h6><h6 id="Sid" style="margin:0">---</h6></div>
+              </li>
+              <li>
+                <form id="reset_statue_farm" action="">
+                  狀態:
+                  <select id="statue_select" style="
+                background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)) !important;
+                color: inherit;" onblur="
+                if(this.value.includes('statue_Green')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle')}
+                else if(this.value.includes('statue_Yellow')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-warning border border-light rounded-circle')}
+                else if(this.value.includes('statue_White')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle')}
+                else if(this.value.includes('statue_Red')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle')}
+                else if(this.value.includes('statue_Blue')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle')}
+                ">
+                    <option value="statue_Green:online">線上🟢</option>
+                    <option value="statue_Yellow:leave">離開🟡</option>
+                    <option value="statue_Red:busy">忙碌🔴</option>
+                    <option value="statue_White:disconnect">離線⚪</option>
+                  </select>
+
+
+                </form>
+
+              </li>
+
+
+
+              <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
+              </li>
+              <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
+            </ul>
+
+
+          </div>
 
           <div class="flex">
-            <button class="btn btn-outline-light" onclick="socket.emit('GetUsers',socket.id)" data-bs-toggle="modal"
+            <button class="btn btn-outline-light" onclick="socket.emit('GetUsers',{'room':MyRooom})" data-bs-toggle="modal"
               data-bs-target="#Modal-1">人員清單</button>
             <a href="https://jerry20200815.herokuapp.com?create=true" target="_blank"
               class="btn btn-outline-light">建立群組</a>
             <a href="https://jerry20200815.herokuapp.com?join=true" target="_blank"
               class="btn btn-outline-light">加入群組</a>
           </div>
-       
+
+        </div>
       </div>
+
+
+
     </div>
 
-
-
-  </div>
-
-  <nav class="navbar navbar-dark bg-dark flex" style="position: sticky;
+    <nav class="navbar navbar-dark bg-dark flex" style="position: sticky;
     width: 100%;
     top: 0;">
 
-    <div class="container-fluid">
-      <h1 style="color:#fff">CHAT</h1>
-      <button class="navbar-toggler" type="button" onclick="window.scrollTo(0,0)" data-bs-toggle="collapse"
-        data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <div class="container-fluid">
+        <h1 style="color:#fff">CHAT</h1>
+        <button class="navbar-toggler" type="button" onclick="window.scrollTo(0,0)" data-bs-toggle="collapse"
+          data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    </div>
-  </nav>
+      </div>
+    </nav>
 
-  <ul id="messages">
+    <ul id="messages">
+      <li>正在連接至伺服器...</li>
 
-    <li>正在連接至伺服器...</li>
-  </ul>
+    </ul>
 
-  <div id="bottom">
-    <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
+    <div id="bottom">
+      <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
 
-    <div id="bottom-bar">
+      <div id="bottom-bar">
 
-      <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
-        style="flex-shrink:1; min-width:90px" onclick='socket.emit("typeing",socket.id)'>傳送圖片</button>
-      &nbsp;
-      <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
-        style="flex-shrink:1; min-width:90px" onclick='socket.emit("typeing",socket.id)'>傳送文字</button>
+        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
+          style="flex-shrink:1; min-width:90px"
+          onclick='socket.emit("typeing",{"id":socket.id,"room":MyRooom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")'>傳送圖片</button>
+        &nbsp;
+        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
+          style="flex-shrink:1; min-width:90px"
+          onclick='socket.emit("typeing",{"id":socket.id,"room":MyRooom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
       <form id="form" action="" class="flex" style="width:100%">
 
 
 
 
 
-        <input id="input" autocomplete="off" placeholder="輸入新訊息" oninput="socket.emit('typeing', socket.id);"
-          onblur="socket.emit('typeing-end',socket.id)">
+        <input id="input" autocomplete="off" placeholder="輸入新訊息" 
+        oninput="
+          socket.emit(' typeing', {'id':socket.id,'room':MyRooom}); $('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle')"
+        onblur="
+          socket.emit('typeing-end',{'id':socket.id,'room':MyRooom});
+          $('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle')">
 
 
-        <button class="btn btn-outline-dark">送出訊息</button>
-      </form>
+          <button class="btn btn-outline-dark">送出訊息</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="login-ui-1">
+    <h1>歡迎來到CHAT</h1>
+    <h5>我們該如何稱呼您?</h5>
+    <span>
+      <p></p>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="nickname-input-set" placeholder="請輸入暱稱">
+        <label for="floatingInput">請輸入暱稱</label>
+      </div>
+    </span><br>
+    <span class="badge bg-primary">
+      <h6>這是您在CHAT顯示的名稱，也是他人認得您的方式</h6>
+    </span>
+    <p></p><span class="badge bg-danger">
+      <h6>請注意:暱稱無法修改</h6>
+    </span>
+    <p></p><span class="badge bg-danger" id="set-alert" style="display: none;">
+      <h6>**最後一個字符不可以是空白**</h6>
+    </span>
+    <p></p><span class="badge bg-danger" id="set-alert-2" style="display: none;">
+      <h6>**請填寫暱稱**</h6>
+    </span>
+    <p></p><span class="badge bg-success" id="set-info" style="display: none;">
+      <h6>變更已經儲存，正在向伺服器確認你的ID，請先<B>不要</B>刷新網頁</h6>
+    </span>
+    <p></p><span class="badge bg-success" id="set-info-2" style="display: none;">
+      <h6></h6>
+    </span>
+    <p></p>
+    <button class="btn btn-secondary" onclick="
+  if($('#nickname-input-set').val().slice(-1) == ' '){
+    $('#set-alert').show()
+  }
+  else if($('#nickname-input-set').val() == ''){
+    $('#set-alert-2').show()
+  }
+  else{
+    localStorage.setItem('CHAT', true)
+    localStorage.setItem('myNickname',$('#nickname-input-set').val())
+    socket.connect()
+    socket.emit('GetID', { 'from': socket.id })
+    $('#set-info').show()
+    $(this).attr('disabled',true)
+  }">確定</button>
+  </div>
+
+
+  <div id="login-ui-2">
+    <h1>Hi,<span class="nickname"></span></h1>
+    <h5>請選擇加入房間，或建立新房間</h5>
+
+    <div class='flex'>
+      <div class='radio'><label
+        onclick="
+        if(document.getElementById('dl-file-1').checked){
+          $('#createRoom').hide();
+          $('#joinRoom').show();
+          
+        }"><input type='radio' id='dl-file-1' name='dl-radio' 
+        ><span class='round button'>
+            <center>加入房間</center>
+          </span></label></div>
+
+      <div class='radio'><label
+        onclick="
+        if(document.getElementById('dl-file-2').checked){
+          $('#createRoom').show();
+          $('#joinRoom').hide();
+        }">
+        <input type='radio' id='dl-file-2'name='dl-radio'><span class='round button'>
+            <center>建立房間</center>
+          </span></label>
+            </div>
+
+          <p></p><br>
+        
+    </div>
+    <div id="createRoom">
+      <span>輸入房間名稱<input type="text" id="create-room-name"></span>
+      <p><span>輸入房間密碼(若不想設定請勿輸入)<input type="password" id="create-room-pws"></span></p>
+      <p><span>確認房間密碼<input type="password" id="create-room-pws-2"></span></p>
+      <p><div class="alert alert-danger">房間密碼請務必牢記!</div></p>
+      
+      <p><button class="btn btn-primary" onclick="
+        if($('#create-room-name').val() == ''){
+          $('#create-statue').append('請輸入房間名稱<br>')
+        }else if($('#create-room-pws').val() !== $('#create-room-pws-2').val()){
+          $('#create-statue').append('兩次輸入的密碼不同，請重新輸入<br>')
+
+        }else if($('#create-room-pws').val() == $('#create-room-pws-2').val()){
+          $('#create-statue').append('房間名稱: '+$('#create-room-name').val()+'<br>')
+
+          $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
+          socket.emit('create',{'name':$('#create-room-name').val(),'pws':$('#create-room-pws').val()})
+        }
+        
+        
+        
+        
+        ">確定</button></p>
+        <p><span id="create-statue"></span></p>
+    </div>
+    <div id="joinRoom">
+      <span>輸入房間ID<input type="text" id="join-room-name" value="@room-1"></span>
+      <p><span>輸入房間密碼<input type="password" id="join-room-pws"></span></p>
+      <p><div id="join-alert" class="alert alert-info"><span id="join-room-name">主聊天室(@room-1)</span><span id="join-info">沒有密碼</span></div></p>
+      <p><div id="join-alert-2" class="alert alert-danger">請勿重複加入同一房間!</div></p>
+      <p><button class="btn btn-primary" onclick="
+        
+        socket.emit('join',{'id':localStorage.getItem('myID'),'nickname':localStorage.getItem('myNickname'),'room':$('#join-room-name').val(),'pws':$('#join-room-pws').val()})
+        $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
+        ">確定</button></p>
+      <p><span id="join-statue"></span></p>
     </div>
   </div>
 
 
 
 
-  <!-- Modal -->
+
+
+
+
+  <!-- Modal + contextmenu-->
   <div class="modal fade" id="Modal-1" tabindex="-1" aria-labelledby="Modal-1Label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -237,12 +457,15 @@
               <tr>
                 <td>暱稱</td>
                 <td>ID</td>
+                <td>狀態</td>
 
               </tr>
             <tbody id="PeopleOnLine">
+              <td colspan="3">正在取得資料...</td>
             </tbody>
           </table>
-
+          <br><p></p>
+          <p><button class="btn btn-outline-primary" onclick="socket.emit('GetUsers',{'room':MyRooom})">重新整理</button></p>
 
         </div>
         <div class="modal-footer">
@@ -263,7 +486,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="Modal-2Label">傳送圖片</h5>
-          <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close" data-bs-dismiss="modal"
+          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})' class="btn-close" data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -277,14 +500,14 @@
           <img>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
+              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})'>關閉</button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
                   if(isfile){
                   let filename =  document.getElementById("upload-input").files[0].name                                                                        
-                  socket.emit("send img",{"src":img.attr("src"),"filename":filename})
+                  socket.emit("send img",{"src":img.attr("src"),"filename":filename,"to":MyRooom})
                   console.log(img.attr("src"))
-                  socket.emit("typeing-end",socket.id)
-                  
+                  socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})
+                  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                   }
                   '>送出</button>
           </div>
@@ -301,7 +524,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="Modal-3Label">傳送文字檔</h5>
-          <button type="button" onclick='socket.emit("typeing-end",socket.id)' class="btn-close" data-bs-dismiss="modal"
+          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})' class="btn-close" data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -315,14 +538,14 @@
           <pre class="text" id="txt-preview"></pre>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",socket.id)'>關閉</button>
+              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})'>關閉</button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
               
                    let filename =  document.getElementById("upload-input-txt").files[0].name  
-                  socket.emit("send txt",{"src":txtfile,"filename":filename})
+                  socket.emit("send txt",{"src":txtfile,"filename":filename,"to":MyRooom})
                   
-                  socket.emit("typeing-end",socket.id)
-                  
+                  socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})
+                  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                 
                   '>送出</button>
           </div>
@@ -331,13 +554,14 @@
     </div>
   </div>
 
+  <div id="contextmenu" style="display: none;">
+    <div id="content-tool"></div>
+    <ul id="contextmenu-ul">
+
+    </ul>
 
 
-
-
-
-
-
+  </div>
 
 
 
@@ -362,6 +586,7 @@
     var last_nickname = ""
     var isConnected = false
 
+    var MyRooom
     //移動裝置檢測
     window.mobileAndTabletCheck = function () {
       let check = false;
@@ -382,78 +607,60 @@
         if (r != null) return (r[2]); return null;
       }
     })(jQuery);
-   
 
 
 
+    //local
+    if (localStorage.getItem("CHAT") == null) {
+      $("#login-ui-1").show()
+      $("#login-ui-2").hide()
+
+    } else {
+      $("#login-ui-2").show();
+      $("#login-ui-1").hide()
+      $("#createRoom,#joinRoom").hide();
+      $(".nickname").html(localStorage.getItem("myNickname"))
 
 
-    //OS 檢測
-    var nVer = navigator.appVersion;
-    var nAgt = navigator.userAgent;
-    var browserName = navigator.appName;
-    var fullVersion = '' + parseFloat(navigator.appVersion);
-    var majorVersion = parseInt(navigator.appVersion, 10);
-    var nameOffset, verOffset, ix;
+    
 
-    // In Opera, the true version is after "Opera" or after "Version"
-    if ((verOffset = nAgt.indexOf("Opera")) != -1) {
-      browserName = "Opera";
-      fullVersion = nAgt.substring(verOffset + 6);
-      if ((verOffset = nAgt.indexOf("Version")) != -1)
-        fullVersion = nAgt.substring(verOffset + 8);
-    }
-    // In MSIE, the true version is after "MSIE" in userAgent
-    else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
-      browserName = "Microsoft Internet Explorer";
-      fullVersion = nAgt.substring(verOffset + 5);
-    }
-    // In Chrome, the true version is after "Chrome" 
-    else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
-      browserName = "Chrome";
-      fullVersion = nAgt.substring(verOffset + 7);
-    }
-    // In Safari, the true version is after "Safari" or after "Version" 
-    else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
-      browserName = "Safari";
-      fullVersion = nAgt.substring(verOffset + 7);
-      if ((verOffset = nAgt.indexOf("Version")) != -1)
-        fullVersion = nAgt.substring(verOffset + 8);
-    }
-    // In Firefox, the true version is after "Firefox" 
-    else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
-      browserName = "Firefox";
-      fullVersion = nAgt.substring(verOffset + 8);
-    }
-    // In most other browsers, "name/version" is at the end of userAgent 
-    else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
-      (verOffset = nAgt.lastIndexOf('/'))) {
-      browserName = nAgt.substring(nameOffset, verOffset);
-      fullVersion = nAgt.substring(verOffset + 1);
-      if (browserName.toLowerCase() == browserName.toUpperCase()) {
-        browserName = navigator.appName;
-      }
-    }
-    // trim the fullVersion string at semicolon/space if present
-    if ((ix = fullVersion.indexOf(";")) != -1)
-      fullVersion = fullVersion.substring(0, ix);
-    if ((ix = fullVersion.indexOf(" ")) != -1)
-      fullVersion = fullVersion.substring(0, ix);
-
-    majorVersion = parseInt('' + fullVersion, 10);
-    if (isNaN(majorVersion)) {
-      fullVersion = '' + parseFloat(navigator.appVersion);
-      majorVersion = parseInt(navigator.appVersion, 10);
     }
 
+    socket.on("PostID", function (id) {
+      localStorage.setItem("myID", id)
+      $("#Sid").html(id)
+      $("#set-info-2").html("<h6>請記下你的ID: " + id + "，現在你可以刷新網頁來加入聊天了</h6>").show()
+      socket.disconnect()
 
-    var OSName = "Unknown OS";
-    if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
-    if (navigator.appVersion.indexOf("Mac") != -1) OSName = "MacOS";
-    if (navigator.appVersion.indexOf("X11") != -1) OSName = "UNIX";
-    if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
+    })
+    socket.on("password incorrect", function (room) {
+      $('#join-statue').append("輸入的聊天室ID或密碼錯誤<br>")
 
+    })
+    socket.on("room not found", function (room) {
+      $('#join-statue').append("找不到聊天室: "+room+"<br>")
 
+    })
+
+    socket.on("welcome", function (room) {
+      $('#join-statue').append("歡迎進入聊天室: "+room+"<br>");
+      MyRooom = room
+      socket.emit("statue",{"statue":$("#statue_select").val()})
+      socket.emit('GetUsers',{'room':MyRooom})
+      $("#login-ui-2").hide();
+      $("#login-ui-1").hide();
+      $("#logined-ui").show();
+      $("#messages").html("<li>聊天室:"+MyRooom+"</li>")
+      $("title").text("CHAT - "+MyRooom)
+      $("#Sid").html(localStorage.getItem("myID"))
+      
+    })
+
+    socket.on("created",msg=>{
+      $('#create-statue').append('房間 '+msg.name+"已經建立完成<br>ID是: "+msg.id+'<br>切換到 加入 以加入此房間')
+      $("#join-room-name").val(msg.id)
+      $("#join-room-pws").val(msg.pws)
+    })
 
     //img input
     var img = $('img');
@@ -518,20 +725,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (input.value) {
-        socket.emit('chat message', (input.value).replace(/\n/g,'<!b>').replace(/\t/g,'<!t>').replace(/ /g,'<!s>'));
+        socket.emit('chat message room', {'msg':(input.value).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'),'room':MyRooom});
         if (!isConnected) {
           var item = document.createElement('li');
           item.textContent = "訊息發送失敗! 無法發送的訊息: " + input.value;
@@ -540,7 +737,7 @@
           window.scrollTo(0, document.body.scrollHeight);
         }
         input.value = '';
-        socket.emit("typeing-end", socket.id)
+        socket.emit("typeing-end", {'id':socket.id,'room':MyRooom})
 
       }
     });
@@ -562,57 +759,83 @@
       }
     });
 
-    socket.on("UserList", function (msg) {
-      console.log(msg)
-      $("#PeopleOnLine").html("")
-      $("#PeopleOnLineCount").html(msg.count)
-      for (let r = 0; r < (msg.userID).length; r++) {
-
-        $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "</tr>")
-
-
-      }
+    $("#statue_select").on("blur",function(){
+      socket.emit("statue",{"statue":$("#statue_select").val(),"room":MyRooom})
     })
 
-    socket.on('chat message', function (msg) {
-      var item = document.createElement('li');
-      item.textContent = (msg).replace(/<!b>/g,'<br>').replace(/<!t>/g,'&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g,'&nbsp;');
-      messages.appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
+    socket.on("UserList", function (msg) {
+      if(msg.to == MyRooom){
+        $("#PeopleOnLine").html("")
+       let count = 0
+       console.log(msg)
+
+      for (let r = 0; r < (msg.userID).length; r++) {
+        console.log(msg.statue[r])
+        if(msg.nickname !== undefined && msg.nickname !== null &&msg.userID !== null){
+          $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" +"<td>"+msg.statue[r]+"</td>"+ "</tr>")
+          count++  
+        }else{
+        
+        }
+
+      }  
+      $(".onlinePeople").html(count)
+      
+      }
+
+    })
+
+    socket.on('chat message room', function (msg) {
+
+      if(msg.room == MyRooom){
+
+      
+      $("#messages").append("<li>" + (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;') + "</li>")
       isConnected = true
 
-
+      window.scrollTo(0, document.body.scrollHeight);
+      }
     });
 
     socket.on('send img', function (msg) {
+      if(msg.to == MyRooom){
       $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
       $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
-
+      }
     });
 
     socket.on('send txt', function (msg) {
+      if(msg.to == MyRooom){
+      console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+      if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+        $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+      } else {
+        $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
 
-      $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
-
-      window.scrollTo(0, document.body.scrollHeight);
+      }
       isConnected = true
       $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
-
+      window.scrollTo(0, document.body.scrollHeight);
+    }
     });
 
 
     socket.on('sys-info chat message', function (msg) {
-      var item = document.createElement('li');
-      item.textContent = msg;
+   console.log(msg) ;
+    if(msg.to == MyRooom ||msg.to == localStorage.getItem("MyID") || msg.to == "you" ){
+     
+        var item = document.createElement('li');
+      item.textContent = msg.msg;
       messages.appendChild(item);
       item.setAttribute("class", "info")
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
-      if (msg.includes("請勿使用與別人相同的暱稱")) {
+      if (msg.msg.includes("請勿使用與別人相同的暱稱")) {
         my_nickname = last_nickname
       }
+    }
 
 
     });
@@ -649,9 +872,12 @@
       socket.disconnect()
     })
 
-    socket.on('people online', function (msg) {
+    socket.on('people online', function (msg) 
+    {
+     if(msg.for == MyRooom){
       $(".onlinePeople").html(msg)
       isConnected = true
+     }
     });
     socket.on('typeing', function (msg) {
       if (msg == " 正在輸入...") {
@@ -680,11 +906,12 @@
       messages.appendChild(item);
       item.setAttribute("class", "success")
       window.scrollTo(0, document.body.scrollHeight);
-      document.getElementById("Sid").innerHTML = socket.id
+
       document.getElementById("connectStatue").innerHTML = "已連線"
       document.getElementById("connectStatue").style.color = "#39ef2f"
       document.getElementById("isTypeing").innerHTML = " "
-      socket.emit("MyUA", { "BR": (browserName + " " + majorVersion), "OS": OSName })
+
+
     });
 
     socket.on("disconnect", () => {
@@ -699,6 +926,43 @@
       document.getElementById("connectStatue").style.color = "#ce3434"
       document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
     });
+
+
+
+
+    /*  
+    <div id="contextmenu" style="display: none;">
+      <div id="content-tool"></div>
+      <ul id="contextmenu-ul">
+
+      </ul>
+    </div>*/
+    window.oncontextmenu = function (e) {
+      contextmenu.x = e.clientX;
+      contextmenu.y = e.clientY;
+      e.preventDefault()
+    }
+    var contextmenu = {
+      menu: $("#contxtmenu"),
+      x: 0,
+      y: 0,
+      set: function (count, text, callback) {
+
+        for (let i = 0; i < count; i++) {
+
+          $("#contextmenu-ul").append("<li onclick='" + callback[i] + "'>" + text[i] + "</li>")
+        }
+      },
+      show: function (callback) {
+
+        //選單出現後的位置
+        contextmenu.menu.css("display", "block")
+        contextmenu.menu.css("left", contextmenu.x + 'px')
+        contextmenu.menu.css("top", contextmenu.y + 'px')
+
+        $("#contxtmenu").show()
+      }
+    }
   </script>
 </body>
 
