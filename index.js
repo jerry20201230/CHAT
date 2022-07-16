@@ -263,7 +263,7 @@ io.on('connection', (socket) => {
   socket.on('send txt', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send txt', {"to":msg.to, "text": (nickname[(user.indexOf(i))] + " (" + i + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID ,"filename":msg.filename})
+    io.emit('send txt', {"to":msg.to, "text": (nickname[socketID.indexOf(i)] + " (" +  user[socketID.indexOf(i)] + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID ,"filename":msg.filename})
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
