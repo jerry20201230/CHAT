@@ -901,8 +901,11 @@
       isConnected = true
       console.log(socket.id);
       console.log("connected")
+      $("#statue_select").val("statue_Green:online")
+      $("#statue_select").attr("disabled",false)
+      $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
       var item = document.createElement('li');
-      item.textContent = "裝置已連接到伺服器,id是:" + socket.id;
+      item.textContent = "裝置已連接到伺服器" ;
       messages.appendChild(item);
       item.setAttribute("class", "success")
       window.scrollTo(0, document.body.scrollHeight);
@@ -914,8 +917,13 @@
 
     });
 
+
+
     socket.on("disconnect", () => {
       isConnected = false
+      $("#statue_select").val("statue_White:disconnect")
+      $("#statue_select").attr("disabled",true)
+      $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
       console.log("disconnected")
       var item = document.createElement('li');
       item.textContent = "裝置未連接到伺服器,正在嘗試連接...";
