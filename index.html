@@ -772,9 +772,14 @@
        console.log(msg)
 
       for (let r = 0; r < (msg.userID).length; r++) {
-        console.log(msg.statue[r])
+   
         if(msg.nickname !== undefined && msg.nickname !== null &&msg.userID !== null){
-          $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" +"<td>"+msg.statue[r]+"</td>"+ "</tr>")
+          let _statue = msg.statue[r]
+          if     (_statue == "線上"){_statue = "🟢 "+_statue}
+          else if(_statue == "離開"){_statue = "🟡 "+_statue}
+          else if(_statue == "忙碌"){_statue = "🔴 "+_statue}
+          else if(_statue == "離線"){_statue = "⚪ "+_statue}
+          $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" +"<td>"+_statue+"</td>"+ "</tr>")
           count++  
         }else{
         
@@ -879,20 +884,25 @@
      }
     });
     socket.on('typeing', function (msg) {
-      if (msg == " 正在輸入...") {
+      /*if(msg.to == MyRooom){
+      if (msg.msg == " 正在輸入...") {
         $("#isTypeing").html("")
       } else {
-        $("#isTypeing").html(msg)
+        $("#isTypeing").html(msg.msg)
       }
+    }*/
+    console.log(msg)
 
     });
     socket.on('typeing-end', function (msg) {
-      if (msg == " 正在輸入...") {
+      /*if(msg.to == MyRooom){
+      if (msg.msg == " 正在輸入...") {
         $("#isTypeing").html("")
       } else {
-        $("#isTypeing").html(msg)
+        $("#isTypeing").html(msg.msg)
       }
-
+    }*/
+    console.log(msg)
     });
 
 

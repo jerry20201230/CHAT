@@ -23,7 +23,7 @@ var roomName = ["主聊天室","MyRoom"]
 var roomID = ["@room-1","@room-123"]
 var roomPws = ["","102030."]
 var room_socketID = [["server"],["server"]]
-
+var room_typeing = [[],[]]
 
 
 var typeing = []
@@ -186,32 +186,35 @@ io.on('connection', (socket) => {
   });
 
   socket.on('typeing', msg => {
-  /*  i = socket.id 
+    i = socket.id 
     _display = ""
 
-    if (typeing.indexOf(i) == -1) {
+    console.log("----------------")
+    console.log(room_typeing[roomName.indexOf(msg.room)])
+    console.log("----------------")
+    if (room_typeing[roomName.indexOf(msg.room)].indexOf(i) == -1) {
       typeing.push(i)
     }
-    console.log(typeing)
-    if (typeing === []) {
+    console.log(room_typeing[roomName.indexOf(msg.room)])
+    if (room_typeing[roomName.indexOf(msg.room)] === []) {
       console.log("no one is typeing")
       io.emit('typeing', " ")
     } else {
 
-      for (let a = 0; a < typeing.length; a++) {
+      for (let a = 0; a < room_typeing[roomName.indexOf(msg.room)].length; a++) {
 
-        _display = _display + nickname[socketID.indexOf(typeing[a])] + " (" + user[socketID.indexOf(typeing[a])] + ")<br>"
+        _display = _display + nickname[socketID.indexOf(typeing[a])] + " (" + user[socketID.indexOf(room_typeing[roomName.indexOf(msg.room)][a])] + ")<br>"
       }
 
       if (_display + " 正在輸入..." == " 正在輸入...") {
         io.emit('typeing', {'to':msg.rooom,'msg':"&nbsp;"})
       } else {
         console.log(_display + " 正在輸入...")
-        io.emit('typeing', _display + " 正在輸入...")
+        io.emit('typeing',{"to":msg.room,"msg": _display + " 正在輸入..."})
       }
 
     }
-*/
+
   });
   socket.on('typeing-end', function (msg) {
   /*  _display = ""
