@@ -23,14 +23,13 @@
       top: 0;
     }
 
-    #bottom {
+    .bottom {
       position: fixed;
       bottom: 0;
-      left: 0;
-      right: 0;
+
     }
 
-    #bottom-bar {
+    .bottom-bar {
       background: rgba(0, 0, 0, 0.15);
       padding: 0.25rem;
 
@@ -40,7 +39,7 @@
       backdrop-filter: blur(10px);
     }
 
-    #input {
+    .input {
       border: none;
       padding: 0 1rem;
       flex-grow: 1;
@@ -48,18 +47,23 @@
       margin: 0.25rem;
     }
 
-    #input:focus {
+    .input:focus {
       outline: none;
     }
 
-    #messages,
+    .msg-form {
+
+      display: flex;
+    }
+
+    .messages,
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
     }
 
-    #messages>li {
+    .messages>li {
       padding: 0.5rem 1rem;
       border-bottom: 1px #333 solid;
     }
@@ -126,7 +130,8 @@
     .text {
       border: 1px #333 solid;
       border-radius: 5px;
-      max-height: 500px;
+      max-height: 50vh;
+      /*   max-width: 30vw;*/
     }
 
     .badge>h6 {
@@ -134,91 +139,124 @@
     }
 
     .radio input[type="radio"] {
-    display: none;
-  }
+      display: none;
+    }
 
-  .checkbox input[type="checkbox"] {
-    display: none;
-  }
+    .checkbox input[type="checkbox"] {
+      display: none;
+    }
 
-  .radio input:checked+.button {
-    background: #3296d4;
-    color: #fff;
-    cursor: default;
-  }
+    .radio input:checked+.button {
+      background: #3296d4;
+      color: #fff;
+      cursor: default;
+    }
 
-  .checkbox input:checked+.button {
-    background: #3296d4;
-    color: #fff;
-    cursor: pointer;
+    .checkbox input:checked+.button {
+      background: #3296d4;
+      color: #fff;
+      cursor: pointer;
 
-  }
+    }
 
-  .radio .button,
-  .checkbox .button {
-    display: inline-block;
+    .radio .button,
+    .checkbox .button {
+      display: inline-block;
 
 
-    margin: 0 0.5vw 0.5vw 0;
-    padding: 0.25vw 0.5vw;
-    background: #f7f7f7;
-    color: #333;
-    cursor: pointer;
-    border: 1px solid #8b8b8b;
-    transition: background-color 0.3s, color 0.3s;
-  }
+      margin: 0 0.5vw 0.5vw 0;
+      padding: 0.25vw 0.5vw;
+      background: #f7f7f7;
+      color: #333;
+      cursor: pointer;
+      border: 1px solid #8b8b8b;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-  .radio .button:hover,
-  .checkbox .button:hover {
-    background-color: #bbb;
-    color: #fff;
-  }
+    .radio .button:hover,
+    .checkbox .button:hover {
+      background-color: #bbb;
+      color: #fff;
+    }
 
-  .radio .round,
-  .checkbox .round {
-    border-radius: 5px;
-  }
-  
+    .radio .round,
+    .checkbox .round {
+      border-radius: 5px;
+    }
+
+    .tab-content {
+      flex-grow: 1;
+      padding-top: 5px;
+    }
+
+    #v-pills-tab {
+      position: sticky !important;
+      padding-top: 5px;
+
+      overflow-x: hidden;
+      flex-wrap: nowrap;
+
+
+      overflow-y: scroll !important;
+      max-height: 80vh;
+
+    }
+
+    #v-pills-tab .nav-link {
+      white-space: nowrap;
+    }
   </style>
 </head>
 
-<body >
-  <div id="logined-ui" style="display: none;">
+<body>
+  <div id="logined-ui">
+
+
+
     <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
         <div>
+
           <div class="flex">
-            <div>
-              <div class="position-relative">
-                <svg xmlns="http://www.w3.org/2000/svg" style="width: 3em; height:3em; color:#fff" fill="currentColor"
-                  class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                  <path fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg>
-                <span id="statue-circle"
-                  class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+            <div id="chat-tabs">
 
-                </span>
-              </div>
+
             </div>
+            <div class="flex">
+              <div>
+                <div class="position-relative">
+                  <svg xmlns="http://www.w3.org/2000/svg" style="width: 3em; height:3em; color:#fff" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                  </svg>
+                  <span id="statue-circle"
+                    class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+
+                  </span>
+                </div>
+              </div>
 
 
-            <ul style="color: #fff; margin-left: 1em;">
-              <li hidden>
-                <form id="rename_nickname_farm" action="">
-                  暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
-                  <button id="changeNM" class="btn btn-outline-light">送出更改</button>
-                </form>
-              </li>
-              <li>
-                <h3 class="nickname"></h3>
-               <div class="flex"> <h6>@</h6><h6 id="Sid" style="margin:0">---</h6></div>
-              </li>
-              <li>
-                <form id="reset_statue_farm" action="">
-                  狀態:
-                  <select id="statue_select" style="
+              <ul style="color: #fff; margin-left: 1em;">
+                <li hidden>
+                  <form id="rename_nickname_farm" action="">
+                    暱稱:<input id="NMinput" placeholder="輸入暱稱..." value="User">
+                    <button id="changeNM" class="btn btn-outline-light">送出更改</button>
+                  </form>
+                </li>
+                <li>
+                  <h3 class="nickname"></h3>
+                  <div class="flex">
+                    <h6>@</h6>
+                    <h6 id="Sid" style="margin:0">---</h6>
+                  </div>
+                </li>
+                <li>
+                  <form id="reset_statue_farm" action="">
+                    狀態:
+                    <select id="statue_select" style="
                 background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)) !important;
                 color: inherit;" onblur="
                 if(this.value.includes('statue_Green')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle')}
@@ -227,34 +265,37 @@
                 else if(this.value.includes('statue_Red')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle')}
                 else if(this.value.includes('statue_Blue')){$('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle')}
                 ">
-                    <option value="statue_Green:online">線上🟢</option>
-                    <option value="statue_Yellow:leave">離開🟡</option>
-                    <option value="statue_Red:busy">忙碌🔴</option>
-                    <option value="statue_White:disconnect">離線⚪</option>
-                  </select>
+                      <option value="statue_Green:online">線上🟢</option>
+                      <option value="statue_Yellow:leave">離開🟡</option>
+                      <option value="statue_Red:busy">忙碌🔴</option>
+                      <option value="statue_White:disconnect">離線⚪</option>
+                    </select>
 
 
-                </form>
+                  </form>
 
-              </li>
+                </li>
 
 
 
-              <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
-              </li>
-              <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
-            </ul>
+                <li>連線狀態: &nbsp; <span id="connectStatue">未連線</span>
+                </li>
+                <li class="flex"><span>線上人數:&nbsp;</span><span class="onlinePeople">未知</span></li>
+              </ul>
 
+
+            </div>
 
           </div>
 
           <div class="flex">
-            <button class="btn btn-outline-light" onclick="$('#getuser-connecting').show();socket.emit('GetUsers',{'room':MyRooom})" data-bs-toggle="modal"
+            <button class="btn btn-outline-light"
+              onclick="$('#getuser-connecting').show();socket.emit('GetUsers',{'room':MyRoom})" data-bs-toggle="modal"
               data-bs-target="#Modal-1">人員清單</button>
-            <a href="https://jerry20200815.herokuapp.com?create=true" target="_blank"
-              class="btn btn-outline-light">建立群組</a>
-            <a href="https://jerry20200815.herokuapp.com?join=true" target="_blank"
-              class="btn btn-outline-light">加入群組</a>
+
+            &nbsp;
+
+            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#Modal-5">設定</button>
           </div>
 
         </div>
@@ -266,7 +307,8 @@
 
     <nav class="navbar navbar-dark bg-dark flex" style="position: sticky;
     width: 100%;
-    top: 0;">
+    top: 0;
+    z-index: 1050;">
 
       <div class="container-fluid">
         <h1 style="color:#fff">CHAT</h1>
@@ -279,44 +321,227 @@
       </div>
     </nav>
 
-    <ul id="messages">
-      <li>正在連接至伺服器...</li>
-
-    </ul>
-
-    <div id="bottom">
-      <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
-
-      <div id="bottom-bar">
-
-        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
-          style="flex-shrink:1; min-width:90px"
-          onclick='socket.emit("typeing",{"id":socket.id,"room":MyRooom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")'>傳送圖片</button>
-        &nbsp;
-        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
-          style="flex-shrink:1; min-width:90px"
-          onclick='socket.emit("typeing",{"id":socket.id,"room":MyRooom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
-      <form id="form" action="" class="flex" style="width:100%">
 
 
 
 
 
-        <input id="input" autocomplete="off" placeholder="輸入新訊息" 
-        oninput="
-          socket.emit(' typeing', {'id':socket.id,'room':MyRooom}); $('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle')"
-        onblur="
-          socket.emit('typeing-end',{'id':socket.id,'room':MyRooom});
-          $('#statue-circle').attr('class','position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle')">
+    <div class="d-flex align-items-start">
+      <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
+        <button class="nav-link active" id="room-ctrl-1" data-bs-toggle="pill" data-bs-target="#room-tab-1"
+          type="button" role="tab" aria-controls="room-tab-1" aria-selected="true" onclick="MyRoom = 'server'"
+          data-room="server"><span>🔧聊天室管理員&nbsp;<span class='badge bg-secondary text-light'>機器人</span>&nbsp;<span
+              class='badge bg-success text-light'>官方帳號</span><br><small>(@admin01)</small></span></button>
+        <button class="nav-link" id="room-ctrl-add" data-bs-toggle="pill" data-bs-target="#room-tab-add" type="button"
+          role="tab" aria-controls="room-tab-add" aria-selected="true">新增</button>
 
-          <button class="btn btn-outline-dark">送出訊息</button>
-          </form>
       </div>
+      <div class="tab-content" id="v-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="room-tab-1" role="tabpanel" aria-labelledby="room-ctrl-1"
+          data-room="server">
+
+          <div>
+            <ul class="messages" data-room="server">
+              <li>聊天室:伺服器通知
+
+              </li>
+
+            </ul>
+          </div>
+          <div class="bottom" data-room="server">
+            <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
+
+            <div class="bottom-bar">
+
+              <button disabled class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
+                style="flex-shrink:1; min-width:90px"
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")'>傳送圖片</button>
+              &nbsp;
+              <button disabled class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
+                style="flex-shrink:1; min-width:90px"
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
+          <form class="msg-form" action="" class="flex" style="width:100%">
+    
+    
+    
+    
+    
+            <input class="input" style="border: 1px #333 solid;" disabled autocomplete="off" placeholder="無法直接傳送訊息給🔧聊天室管理員" 
+            oninput="
+              socket.emit(' typeing', {'id':socket.id,'room':MyRoom});"
+              
+                onblur="
+              socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});"
+            >
+
+
+                <button disabled class="btn btn-outline-dark">送出訊息</button>
+                </form>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="tab-pane fade show" id="room-tab-add" role="tabpanel" aria-labelledby="room-ctrl-add">
+
+          <div class='flex'>
+            <div class='radio'><label onclick="
+              if(document.getElementById('dl-file-1').checked){
+                $('#createRoom').hide();
+                $('#joinRoom').show();
+                
+              }"><input type='radio' id='dl-file-1' name='dl-radio'><span class='round button'>
+                  <center>加入房間</center>
+                </span></label></div>
+
+            <div class='radio'><label onclick="
+              if(document.getElementById('dl-file-2').checked){
+                $('#createRoom').show();
+                $('#joinRoom').hide();
+              }">
+                <input type='radio' id='dl-file-2' name='dl-radio'><span class='round button'>
+                  <center>建立房間</center>
+                </span></label>
+            </div>
+
+            <p></p><br>
+
+          </div>
+          <div id="createRoom">
+            <span>輸入房間名稱<input type="text" id="create-room-name"></span>
+            <p><span>輸入房間密碼(若不想設定請勿輸入)<input type="password" id="create-room-pws"></span></p>
+            <p><span>確認房間密碼<input type="password" id="create-room-pws-2"></span></p>
+            <p>
+            <div class="alert alert-danger">房間密碼請務必牢記!</div>
+            </p>
+
+            <p>
+            <div>
+              <span>房間設定</span>
+              <ul>
+                <li>誰可以變更設定<br>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-1" id="room-setting-radio-1/all"
+                    autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-1/all">所有人</label>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-1" id="room-setting-radio-1/me"
+                    autocomplete="off">
+                  <label class="btn btn-outline-warning" for="room-setting-radio-1/me">我</label>
+                </li>
+                <p></p>
+                <li>誰可以邀請用戶<br>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/all"
+                    autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-2/all">所有人</label>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/me"
+                    autocomplete="off">
+                  <label class="btn btn-outline-warning" for="room-setting-radio-2/me">我</label>
+                </li>
+                <p></p>
+                <li>誰可以移除用戶<br>
+                  <span>🔧聊天室管理員&nbsp;<span class='badge bg-secondary text-light'>機器人</span>&nbsp;<span
+                      class='badge bg-success text-light'>官方帳號</span>(@admin01) 以及</span>
+                  <br>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-3" id="room-setting-radio-3/all"
+                    autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-3/all">所有人</label>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-3" id="room-setting-radio-3/me"
+                    autocomplete="off">
+                  <label class="btn btn-outline-warning" for="room-setting-radio-3/me">我</label>
+                </li>
+                <p></p>
+                <li>用戶加入方式<br>
+
+
+
+                  <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="btn-check">輸入密碼</label>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-4" id="room-setting-radio-4/invite"
+                    autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-4/invite">接受邀請</label>
+
+                  <input type="radio" class="btn-check" name="room-setting-radio-4" id="room-setting-radio-4/auto"
+                    autocomplete="off">
+                  <label class="btn btn-outline-warning" for="room-setting-radio-4/auto">自動加入</label>
+
+                </li>
+
+
+
+              </ul>
+            </div>
+            </p>
+
+            <p><button class="btn btn-primary" onclick="
+              if($('#create-room-name').val() == ''){
+                $('#create-statue').append('請輸入房間名稱<br>')
+              }else if($('#create-room-pws').val() !== $('#create-room-pws-2').val()){
+                $('#create-statue').append('兩次輸入的密碼不同，請重新輸入<br>')
+      
+              }else if($('#create-room-name').val().includes(' ')){
+                $('#create-statue').append('編譯失敗!請不要使用空白，可以用下底線(_)代替<br>')
+              }else if($('#create-room-name').val().includes('<') || $('#create-room-name').val().includes('>')){
+                $('#create-statue').append('編譯失敗!請不要使用尖括號 <><br>')
+              }else if($('#create-room-pws').val() == $('#create-room-pws-2').val()){
+                $('#create-statue').append('房間名稱: '+$('#create-room-name').val()+'<br>')
+      
+                $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
+                socket.emit('create',{'name':$('#create-room-name').val(),'pws':$('#create-room-pws').val()})
+              }
+              
+              
+              
+              
+              ">確定</button></p>
+            <p><span id="create-statue"></span></p>
+          </div>
+          <div id="joinRoom">
+            <span>輸入房間ID<input type="text" id="join-room-name" value="@room-"></span>
+            <p><span>輸入房間密碼<input type="password" id="join-room-pws"></span></p>
+
+            <p>
+            <div id="join-alert-2" class="alert alert-danger">請勿重複加入同一房間!</div>
+            </p>
+            <p><button class="btn btn-primary" onclick="
+              if(RoomID.includes($('#join-room-name').val())){
+
+             $('#join-statue').append('你已經加入了此房間<br>') }
+              else{
+                    socket.emit('join',{'id':localStorage.getItem('myID'),'nickname':localStorage.getItem('myNickname'),'room':$('#join-room-name').val(),'pws':$('#join-room-pws').val()})
+              $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
+              }
+              ">確定</button></p>
+            <p><span id="join-statue"></span></p>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
     </div>
+
+
+
+
+
+
+
+
+
   </div>
 
-  <div id="login-ui-1">
+  <div id="login-ui-1" style="display: none;">
     <h1>歡迎來到CHAT</h1>
     <h5>我們該如何稱呼您?</h5>
     <span>
@@ -338,6 +563,11 @@
     <p></p><span class="badge bg-danger" id="set-alert-2" style="display: none;">
       <h6>**請填寫暱稱**</h6>
     </span>
+
+    <p></p><span class="badge bg-danger" id="set-alert-3" style="display: none;">
+      <h6>編譯失敗!請不要使用尖括號 <>
+      </h6>
+    </span>
     <p></p><span class="badge bg-success" id="set-info" style="display: none;">
       <h6>變更已經儲存，正在向伺服器確認你的ID，請先<B>不要</B>刷新網頁</h6>
     </span>
@@ -352,6 +582,9 @@
   else if($('#nickname-input-set').val() == ''){
     $('#set-alert-2').show()
   }
+  else if($('#nickname-input-set').val().includes('>') || $('#nickname-input-set').val().includes('<')){
+    $('#set-alert-3').show()
+  }
   else{
     localStorage.setItem('CHAT', true)
     localStorage.setItem('myNickname',$('#nickname-input-set').val())
@@ -361,80 +594,6 @@
     $(this).attr('disabled',true)
   }">確定</button>
   </div>
-
-
-  <div id="login-ui-2">
-    <h1>Hi,<span class="nickname"></span></h1>
-    <h5>請選擇加入房間，或建立新房間</h5>
-
-    <div class='flex'>
-      <div class='radio'><label
-        onclick="
-        if(document.getElementById('dl-file-1').checked){
-          $('#createRoom').hide();
-          $('#joinRoom').show();
-          
-        }"><input type='radio' id='dl-file-1' name='dl-radio' 
-        ><span class='round button'>
-            <center>加入房間</center>
-          </span></label></div>
-
-      <div class='radio'><label
-        onclick="
-        if(document.getElementById('dl-file-2').checked){
-          $('#createRoom').show();
-          $('#joinRoom').hide();
-        }">
-        <input type='radio' id='dl-file-2'name='dl-radio'><span class='round button'>
-            <center>建立房間</center>
-          </span></label>
-            </div>
-
-          <p></p><br>
-        
-    </div>
-    <div id="createRoom">
-      <span>輸入房間名稱<input type="text" id="create-room-name"></span>
-      <p><span>輸入房間密碼(若不想設定請勿輸入)<input type="password" id="create-room-pws"></span></p>
-      <p><span>確認房間密碼<input type="password" id="create-room-pws-2"></span></p>
-      <p><div class="alert alert-danger">房間密碼請務必牢記!</div></p>
-      
-      <p><button class="btn btn-primary" onclick="
-        if($('#create-room-name').val() == ''){
-          $('#create-statue').append('請輸入房間名稱<br>')
-        }else if($('#create-room-pws').val() !== $('#create-room-pws-2').val()){
-          $('#create-statue').append('兩次輸入的密碼不同，請重新輸入<br>')
-
-        }else if($('#create-room-pws').val() == $('#create-room-pws-2').val()){
-          $('#create-statue').append('房間名稱: '+$('#create-room-name').val()+'<br>')
-
-          $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
-          socket.emit('create',{'name':$('#create-room-name').val(),'pws':$('#create-room-pws').val()})
-        }
-        
-        
-        
-        
-        ">確定</button></p>
-        <p><span id="create-statue"></span></p>
-    </div>
-    <div id="joinRoom">
-      <span>輸入房間ID<input type="text" id="join-room-name" value="@room-1"></span>
-      <p><span>輸入房間密碼<input type="password" id="join-room-pws"></span></p>
-      <p><div id="join-alert" class="alert alert-info"><span id="join-room-name">主聊天室(@room-1)</span><span id="join-info">沒有密碼</span></div></p>
-      <p><div id="join-alert-2" class="alert alert-danger">請勿重複加入同一房間!</div></p>
-      <p><button class="btn btn-primary" onclick="
-        
-        socket.emit('join',{'id':localStorage.getItem('myID'),'nickname':localStorage.getItem('myNickname'),'room':$('#join-room-name').val(),'pws':$('#join-room-pws').val()})
-        $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
-        ">確定</button></p>
-      <p><span id="join-statue"></span></p>
-    </div>
-  </div>
-
-
-
-
 
 
 
@@ -465,7 +624,8 @@
             </tbody>
           </table>
           <br>
-          <p><button class="btn btn-outline-primary" onclick="$('#getuser-connecting').show(); socket.emit('GetUsers',{'room':MyRooom})">重新整理</button></p>
+          <p><button class="btn btn-outline-primary"
+              onclick="$('#getuser-connecting').show(); socket.emit('GetUsers',{'room':MyRoom})">重新整理</button></p>
           <br>
           <p><span class="badge bg-primary " id="getuser-connecting">正在連線...</span></p>
         </div>
@@ -477,18 +637,14 @@
     </div>
   </div>
 
-
-
-
-
   <div class="modal fade" id="Modal-2" tabindex="-1" aria-labelledby="Modal-2Label" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="Modal-2Label">傳送圖片</h5>
-          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})' class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})' class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <span class=" btn-file btn btn-secondary">
@@ -501,14 +657,14 @@
           <img>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})'>關閉</button>
+              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
                   if(isfile){
                   let filename =  document.getElementById("upload-input").files[0].name                                                                        
-                  socket.emit("send img",{"src":img.attr("src"),"filename":filename,"to":MyRooom})
+                  socket.emit("send img",{"src":img.attr("src"),"filename":filename,"to":MyRoom})
                   console.log(img.attr("src"))
-                  socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})
-                  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+                  socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
+                  //$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                   }
                   '>送出</button>
           </div>
@@ -517,16 +673,14 @@
     </div>
   </div>
 
-
-
   <div class="modal fade" id="Modal-3" tabindex="-1" aria-labelledby="Modal-3Label" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="Modal-3Label">傳送文字檔</h5>
-          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})' class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})' class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <span class=" btn-file btn btn-secondary">
@@ -539,16 +693,79 @@
           <pre class="text" id="txt-preview"></pre>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})'>關閉</button>
+              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
               
                    let filename =  document.getElementById("upload-input-txt").files[0].name  
-                  socket.emit("send txt",{"src":txtfile,"filename":filename,"to":MyRooom})
+                  socket.emit("send txt",{"src":txtfile,"filename":filename,"to":MyRoom})
                   
-                  socket.emit("typeing-end",{"id":socket.id,"room":MyRooom})
-                  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+                  socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
+                //  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                 
                   '>送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Modal-4" tabindex="-1" aria-labelledby="Modal-4Label" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-4Label">傳送連結</h5>
+          <button type="button" onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})' class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="">https:///</span>
+            <input type="text" class="form-control" id="link-url" aria-describedby="basic-addon3">
+          </div>
+
+          <div class="alert alert-danger">請勿傳送惡意連結，並請先<a href="https://cofacts.tw/">確定真實性</a>再轉貼</div>
+
+
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Modal-5" tabindex="-1" aria-labelledby="Modal-5Label" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-5Label">系統設定</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="flex">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width: 3em; height:3em; color:#fff" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+            <div>
+              <h3 class="nickname"></h3>
+              <div class="flex">
+                <h6>@</h6>
+                <h6 id="Sid" style="margin:0">---</h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -560,6 +777,12 @@
     <ul id="contextmenu-ul">
 
     </ul>
+
+
+  </div>
+
+
+  <div id="toast" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 
 
   </div>
@@ -579,15 +802,23 @@
     var socket = io();
 
     var messages = document.getElementById('messages');
-    var form = document.getElementById('form');
+    var form = $(".msg-form")
     var input = document.getElementById('input');
     var rename_nickname_farm = document.getElementById('rename_nickname_farm');
+    var input_focus = false
+    var input_room = ''
 
     var my_nickname = ""
     var last_nickname = ""
     var isConnected = false
 
-    var MyRooom
+    var MyRoom
+    var RoomList = []
+    var RoomID = []
+    var room_num = 1
+
+    var notifications = false
+
     //移動裝置檢測
     window.mobileAndTabletCheck = function () {
       let check = false;
@@ -615,16 +846,16 @@
     //local
     if (localStorage.getItem("CHAT") == null) {
       $("#login-ui-1").show()
-      $("#login-ui-2").hide()
+      $("#logined-ui").hide()
+
 
     } else {
-      $("#login-ui-2").show();
-      $("#login-ui-1").hide()
       $("#createRoom,#joinRoom").hide();
       $(".nickname").html(localStorage.getItem("myNickname"))
 
+      socket.emit('join', { 'id': localStorage.getItem('myID'), 'nickname': localStorage.getItem('myNickname'), 'room': '@room-1', 'pws': '' })
 
-    
+
 
     }
 
@@ -640,26 +871,89 @@
 
     })
     socket.on("room not found", function (room) {
-      $('#join-statue').append("找不到聊天室: "+room+"<br>")
+      $('#join-statue').append("找不到聊天室: " + room + "<br>")
 
     })
 
     socket.on("welcome", function (room) {
-      $('#join-statue').append("歡迎進入聊天室: "+room+"<br>");
-      MyRooom = room
-      socket.emit("statue",{"statue":$("#statue_select").val()})
-      socket.emit('GetUsers',{'room':MyRooom})
+      if (room.id !== '@room-1') {
+        $('#join-statue').append("歡迎進入聊天室: " + room.name + "<br>");
+        RoomList.push(room.name)
+        RoomID.push(room.id)
+      }
+      MyRoom = room.name
+      RoomID.push(room.id)
+      socket.emit("statue", { "statue": $("#statue_select").val() })
+      socket.emit('GetUsers', { 'room': MyRoom })
       $("#login-ui-2").hide();
       $("#login-ui-1").hide();
       $("#logined-ui").show();
-      $("#messages").html("<li>聊天室:"+MyRooom+" ("+$("#join-room-name").val()+" )</li>")
-      $("title").text("CHAT - "+MyRooom)
+      RoomList.push(room.name)
+      //$(".messages").html("<li>聊天室:" + MyRoom + " (" + $("#join-room-name").val() + " )</li>")
+
       $("#Sid").html(localStorage.getItem("myID"))
+      room_num++
+      $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=${(MyRoom)}>${MyRoom}<br><small>(${room.id})</small></button>`)
+      $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="${(MyRoom)}"></div>`)
+      $(`#room-tab-${room_num}`).html(`
+      <div>
+            <ul class="messages" data-room="${MyRoom}">
+              <li>聊天室:${MyRoom} (${room.id})</li>
+
+            </ul>
+          </div>
+          <div class="bottom" data-room="${MyRoom}">
+            <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
+
+            <div class="bottom-bar">
+
+              <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
+                style="flex-shrink:1; min-width:90px"
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")'>傳送圖片</button>
+              &nbsp;
+              <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
+                style="flex-shrink:1; min-width:90px"
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
+          <div class="msg-form" action="" class="flex" style="width:100%">
+    
+    
+    
+    
+    
+            <input class="input" autocomplete="off" data-room=${MyRoom} placeholder="輸入新訊息" 
+            onfocus="input_focus=true; input_room = MyRoom"
+            oninput="
+              socket.emit(' typeing', {'id':socket.id,'room':MyRoom});
+              input_room = MyRoom
+                "
+                onblur="
+              socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});
+              input_focus = false;
+              input_room = MyRoom
+              ">
+
+
+                <button class="btn btn-outline-dark"
+                onclick="submit_chat(MyRoom)"
+                
+                
+                
+                
+                >送出訊息</button>
+                </div>
+            </div>
+          </div>
+
       
+      
+      
+      `)
+
+      $(".bottom").css("width", $(".tab-content").css("width"))
     })
 
-    socket.on("created",msg=>{
-      $('#create-statue').append('房間 '+msg.name+"已經建立完成<br>ID是: "+msg.id+'<br>切換到 加入 以加入此房間')
+    socket.on("created", msg => {
+      $('#create-statue').append('房間 ' + msg.name + "已經建立完成<br>ID是: " + msg.id + '<br>切換到 加入 以加入此房間')
       $("#join-room-name").val(msg.id)
       $("#join-room-pws").val(msg.pws)
     })
@@ -725,25 +1019,52 @@
     document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
 
 
+    $(`.input[data-room=${MyRoom}]`).on('input', function () {
+      console.log(`.input[data-room=${MyRoom}]`)
+    })
 
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (input.value) {
-        socket.emit('chat message room', {'msg':(input.value).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'),'room':MyRooom});
+
+
+    function submit_chat(room) {
+      console.log({ 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room })
+      if ($(`.input[data-room=${room}]`).val() !== '') {
+        socket.emit('chat message room', { 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room });
         if (!isConnected) {
-          var item = document.createElement('li');
-          item.textContent = "訊息發送失敗! 無法發送的訊息: " + input.value;
-          messages.appendChild(item);
-          item.setAttribute("class", "warn")
+
+          $(`.msssages[data-room=${room}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${room}]`).val() + '</li>')
+
           window.scrollTo(0, document.body.scrollHeight);
         }
-        input.value = '';
-        socket.emit("typeing-end", {'id':socket.id,'room':MyRooom})
+        //input.value = '';
+        socket.emit("typeing-end", { 'id': socket.id, 'room': room })
+
+        $(`.input[data-room=${room}]`).val("")
+      }
+    }
+    window.onkeydown = function (e) {
+      if (e.keyCode == 13 && input_focus) {
+        submit_chat(input_room)
+      }
+
+    }
+    //Do Not Use The Code Below (JQ BUG in submit)
+    form.on('submit', function () {
+      //  e.preventDefault();
+      if ($(`.input[data-room=${MyRoom}]`).val() !== '') {
+        socket.emit('chat message room', { 'msg': ($(`.input[data-room=${MyRoom}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': MyRoom });
+        if (!isConnected) {
+
+          $(`.msssages[data-room=${MyRoom}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${MyRoom}]`).val() + '</li>')
+
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+        //input.value = '';
+        socket.emit("typeing-end", { 'id': socket.id, 'room': MyRoom })
 
       }
     });
-
+    /////////////////////////////
     rename_nickname_farm.addEventListener('submit', function (e) {
       e.preventDefault();
       if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
@@ -752,109 +1073,109 @@
         my_nickname = document.getElementById("NMinput").value
 
         if (!isConnected) {
-          var item = document.createElement('li');
-          item.textContent = " : ( 與伺服器連接失敗! ";
-          messages.appendChild(item);
-          item.setAttribute("class", "warn")
+
+          $(".messages").append("<li>: ( 與伺服器連接失敗!</li>")
+
           window.scrollTo(0, document.body.scrollHeight);
         }
       }
     });
 
-    $("#statue_select").on("blur",function(){
-      socket.emit("statue",{"statue":$("#statue_select").val(),"room":MyRooom})
+    $("#statue_select").on("blur", function () {
+      socket.emit("statue", { "statue": $("#statue_select").val(), "room": MyRoom })
     })
 
     socket.on("UserList", function (msg) {
-      if(msg.to == MyRooom){
+      if (msg.to == MyRoom) {
         $("#PeopleOnLine").html("")
-       let count = 0
-       console.log(msg)
+        let count = 0
+        console.log(msg)
 
-      for (let r = 0; r < (msg.userID).length; r++) {
-   
-        if(msg.nickname !== undefined && msg.nickname !== null &&msg.userID !== null){
-          let _statue = msg.statue[r]
-          if     (_statue == "線上"){_statue = "🟢 "+_statue}
-          else if(_statue == "離開"){_statue = "🟡 "+_statue}
-          else if(_statue == "忙碌"){_statue = "🔴 "+_statue}
-          else if(_statue == "離線"){_statue = "⚪ "+_statue}
-          $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" +"<td>"+_statue+"</td>"+ "</tr>")
-          count++  
-        }else{
-        
+        for (let r = 0; r < (msg.userID).length; r++) {
+
+          if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
+            let _statue = msg.statue[r]
+            if (_statue == "線上") { _statue = "🟢 " + _statue }
+            else if (_statue == "離開") { _statue = "🟡 " + _statue }
+            else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
+            else if (_statue == "離線") { _statue = "⚪ " + _statue }
+            $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+            count++
+          } else {
+
+          }
+
         }
+        $(".onlinePeople").html(count);
+        $('#getuser-connecting').hide();
 
-      }  
-      $(".onlinePeople").html(count);
-      $('#getuser-connecting').hide();
-      
       }
 
     })
 
     socket.on('chat message room', function (msg) {
 
-      if(msg.room == MyRooom){
+      if (RoomList.includes(msg.room)) {
+        if (msg.room == MyRoom) {
+          console.log(msg)
+          $(`.messages[data-room=${msg.room}]`).append("<li>" + (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;') + "</li>")
+          isConnected = true
 
-      
-      $("#messages").append("<li>" + (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;') + "</li>")
-      isConnected = true
-
-      window.scrollTo(0, document.body.scrollHeight);
+          window.scrollTo(0, document.body.scrollHeight);
+        }
       }
     });
 
     socket.on('send img', function (msg) {
-      if(msg.to == MyRooom){
-      $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
-      window.scrollTo(0, document.body.scrollHeight);
-      isConnected = true
-      $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+      if (msg.to == MyRoom) {
+        $(".messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+        window.scrollTo(0, document.body.scrollHeight);
+        isConnected = true
+        $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
       }
     });
 
     socket.on('send txt', function (msg) {
-      if(msg.to == MyRooom){
-      console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
-      if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-        $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
-      } else {
-        $("#messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+      if (msg.to == MyRoom) {
+        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+        } else {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
 
+        }
+        isConnected = true
+        $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+        window.scrollTo(0, document.body.scrollHeight);
       }
-      isConnected = true
-      $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
-      window.scrollTo(0, document.body.scrollHeight);
-    }
     });
 
 
     socket.on('sys-info chat message', function (msg) {
-   console.log(msg) ;
-    if(msg.to == MyRooom ||msg.to == localStorage.getItem("MyID") || msg.to == "you" ){
-     
-      $("#messages").append("<li class='info'>"+msg.msg+"</li>")
-      window.scrollTo(0, document.body.scrollHeight);
-      isConnected = true
-      if (msg.msg.includes("請勿使用與別人相同的暱稱")) {
-        my_nickname = last_nickname
+      console.log(msg);
+      if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID") || msg.to == "you") {
+
+        $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
+        window.scrollTo(0, document.body.scrollHeight);
+        isConnected = true
+        if (msg.msg.includes("請勿使用與別人相同的暱稱")) {
+          my_nickname = last_nickname
+        }
       }
-    }
 
 
     });
 
     socket.on('sys-warn chat message', function (msg) {
 
-      $("#messages").append("<li class='warn'>"+msg+"</li>")
+      $(`.messages[data-room=${MyRoom}]`).append("<li class='warn'>" + msg + "</li>")
 
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
 
 
     });
-    socket.on('nickname', function (msg) {
+    /*socket.on('nickname', function (msg) {
       document.getElementById("NMinput").setAttribute("value", msg)
       var item = document.createElement('li');
       item.textContent = "系統自動生成暱稱: " + msg;
@@ -865,44 +1186,40 @@
       my_nickname = msg
 
 
-    });
+    });*/
     socket.on("BAN", function (msg) {
 
-      var item = document.createElement('li');
-      item.textContent = "你的連接已被伺服器中斷 [原因] 大量發送相同訊息/洗版"
-      messages.appendChild(item);
-      item.setAttribute("class", "warn")
+      $(`.messages[data-room=${MyRoom}]`).append("<li>你的連接已被伺服器中斷 [原因] 大量發送相同訊息/洗版</li>")
       window.scrollTo(0, document.body.scrollHeight);
       socket.disconnect()
     })
 
-    socket.on('people online', function (msg) 
-    {
-     if(msg.for == MyRooom){
-      $(".onlinePeople").html(msg)
-      isConnected = true
-     }
+    socket.on('people online', function (msg) {
+      if (msg.for == MyRoom) {
+        $(".onlinePeople").html(msg)
+        isConnected = true
+      }
     });
     socket.on('typeing', function (msg) {
-      /*if(msg.to == MyRooom){
+      /*if(msg.to == MyRoom){
       if (msg.msg == " 正在輸入...") {
         $("#isTypeing").html("")
       } else {
         $("#isTypeing").html(msg.msg)
       }
     }*/
-    console.log(msg)
+      console.log(msg)
 
     });
     socket.on('typeing-end', function (msg) {
-      /*if(msg.to == MyRooom){
+      /*if(msg.to == MyRoom){
       if (msg.msg == " 正在輸入...") {
         $("#isTypeing").html("")
       } else {
         $("#isTypeing").html(msg.msg)
       }
     }*/
-    console.log(msg)
+      console.log(msg)
     });
 
 
@@ -911,12 +1228,10 @@
       console.log(socket.id);
       console.log("connected")
       $("#statue_select").val("statue_Green:online")
-      $("#statue_select").attr("disabled",false)
-      $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
-      var item = document.createElement('li');
-      item.textContent = "裝置已連接到伺服器" ;
-      messages.appendChild(item);
-      item.setAttribute("class", "success")
+      $("#statue_select").attr("disabled", false)
+      $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+
+      $(".messages").append("<li class='success'>裝置已連接到伺服器</li>")
       window.scrollTo(0, document.body.scrollHeight);
 
       document.getElementById("connectStatue").innerHTML = "已連線"
@@ -931,13 +1246,13 @@
     socket.on("disconnect", () => {
       isConnected = false
       $("#statue_select").val("statue_White:disconnect")
-      $("#statue_select").attr("disabled",true)
-      $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
+      $("#statue_select").attr("disabled", true)
+      $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
       console.log("disconnected")
-      var item = document.createElement('li');
-      item.textContent = "裝置未連接到伺服器,正在嘗試連接...";
-      messages.appendChild(item);
-      item.setAttribute("class", "warn")
+
+
+      $(".messages").append("<li class='warn'>裝置未連接到伺服器,正在嘗試連接...</li>")
+
       window.scrollTo(0, document.body.scrollHeight);
       document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
       document.getElementById("connectStatue").style.color = "#ce3434"
@@ -945,13 +1260,13 @@
     });
 
 
-
+    //==============contextmenu==============//
 
     /*  
     <div id="contextmenu" style="display: none;">
       <div id="content-tool"></div>
       <ul id="contextmenu-ul">
-
+ 
       </ul>
     </div>*/
     window.oncontextmenu = function (e) {
@@ -982,24 +1297,128 @@
     }
 
 
+    //==============Toast notification============//
+    /*  <div id="toast">
+    
+    </div>*/
+
+    /*<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" id=toast>
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>*/
+
+
+    //header,footer:obj
+    /*
+    Like:
+  
+    header={
+    title:'@group-01',
+    time:'現在',
+    img:'group.svg'
+  }
+  body={
+    html:`Bob send a file...`
+  }
+  
+  
+    
+    */
+    const BS_Toast = {
+      toast_id: 0,
+
+      toast_title: ``,
+      toast_time: ``,
+      toast_img: ``,
+      toast_html: ``,
+
+
+    }
+
+    BS_Toast.toast_header = ` 
+  <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header" >
+
+      <i class=${BS_Toast.toast_img}></i>
+      <strong class="me-auto">${BS_Toast.toast_title}</strong>
+      <small>${BS_Toast.toast_time}</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>`,
+
+      BS_Toast.toast_body = `    
+  <div class="toast-body">
+    ${BS_Toast.toast_html}
+    </div>
+    </div>`,
+      BS_Toast.show = function (header, body) {
+        BS_Toast.toast_title = `${header.title}`
+        BS_Toast.toast_time = `${header.time}`
+        BS_Toast.toast_img = `${header.img}`
+        BS_Toast.toast_html = `${body.html}`
+        console.log(BS_Toast.header + BS_Toast.body)
+        $("#toast").append(BS_Toast.header + BS_Toast.body)
+
+        let Thistoast = new bootstrap.Toast(document.getElementById(`BS-Toast-${BS_Toast.toast_id}`))
+
+        Thistoast.show()
+        BS_Toast.toast_id++
+      }
+
+
+    //width setting
+
+    $(".bottom").css("width", $(".tab-content").css("width"))
+    $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
+
+    window.onresize = function () {
+      $(".bottom").css("width", $(".tab-content").css("width"))
+      $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
+      if (window.innerWidth < 936) {
+        $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+        $("#v-pills-tab").appendTo($("#chat-tabs"));
+
+      }
+
+    }
 
 
 
-    if($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true'){
-      $("#dl-file-2").attr("checked",true)
-      $("#dl-file-1").attr("checked",false)
+    //onblur => notifications.show() .etc
+    window.onblur = function () { notifications = true }
+
+    window.onfocus = function () { notifications = false }
+
+
+    //width => tabs display
+
+    if (window.innerWidth < 936) {
+      $("#v-pills-tab").appendTo($("#chat-tabs"));
+    }
+
+    if ($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true') {
+      $("#dl-file-2").attr("checked", true)
+      $("#dl-file-1").attr("checked", false)
       $("#joinRoom").hide();
       $("#createRoom").show();
-    }else
-    if($.UrlParam("join") == 'true' && $.UrlParam("create") !== 'true'){
-      $("#dl-file-2").attr("checked",false)
-      $("#dl-file-1").attr("checked",true)
-      $("#joinRoom").show();
-      $("#createRoom").hide();
-    }else
-    if($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true' ){
-      $("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
-    }
+    } else
+      if ($.UrlParam("join") == 'true' && $.UrlParam("create") !== 'true') {
+        $("#dl-file-2").attr("checked", false)
+        $("#dl-file-1").attr("checked", true)
+        $("#joinRoom").show();
+        $("#createRoom").hide();
+      } else
+        if ($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true') {
+          $("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
+        }
 
   </script>
 </body>

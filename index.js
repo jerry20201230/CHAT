@@ -15,15 +15,15 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 var user = ["admin01"]
-var nickname = ["🔧聊天室管理員<span class='badge bg-secondary text-light'>機器人</span><span class='badge bg-success text-light'>官方帳號</span>"]
+var nickname = ["🔧聊天室管理員&nbsp;<span class='badge bg-secondary text-light'>機器人</span>&nbsp;<span class='badge bg-success text-light'>官方帳號</span>"]
 var socketID = ["server"]
 var statue = ["線上"]
 
-var roomName = ["主聊天室","MyRoom"]
-var roomID = ["@room-1","@room-123"]
-var roomPws = ["","102030."]
-var room_socketID = [["server"],["server"]]
-var room_typeing = [[],[]]
+var roomName = ["主聊天室", "MyRoom"]
+var roomID = ["@room-1", "@room-123"]
+var roomPws = ["", "102030."]
+var room_socketID = [["server"], ["server"]]
+var room_typeing = [[], []]
 
 
 var typeing = []
@@ -33,13 +33,13 @@ var lastmsg = ""
 var msgCount = 0
 var lastID = ""
 
-var fileID= 0
+var fileID = 0
 //////////////////////////////////////////////////
 function arrayRemove(arr, value) {
 
-  return arr.filter(function (ele) {
-    return ele != value;
-  });
+  return arr.filter(function(ele){ 
+    return ele != value; 
+});
 
 }
 function arrayRemove_val(arr, value) {
@@ -52,10 +52,12 @@ function arrayRemove_val(arr, value) {
   }
   return arr;
 };
-function GetUserInRoom(room){
-  let roomUsers= io.sockets.adapter.rooms.get(room)
- // console.log(io.sockets.adapter.rooms.get())
-  return roomUsers
+function GetUserInRoom(room) {
+  let roomUsers = io.sockets.adapter.rooms.get(room)
+  // console.log(io.sockets.adapter.rooms.get())
+ // return roomUsers
+
+/*if (io.sockets.adapter.rooms.has(room)) */return io.sockets.adapter.rooms.get(room)//.size
 }
 Math.getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
@@ -64,91 +66,102 @@ Math.getRandomInt = function (max) {
 
 io.on('connection', (socket) => {
 
-  socket.on('GetID',msg =>{
+  socket.on('GetID', msg => {
     var random = Math.getRandomInt(9999)
-    while (nickname.includes("User"+random)) {
-      random  = Math.getRandomInt(9999)
+    while (nickname.includes("User" + random)) {
+      random = Math.getRandomInt(9999)
     }
     socket.myid = random
-    io.to(socket.id).emit("PostID","User"+random)
+    io.to(socket.id).emit("PostID", "User" + random)
   })
 
-  socket.on('create',msg =>{
+  socket.on('create', msg => {
     i = socket.id
     var random = Math.getRandomInt(9999)
-    while (roomID.includes("@room-"+random)) {
-      random  = Math.getRandomInt(9999)
+    while (roomID.includes("@room-" + random)) {
+      random = Math.getRandomInt(9999)
     }
     roomName.push(msg.name)
     roomPws.push(msg.pws)
     room_socketID.push(["server"])
-    roomID.push('@room-'+random)
-    io.to(i).emit("created",{'id':'@room-'+random,'name':msg.name,'pws':msg.pws})
+    roomID.push('@room-' + random)
+    io.to(i).emit("created", { 'id': '@room-' + random, 'name': msg.name, 'pws': msg.pws })
 
 
   })
 
-  socket.on("statue",msg=>{
-    
-    if(msg.statue.includes('online')){statue[socketID.indexOf(socket.id)] = "線上"}
-    else
-    if(msg.statue.includes('leave')){statue[socketID.indexOf(socket.id)] = "離開"}
-    else
-    if(msg.statue.includes('busy')){statue[socketID.indexOf(socket.id)] = "忙碌"}
-    else
-    if(msg.statue.includes('disconnect')){statue[socketID.indexOf(socket.id)] = "離線"}
+  socket.on("statue", msg => {
 
-  
+    if (msg.statue.includes('online')) { statue[socketID.indexOf(socket.id)] = "線上" }
+    else
+      if (msg.statue.includes('leave')) { statue[socketID.indexOf(socket.id)] = "離開" }
+      else
+        if (msg.statue.includes('busy')) { statue[socketID.indexOf(socket.id)] = "忙碌" }
+        else
+          if (msg.statue.includes('disconnect')) { statue[socketID.indexOf(socket.id)] = "離線" }
+
+
   })
 
-  socket.on("join",msg=>{
+  socket.on("join", msg => {
     i = socket.id
     console.log(i);
-    if(roomPws[roomID.indexOf(msg.room)] == msg.pws){
-      io.to(socket.id).emit("welcome",roomName[roomID.indexOf(msg.room)])
-      console.log(msg.id+"joined"+msg.room)
-      nickname.push(msg.nickname)
-      user.push(msg.id)
-      socketID.push(i)
-      room_socketID[roomID.indexOf(msg.room)].push(i)
 
-      socket.join(msg.room)
+    if (msg.pws == '##' && msg.room == `server-${i}`) {
+      io.to(socket.id).emit("welcome", { 'name': 'robot', 'id':  '@admin1'})
+    } else {
+      if (roomPws[roomID.indexOf(msg.room)] == msg.pws) {
+        
+        socket.join(msg.room)
 
-      console.log(GetUserInRoom(msg.room))
-      io.emit('sys-info chat message',{"to":roomName[roomID.indexOf(msg.room)],"msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入"});
-      io.to(socket.id).emit("sys-info chat message",{"to":"you","msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~"});
+        console.log("JOIN")
+        console.log(GetUserInRoom('@room-1'))
+        io.to(socket.id).emit("welcome", { 'name': roomName[roomID.indexOf(msg.room)], 'id': roomID[roomID.indexOf(msg.room)] })
+        console.log(msg.id + "joined" + msg.room)
+        nickname.push(msg.nickname)
+        user.push(msg.id)
+        socketID.push(i)
+        console.log(GetUserInRoom(msg.room))
+        room_socketID[roomID.indexOf(msg.room)].push(i) //= Array.from(GetUserInRoom(msg.room)) //arrayRemove(room_socketID[roomID.indexOf(roomName[o])] ,i)
+       // room_socketID[roomID.indexOf(msg.room)][0] = 'server'
 
-      let room = msg.room,
-      return_user_arr = [],
-      return_nickname_arr = [],
-      return_statue_arr = [];
-      console.log(msg.room)
-      console.log(room_socketID)
-      console.log(roomName.indexOf(room))
-      for(i=0;(i < room_socketID[roomID.indexOf(room)].length);i++){
-        if(user[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])] !== undefined){
-        return_user_arr.push(user[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])])
-        return_nickname_arr.push(nickname[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])])
-        return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomID.indexOf(room)[i]])])
+        
+
+        console.log(GetUserInRoom(msg.room))
+        io.emit('sys-info chat message', { "to": roomName[roomID.indexOf(msg.room)], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入" });
+        io.to(socket.id).emit("sys-info chat message", { "to": "you", "msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~" });
+
+        let room = msg.room,
+          return_user_arr = [],
+          return_nickname_arr = [],
+          return_statue_arr = [];
+        console.log(msg.room)
+        console.log(room_socketID)
+        console.log(roomName.indexOf(room))
+        for (i = 0; (i < room_socketID[roomID.indexOf(room)].length); i++) {
+          if (user[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])] !== undefined) {
+            return_user_arr.push(user[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])])
+            return_nickname_arr.push(nickname[socketID.indexOf(room_socketID[roomID.indexOf(room)][i])])
+            return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomID.indexOf(room)[i]])])
+          }
         }
+        console.log(return_nickname_arr)
+        console.log(return_user_arr)
+        io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
       }
-     console.log(return_nickname_arr)
-     console.log(return_user_arr)
-     io.emit("UserList", {"to":room, "userID":return_user_arr, "nickname": return_nickname_arr,"statue":return_statue_arr})
+
+      else if (roomName[roomID.indexOf(msg.room)] == -1) {
+        io.to(socket.id).emit("room not found", msg.room)
+      }
+
+      else if (roomPws[roomID.indexOf(msg.room)] !== msg.pws) {
+        io.to(socket.id).emit("password incorrect", msg.room)
+      }
+
+
+
 
     }
-    else if(roomName[roomID.indexOf(msg.room)] == -1){
-      io.to(socket.id).emit("room not found",msg.room)
-    }
-
-    else if(roomPws[roomID.indexOf(msg.room)] !== msg.pws){
-      io.to(socket.id).emit("password incorrect",msg.room)
-    }
-
-
-
-
-
 
 
   })
@@ -165,16 +178,16 @@ io.on('connection', (socket) => {
     } else {
 
 
-      console.log(msg.room+nickname[socketID.indexOf(i)] + " (" + i + ") 發布了: " + msg.msg)
+      console.log(msg.room + nickname[socketID.indexOf(i)] + " (" + i + ") 發布了: " + msg.msg)
 
-      io.emit('chat message room', {"msg":nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了: " + msg.msg,"room":msg.room});
+      io.to(roomID[roomName.indexOf(msg.room)]).emit('chat message room', { "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了: " + msg.msg, "room": msg.room });
       if (lastmsg == msg.msg && i == lastID) {
         msgCount += 1
         if (msgCount == 2) {
           io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
         } else if (msgCount == 3) {
           io.to(i).emit("BAN", "byebye");
-          io.emit("sys-info chat message", {"to":msg.to,"msg":nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線"})
+          io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" })
         }
       }
       else {
@@ -186,7 +199,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('typeing', msg => {
-    i = socket.id 
+    i = socket.id
     _display = ""
 
     console.log("----------------")
@@ -207,10 +220,10 @@ io.on('connection', (socket) => {
       }
 
       if (_display + " 正在輸入..." == " 正在輸入...") {
-        io.emit('typeing', {'to':msg.rooom,'msg':"&nbsp;"})
+        io.emit('typeing', { 'to': msg.rooom, 'msg': "&nbsp;" })
       } else {
         console.log(_display + " 正在輸入...")
-        io.emit('typeing',{"to":msg.room,"msg": _display + " 正在輸入..."})
+        io.emit('typeing', { "to": msg.room, "msg": _display + " 正在輸入..." })
       }
 
     }
@@ -236,7 +249,7 @@ io.on('connection', (socket) => {
   socket.on('send img', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send img', {"to":msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了圖片:", "src": msg.src,"filename":msg.filename, "id": 'img-' + fileID ,"alt": (nickname[(user.indexOf(i))] + " (" + i + ") 發送的圖片")})
+    io.emit('send img', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了圖片:", "src": msg.src, "filename": msg.filename, "id": 'img-' + fileID, "alt": (nickname[(user.indexOf(i))] + " (" + i + ") 發送的圖片") })
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
@@ -244,13 +257,13 @@ io.on('connection', (socket) => {
         io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + i + ") 請勿洗版，否則我們將斷開你的連線!")
       } else if (msgCount == 3) {
         io.to(i).emit("BAN", "byebye");
-        
 
-        io.emit("sys-info chat message", {"to":msg.to,"msg":nickname[socketID.indexOf(i)] + " (" + i + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線"})
 
-   
- 
-        
+        io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + i + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" })
+
+
+
+
       }
     }
     else {
@@ -266,7 +279,7 @@ io.on('connection', (socket) => {
   socket.on('send txt', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send txt', {"to":msg.to, "text": (nickname[socketID.indexOf(i)] + " (" +  user[socketID.indexOf(i)] + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID ,"filename":msg.filename})
+    io.emit('send txt', { "to": msg.to, "text": (nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID, "filename": msg.filename })
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
@@ -288,26 +301,26 @@ io.on('connection', (socket) => {
 
 
   socket.on('GetUsers', msg => {
- //   
+    //   
     let room = msg.room,
-    return_user_arr = [],
-    return_nickname_arr = [],
-    return_statue_arr = [];
+      return_user_arr = [],
+      return_nickname_arr = [],
+      return_statue_arr = [];
     console.log(msg.room)
     console.log(room_socketID)
     console.log(roomName.indexOf(room))
-    for(i=0;(i < room_socketID[roomName.indexOf(room)].length);i++){
-      if(user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])] !== undefined){
-      return_user_arr.push(user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
-      return_nickname_arr.push(nickname[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
-      return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
+    for (i = 0; (i < room_socketID[roomName.indexOf(room)].length); i++) {
+      if (user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])] !== undefined) {
+        return_user_arr.push(user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
+        return_nickname_arr.push(nickname[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
+        return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
       }
     }
-   console.log(return_nickname_arr)
-   console.log(return_user_arr)
-   console.log(return_statue_arr)
-   io.emit("UserList", {"to":room, "userID":return_user_arr, "nickname": return_nickname_arr,"statue":return_statue_arr})
-   
+    console.log(return_nickname_arr)
+    console.log(return_user_arr)
+    console.log(return_statue_arr)
+    io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
+
   })
   socket.on('rename_nickname', msg => {
     i = socket.id
@@ -320,7 +333,7 @@ io.on('connection', (socket) => {
       nickname[socketID.indexOf(i)] = msg
       io.emit("NM", user + nickname)
       io.emit('sys-info chat message', _nic + " (" + i + ") 已更改暱稱為: " + msg);
-      io.emit("UserList", { "userID": user, "nickname": nickname})
+      io.emit("UserList", { "userID": user, "nickname": nickname })
     }
 
   });
@@ -351,24 +364,37 @@ io.on('connection', (socket) => {
     console.log(room_socketID)
 
     for (let o = 0; o < room_socketID.length; o++) {
-      let k = room_socketID[o]
-      if(k.includes(i)){
-        console.log("u")
-        console.log(roomName[o])
-        io.emit("sys-info chat message",{"to":roomName[o],"msg":nickname[socketID.indexOf(i)]+" ("+user[socketID.indexOf(i)]+" ) 已離線"})
-        //room_socketID[roomID.indexOf(roomName[o])] = arrayRemove(room_socketID[roomID.indexOf(roomName[o])] ,i)
-        //console.log(room_socketID)
-        //console.log(roomID.indexOf(roomName[o]))
-      }
+
+  
+            console.log("u")
+        console.log(GetUserInRoom(roomName[o]))
+        console.log(GetUserInRoom(roomID[o]))
+        console.log(room_socketID)
+        
+        room_socketID[o] = arrayRemove(room_socketID[o] ,i)
+
+        //console.log(Array.from(GetUserInRoom(roomID[o])))
+        io.emit("sys-info chat message", { "to": roomName[o], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + " ) 已離線" })
+       
+        
+        console.log(room_socketID)
+        console.log(roomID.indexOf(roomName[o]))
+ 
+
+      
     }
 
 
     //io.to(room_socketID[room_socketID.indexOf(i)]).emit("sys-info chat message", nickname[socketID.indexOf(i)] + " (" + i + ") 已離線")
-    console.log(socketID.indexOf(i))
-    user = arrayRemove(user,user[socketID.indexOf(i)])
-    nickname = arrayRemove(nickname,nickname[socketID.indexOf(i)])
-    socketID = arrayRemove(socketID, socketID[socketID.indexOf(i)])
+
+      console.log(socketID.indexOf(i))
+    user = arrayRemove_val(user, socketID.indexOf(i))
+    nickname = arrayRemove_val(nickname, socketID.indexOf(i))
+    socketID = arrayRemove_val(socketID, socketID.indexOf(i))
     
+
+    
+
     console.log(user)
     console.log(nickname)
     console.log(socketID)
