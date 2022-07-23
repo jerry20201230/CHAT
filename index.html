@@ -497,7 +497,7 @@
               }else if($('#create-room-name').val().includes(' ')){
                 $('#create-statue').append('編譯失敗!請不要使用空白，可以用下底線(_)代替<br>')
                 
-              }else if(text_type.includes($('#create-room-name').val()) || text_type.includes($('#create-room-name').val().includes(``))){
+              }else if(text_type.includes($('#create-room-name').val())){
                 $('#create-statue').append('編譯失敗，請不要使用引號')
               }else if($('#create-room-name').val().includes('<') || $('#create-room-name').val().includes('>')){
                 $('#create-statue').append('編譯失敗!請不要使用尖括號 <><br>')
@@ -1115,12 +1115,21 @@
             else if (_statue == "離開") { _statue = "🟡 " + _statue }
             else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
             else if (_statue == "離線") { _statue = "⚪ " + _statue }
-            $("#PeopleOnLine").html($("#PeopleOnLine").html() + "<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+            $("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
             count++
           } else {
 
           }
 
+        }
+        if(msg.self == true){
+          let _statue =$("#statue_select").val()
+            if (_statue.includes("online")) { _statue = "🟢 " + _statue }
+            else if (_statue.includes("leave")) { _statue = "🟡 " + _statue }
+            else if (_statue.includes("busy")) { _statue = "🔴 " + _statue }
+            else if (_statue.includes("disconnect")) { _statue = "⚪ " + _statue }
+          $("#PeopleOnLine").append("<tr>" + "<td>" + localStorage.getItem("myNickname") + "</td>" + "<td>" + localStorage.getItem("myID") + "</td>" + "<td>" +$("#statue_select")+ "</td>" + "</tr>")
+          count++
         }
         $(".onlinePeople").html(count);
         $('#getuser-connecting').hide();

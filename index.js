@@ -307,15 +307,21 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
 
 
   socket.on('GetUsers', msg => {
-    //   
-    let room = msg.room,
-      return_user_arr = [],
+     let room = msg.room
+    //   decode the attr(data-room)is<server>?=>return:server.
+    if(room == 'server'){
+      io.emit("UserList", { "to": room, "userID": [user[0]], "nickname": [nickname[0]], "statue": statue[0],"self":true })
+    }else{
+
+
+   
+   let   return_user_arr = [],
       return_nickname_arr = [],
       return_statue_arr = [];
     console.log(msg.room)
     console.log(room_socketID)
     console.log(roomName.indexOf(room))
-    try{
+    
     for (i = 0; (i < room_socketID[roomName.indexOf(room)].length); i++) {
       if (user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])] !== undefined) {
         return_user_arr.push(user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
@@ -323,14 +329,15 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
       }
     }
-  }
-  catch(e){console.log(e)}
+  
+ 
+
 
     console.log(return_nickname_arr)
     console.log(return_user_arr)
     console.log(return_statue_arr)
     io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
-
+ }
   })
   socket.on('rename_nickname', msg => {
     i = socket.id
