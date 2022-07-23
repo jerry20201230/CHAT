@@ -1135,19 +1135,28 @@
         $('#getuser-connecting').hide();
 
       }
+      count = 0;
+ 
 
     })
 
     socket.on('chat message room', function (msg) {
 
       if (RoomList.includes(msg.room)) {
+
+
         if (msg.room == MyRoom) {
           console.log(msg)
           $(`.messages[data-room=${msg.room}]`).append("<li>" + (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;') + "</li>")
           isConnected = true
 
           window.scrollTo(0, document.body.scrollHeight);
+        }else{
+          BS_Toast.show({'title':msg.room+' 有新訊息','time':'現在','img':'bi bi-1-square-fill'},{'html':msg.msg}) 
+          $(`.messages[data-room=${msg.room}]`).append("<li>" + (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;') + "</li>")
         }
+
+
       }
     });
 
@@ -1358,45 +1367,39 @@
   
     
     */
-    const BS_Toast = {
-      toast_id: 0,
+    
 
-      toast_title: ``,
-      toast_time: ``,
-      toast_img: ``,
-      toast_html: ``,
+    
+BS_Toast={
+      toast_id : 0,
+      show : function (header, body) {
+        
 
 
-    }
-
-    BS_Toast.toast_header = ` 
+        $("#toast").append( 
+          ` 
   <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="toast-header" >
 
-      <i class=${BS_Toast.toast_img}></i>
-      <strong class="me-auto">${BS_Toast.toast_title}</strong>
-      <small>${BS_Toast.toast_time}</small>
+      <i class=${header.img}></i>
+      <strong class="me-auto">${header.title}</strong>
+      <small>${header.time}</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>`,
-
-      BS_Toast.toast_body = `    
+    </div>`
+        +
+        `    
   <div class="toast-body">
-    ${BS_Toast.toast_html}
+    ${body.html}
     </div>
-    </div>`,
-      BS_Toast.show = function (header, body) {
-        BS_Toast.toast_title = `${header.title}`
-        BS_Toast.toast_time = `${header.time}`
-        BS_Toast.toast_img = `${header.img}`
-        BS_Toast.toast_html = `${body.html}`
-        console.log(BS_Toast.header + BS_Toast.body)
-        $("#toast").append(BS_Toast.header + BS_Toast.body)
+    </div>`)
 
         let Thistoast = new bootstrap.Toast(document.getElementById(`BS-Toast-${BS_Toast.toast_id}`))
 
         Thistoast.show()
-        BS_Toast.toast_id++
+
+        BS_Toast.toast_id += 1
       }
+    }
 
 
     //width setting

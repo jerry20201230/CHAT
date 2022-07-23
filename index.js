@@ -25,6 +25,10 @@ var roomPws = ["", "102030."]
 var room_socketID = [["server"], ["server"]]
 var room_typeing = [[], []]
 
+var room_setting_change = ["@admin01","@admin01"]
+var room_setting_invite = ["@all","@all"]
+var room_setting_remove = ["@all","@all"]
+var room_setting_how_to_join = [{'pws':true,'invite':'allow'},{'pws':true,'invite':'auto'}]
 
 var typeing = []
 
