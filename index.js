@@ -315,6 +315,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     console.log(msg.room)
     console.log(room_socketID)
     console.log(roomName.indexOf(room))
+    try{
     for (i = 0; (i < room_socketID[roomName.indexOf(room)].length); i++) {
       if (user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])] !== undefined) {
         return_user_arr.push(user[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
@@ -322,6 +323,9 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         return_statue_arr.push(statue[socketID.indexOf(room_socketID[roomName.indexOf(room)][i])])
       }
     }
+  }
+  catch(e){console.log(e)}
+
     console.log(return_nickname_arr)
     console.log(return_user_arr)
     console.log(return_statue_arr)

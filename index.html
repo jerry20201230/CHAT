@@ -496,6 +496,9 @@
       
               }else if($('#create-room-name').val().includes(' ')){
                 $('#create-statue').append('編譯失敗!請不要使用空白，可以用下底線(_)代替<br>')
+                
+              }else if(text_type.includes($('#create-room-name').val()) || text_type.includes($('#create-room-name').val().includes(``))){
+                $('#create-statue').append('編譯失敗，請不要使用引號')
               }else if($('#create-room-name').val().includes('<') || $('#create-room-name').val().includes('>')){
                 $('#create-statue').append('編譯失敗!請不要使用尖括號 <><br>')
               }else if($('#create-room-pws').val() == $('#create-room-pws-2').val()){
@@ -825,6 +828,8 @@
     var room_num = 1
 
     var notifications = false
+
+    var text_type = ['"',"'",'`']
 
     //移動裝置檢測
     window.mobileAndTabletCheck = function () {
