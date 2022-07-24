@@ -139,8 +139,8 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         
 
         console.log(GetUserInRoom(msg.room))
-        io.emit('sys-info chat message', { "to": roomName[roomID.indexOf(msg.room)], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入" });
-        io.to(socket.id).emit("sys-info chat message", { "to": "you", "msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~" });
+        io.emit('sys-info chat message', { "to": roomName[roomID.indexOf(msg.room)], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入 "+roomName.indexOf(roomID.indexOf(msg.room)) ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入",'type':"join"});
+        io.to(socket.id).emit("sys-info chat message", { "to": "you", "msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~" ,'head':"none"});
 
         let room = msg.room,
           return_user_arr = [],
@@ -184,13 +184,10 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     i = socket.id
 
     TotalMsgCount[roomName.indexOf(msg.room)] += 1
-    if (msg.msg === "!DEV /_") {
-      io.to(i).emit("sys-info chat message", "[伺服器回應][重要!]你已經是開發人員")
-      io.to(i).emit('typeing', "開發人員模式已啟用")
-    } else {
 
 
-      console.log(msg.room + nickname[socketID.indexOf(i)] + " (" + i + ") 發布了: " + msg.msg)
+
+      console.log(msg.room +  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了: " + msg.msg)
 
       io.to(roomID[roomName.indexOf(msg.room)]).emit('chat message room', { "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了:"+msg.msg, "room": msg.room ,"html": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ")","count":TotalMsgCount[roomName.indexOf(msg.room)]});
       if (lastmsg == msg.msg && i == lastID) {
@@ -199,7 +196,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
           io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
         } else if (msgCount == 3) {
           io.to(i).emit("BAN", "byebye");
-          io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" })
+          io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線","type":"leave"})
         }
       }
       else {
@@ -207,7 +204,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         msgCount = 0
         lastID = i
       }
-    }
+    
   });
 
   socket.on('typeing', msg => {
@@ -266,12 +263,12 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
       if (msgCount == 2) {
-        io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + i + ") 請勿洗版，否則我們將斷開你的連線!")
+        io.to(i).emit('sys-warn chat message', "[伺服器警告!] " +  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
       } else if (msgCount == 3) {
         io.to(i).emit("BAN", "byebye");
 
 
-        io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + i + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" })
+        io.emit("sys-info chat message", { "to": msg.to, "msg":  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線","type":"leave"})
 
 
 
@@ -296,10 +293,10 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
       if (msgCount == 2) {
-        io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + i + ") 請勿洗版，否則我們將斷開你的連線!")
+        io.to(i).emit('sys-warn chat message', "[伺服器警告!] " +  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
       } else if (msgCount == 3) {
         io.to(i).emit("BAN", "byebye");
-        io.emit("sys-info chat message", nickname[socketID.indexOf(i)] + " (" + i + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線")
+        io.emit("sys-info chat message", { "to": msg.to, "msg":  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線","type":"leave"})
       }
     }
     else {
@@ -397,7 +394,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         room_socketID[o] = arrayRemove(room_socketID[o] ,i)
 
         //console.log(Array.from(GetUserInRoom(roomID[o])))
-        io.emit("sys-info chat message", { "to": roomName[o], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + " ) 已離線" })
+        io.emit("sys-info chat message", { "to": roomName[o], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + " ) 已離線",'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線","type":"leave" })
        
         
         console.log(room_socketID)
@@ -408,7 +405,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     }
 
 
-    //io.to(room_socketID[room_socketID.indexOf(i)]).emit("sys-info chat message", nickname[socketID.indexOf(i)] + " (" + i + ") 已離線")
+    //io.to(room_socketID[room_socketID.indexOf(i)]).emit("sys-info chat message",  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線")
 
       console.log(socketID.indexOf(i))
     user = arrayRemove_val(user, socketID.indexOf(i))

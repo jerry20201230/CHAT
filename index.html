@@ -947,7 +947,7 @@
       room_num++
       $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=${(MyRoom)}>${MyRoom}<br><small>(${room.id})</small></button>`)
       $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="${(MyRoom)}"></div>`)
-      $(`#room-tab-${room_num}`).html(`
+      $("#room-tab-"+room_num).html(`
       <div>
             <ul class="messages" data-room="${MyRoom}">
               <li>聊天室:${MyRoom} (${room.id})</li>
@@ -1252,16 +1252,27 @@
 
 
     socket.on('sys-info chat message', function (msg) {
-      console.log(msg);
-      if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID") || msg.to == "you" && msg.msg !=="undefined (undefined ) 已離線") {
+  
+      if (RoomList.includes(msg.to) || msg.to == 'you') {
+      if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID") || msg.to == "you") {
 
-        $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
+        $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
         window.scrollTo(0, document.body.scrollHeight);
         isConnected = true
-        if (msg.msg.includes("請勿使用與別人相同的暱稱")) {
-          my_nickname = last_nickname
+
+      }else{
+        let icon = "bi-bell-fill"
+        if(msg.type == "join"){
+          icon = "person-plus-fill"
+        }else
+        if(msg.type == "leave"){
+          icon = "bi-person-x-fill"
         }
+        BS_Toast.show({'img':icon,'title':msg.head},{'html':msg.msg})
+        
+        $(`.messages[data-room=${ RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
       }
+    }
 
 
     });
@@ -1270,6 +1281,7 @@
 
       $(`.messages[data-room=${MyRoom}]`).append("<li class='warn'>" + msg + "</li>")
 
+    
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
 
