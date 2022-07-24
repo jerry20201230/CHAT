@@ -261,7 +261,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
   socket.on('send img', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send img', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了圖片:", "src": msg.src, "filename": msg.filename, "id": 'img-' + fileID, "alt": (nickname[(user.indexOf(i))] + " (" + i + ") 發送的圖片") })
+    io.emit('send img', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了圖片:", "src": msg.src, "filename": msg.filename, "id": 'img-' + fileID, "alt": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送的圖片" ,"head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了圖片", "src": msg.src, "filename": msg.filename})
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1
@@ -291,7 +291,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
   socket.on('send txt', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send txt', { "to": msg.to, "text": (nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID, "filename": msg.filename })
+    io.emit('send txt', { "to": msg.to, "text": (nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了文字文件:"), "src": msg.src, "id": 'txt-' + fileID, "filename": msg.filename,'head':(nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了文字文件") })
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1

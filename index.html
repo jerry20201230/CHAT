@@ -1205,15 +1205,24 @@
     });
 
     socket.on('send img', function (msg) {
+      if (RoomList.includes(msg.room)) {
       if (msg.to == MyRoom) {
         $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
         window.scrollTo(0, document.body.scrollHeight);
         isConnected = true
         $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih")-50))
+      }else{
+        BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+   
+        isConnected = true
+        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih")-50))
       }
+    }
     });
 
     socket.on('send txt', function (msg) {
+      if (RoomList.includes(msg.room)) {
       if (msg.to == MyRoom) {
         console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
         if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
@@ -1225,7 +1234,20 @@
         isConnected = true
         $("#" + msg.id).css("max-width", (($(".messages").css("widih")-50)))
         window.scrollTo(0, document.body.scrollHeight);
+      }else{
+        BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+
+        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+        } else {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+
+        }
+        isConnected = true
+        $("#" + msg.id).css("max-width", (($(".messages").css("widih")-50)))
       }
+    }
     });
 
 
