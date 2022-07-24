@@ -704,7 +704,7 @@
 
           </span>
 
-          <img>
+          <img alt="顯示圖片時發生問題" onerror="isfile = false">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
@@ -961,11 +961,11 @@
 
               <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
                 style="flex-shrink:1; min-width:90px"
-                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")'>傳送圖片</button>
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});'>傳送圖片</button>
               &nbsp;
               <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
                 style="flex-shrink:1; min-width:90px"
-                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
+                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});'>傳送文字</button>
           <div class="msg-form" action="" class="flex" style="width:100%">
     
     
@@ -1206,10 +1206,10 @@
 
     socket.on('send img', function (msg) {
       if (msg.to == MyRoom) {
-        $(".messages").append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
         window.scrollTo(0, document.body.scrollHeight);
         isConnected = true
-        $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih")-50))
       }
     });
 
@@ -1223,7 +1223,7 @@
 
         }
         isConnected = true
-        $("#" + msg.id).css("max-width", ($("#" + msg.id).parent().width() - 30))
+        $("#" + msg.id).css("max-width", (($(".messages").css("widih")-50)))
         window.scrollTo(0, document.body.scrollHeight);
       }
     });
@@ -1467,8 +1467,11 @@
     //width => tabs display
 
     if (window.innerWidth < 936) {
-      $("#v-pills-tab").appendTo($("#chat-tabs"));
+       $("#v-pills-tab").appendTo($("#chat-tabs"));
+      $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+     
     }
+
 
     if ($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true') {
       $("#dl-file-2").attr("checked", true)
