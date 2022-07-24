@@ -32,6 +32,7 @@ var room_setting_how_to_join = [{'pws':true,'invite':'allow'},{'pws':true,'invit
 
 var typeing = []
 
+var TotalMsgCount = [0,0]
 
 var lastmsg = ""
 var msgCount = 0
@@ -182,6 +183,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
 
     i = socket.id
 
+    TotalMsgCount[roomName.indexOf(msg.room)] += 1
     if (msg.msg === "!DEV /_") {
       io.to(i).emit("sys-info chat message", "[伺服器回應][重要!]你已經是開發人員")
       io.to(i).emit('typeing', "開發人員模式已啟用")
@@ -190,7 +192,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
 
       console.log(msg.room + nickname[socketID.indexOf(i)] + " (" + i + ") 發布了: " + msg.msg)
 
-      io.to(roomID[roomName.indexOf(msg.room)]).emit('chat message room', { "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了: " + msg.msg, "room": msg.room });
+      io.to(roomID[roomName.indexOf(msg.room)]).emit('chat message room', { "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發布了:"+msg.msg, "room": msg.room ,"html": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ")","count":TotalMsgCount[roomName.indexOf(msg.room)]});
       if (lastmsg == msg.msg && i == lastID) {
         msgCount += 1
         if (msgCount == 2) {
