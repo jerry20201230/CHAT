@@ -11,7 +11,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <!--BS icon-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css" integrity="sha512-CaTMQoJ49k4vw9XO0VpTBpmMz8XpCWP5JhGmBvuBqCOaOHWENWO1CrVl09u4yp8yBVSID6smD4+gpzDJVQOPwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css"
+    integrity="sha512-CaTMQoJ49k4vw9XO0VpTBpmMz8XpCWP5JhGmBvuBqCOaOHWENWO1CrVl09u4yp8yBVSID6smD4+gpzDJVQOPwQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 8px;
@@ -208,37 +210,37 @@
       white-space: nowrap;
     }
 
-    #toast{
+    #toast {
       z-index: 20000 !important;
     }
   </style>
 
   <script>
     var
-     NowDate = new Date(),
-        sec = NowDate.getSeconds(),
-        mins= NowDate.getMinutes(),
-        hour = NowDate.getHours(),
-        month = (NowDate.getMonth() +1),
-        year = NowDate.getFullYear(),
-        date = NowDate.getDate();
+      NowDate = new Date(),
+      sec = NowDate.getSeconds(),
+      mins = NowDate.getMinutes(),
+      hour = NowDate.getHours(),
+      month = (NowDate.getMonth() + 1),
+      year = NowDate.getFullYear(),
+      date = NowDate.getDate();
     function Time() {
       NowDate = new Date(),
         sec = NowDate.getSeconds(),
-        mins= NowDate.getMinutes(),
+        mins = NowDate.getMinutes(),
         hour = NowDate.getHours(),
-        month = (NowDate.getMonth() +1),
+        month = (NowDate.getMonth() + 1),
         year = NowDate.getFullYear(),
         date = NowDate.getDate();
 
-      if (sec < 10 ) {
+      if (sec < 10) {
         sec = '0' + sec;
       }
-      if (mins < 10 ) {
+      if (mins < 10) {
         mins = '0' + mins;
       }
       if (hour < 10) {
-        hour = '0' +(hour);
+        hour = '0' + (hour);
       }
 
 
@@ -250,7 +252,7 @@
 
 <body onload="Time()">
   <span hidden>即時的線上聊天應用程式</span>
-  <div id="logined-ui" >
+  <div id="logined-ui">
 
 
 
@@ -336,8 +338,7 @@
 
             &nbsp;
 
-            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#Modal-5"
-            onclick='    $(".nickname").html(localStorage.getItem("myNickname"))
+            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#Modal-5" onclick='    $(".nickname").html(localStorage.getItem("myNickname"))
             $(".Sid").html(localStorage.getItem("myID"))'>設定</button>
           </div>
 
@@ -829,25 +830,25 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="setting-1-1">
             <label class="form-check-label" for="setting-1-1">
-             聊天室有新訊息
+              聊天室有新訊息
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="setting-1-2">
             <label class="form-check-label" for="setting-1-2">
-             有人加入聊天
+              有人加入聊天
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="setting-1-3">
             <label class="form-check-label" for="setting-1-3">
-             有人離開聊天
+              有人離開聊天
             </label>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">確定</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal">確定</button>
         </div>
       </div>
     </div>
@@ -978,7 +979,7 @@
       room_num++
       $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=${(MyRoom)}>${MyRoom}<br><small>(${room.id})</small></button>`)
       $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="${(MyRoom)}"></div>`)
-      $("#room-tab-"+room_num).html(`
+      $("#room-tab-" + room_num).html(`
       <div>
             <ul class="messages" data-room="${MyRoom}">
               <li>聊天室:${MyRoom} (${room.id})</li>
@@ -1214,20 +1215,20 @@
     socket.on('chat message room', function (msg) {
 
       if (RoomList.includes(msg.room)) {
-        
+
 
         if (msg.room == MyRoom) {
-      
-          $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }</li>`)
+
+          $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
           isConnected = true
-   
+
 
           window.scrollTo(0, document.body.scrollHeight);
         } else {
-          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') })
-          $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }</li>`)
+          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') })
+          $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
           isConnected = true
-          $(`#chat-msg-${msg.count}`).html(msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') )
+          $(`#chat-msg-${msg.count}`).html(msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'))
 
         }
 
@@ -1237,73 +1238,80 @@
 
     socket.on('send img', function (msg) {
       if (RoomList.includes(msg.room)) {
-      if (msg.to == MyRoom) {
-        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
-        window.scrollTo(0, document.body.scrollHeight);
-        isConnected = true
-        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih")-50))
-      }else{
-        BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
-   
-        isConnected = true
-        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih")-50))
+        if (msg.to == MyRoom) {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+          window.scrollTo(0, document.body.scrollHeight);
+          isConnected = true
+          $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+        } else {
+          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+
+          isConnected = true
+          $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+        }
       }
-    }
     });
 
     socket.on('send txt', function (msg) {
       if (RoomList.includes(msg.room)) {
-      if (msg.to == MyRoom) {
-        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
-        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+        if (msg.to == MyRoom) {
+          console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+          if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+          } else {
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+
+          }
+          isConnected = true
+          $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+          window.scrollTo(0, document.body.scrollHeight);
         } else {
-          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
+          console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+          if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+          } else {
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+
+          }
+          isConnected = true
+          $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
         }
-        isConnected = true
-        $("#" + msg.id).css("max-width", (($(".messages").css("widih")-50)))
-        window.scrollTo(0, document.body.scrollHeight);
-      }else{
-        BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-
-        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
-        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
-        } else {
-          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
-
-        }
-        isConnected = true
-        $("#" + msg.id).css("max-width", (($(".messages").css("widih")-50)))
       }
-    }
     });
 
 
     socket.on('sys-info chat message', function (msg) {
-  
-      if (RoomList.includes(msg.to) || msg.to == 'you') {
-      if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID") || msg.to == "you") {
 
-        $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+      if (msg.to == "you") {
+        $(`.messages[data-room=${RoomList.indexOf(MyRoom)}]`).append("<li class='info'>" + msg.msg + "</li>")
         window.scrollTo(0, document.body.scrollHeight);
         isConnected = true
+      } else
+        if (RoomList.includes(msg.to)) {
+          if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
 
-      }else{
-        let icon = "bi-bell-fill"
-        if(msg.type == "join"){
-          icon = "bi-person-plus-fill"
-        }else
-        if(msg.type == "leave"){
-          icon = "bi-person-x-fill"
+            $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+            window.scrollTo(0, document.body.scrollHeight);
+            isConnected = true
+
+          } else {
+            $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+
+            let icon = "bi-bell-fill"
+            if (msg.type == "join") {
+              icon = "bi-person-plus-fill"
+            } else
+              if (msg.type == "leave") {
+                icon = "bi-person-x-fill"
+              }
+            BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+
+    
+          }
         }
-        BS_Toast.show({'img':icon,'title':msg.head},{'html':msg.msg})
-        
-        $(`.messages[data-room=${ RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
-      }
-    }
 
 
     });
@@ -1312,7 +1320,7 @@
 
       $(`.messages[data-room=${MyRoom}]`).append("<li class='warn'>" + msg + "</li>")
 
-    
+
       window.scrollTo(0, document.body.scrollHeight);
       isConnected = true
 
@@ -1392,6 +1400,7 @@
       $("#statue_select").attr("disabled", true)
       $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
       console.log("disconnected")
+      BS_Toast.show({ "title": "未連線到伺服器", "img": "bi-cloud-slash-fill" }, { "html": "裝置未連接到伺服器,正在嘗試連接..." })
 
 
       $(".messages").append("<li class='warn'>裝置未連接到伺服器,正在嘗試連接...</li>")
@@ -1482,10 +1491,10 @@
 
 
 
-  var  BS_Toast = {
+    var BS_Toast = {
       toast_id: 0,
       show: function (header, body) {
-          $("#toast").append(` 
+        $("#toast").append(` 
             <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
               <div class="toast-header" >
                 <i class='bi ${header.img}'></i>&nbsp;
@@ -1532,9 +1541,9 @@
     //width => tabs display
 
     if (window.innerWidth < 936) {
-       $("#v-pills-tab").appendTo($("#chat-tabs"));
+      $("#v-pills-tab").appendTo($("#chat-tabs"));
       $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-     
+
     }
 
 
