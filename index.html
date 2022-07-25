@@ -476,23 +476,25 @@
                 <li>誰可以變更設定<br>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-1" id="room-setting-radio-1/all"
-                    autocomplete="off" checked>
+                    autocomplete="off" checked value="@all">
                   <label class="btn btn-outline-primary" for="room-setting-radio-1/all">所有人</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-1" id="room-setting-radio-1/me"
-                    autocomplete="off">
+                    autocomplete="off" value="@me">
                   <label class="btn btn-outline-warning" for="room-setting-radio-1/me">我</label>
                 </li>
                 <p></p>
                 <li>誰可以邀請用戶<br>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/all"
-                    autocomplete="off" checked>
-                  <label class="btn btn-outline-primary" for="room-setting-radio-2/all">所有人</label>
+                    autocomplete="off" checked value="@all">
+                  <label class="btn btn-outline-primary" for="room-setting-radio-2/all"
+                  >所有人</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/me"
-                    autocomplete="off">
-                  <label class="btn btn-outline-warning" for="room-setting-radio-2/me">我</label>
+                    autocomplete="off" value="@me">
+                  <label class="btn btn-outline-warning" for="room-setting-radio-2/me"
+                 >我</label>
                 </li>
                 <p></p>
                 <li>誰可以移除用戶<br>
@@ -501,11 +503,11 @@
                   <br>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-3" id="room-setting-radio-3/all"
-                    autocomplete="off" checked>
+                    autocomplete="off" checked value="@all">
                   <label class="btn btn-outline-primary" for="room-setting-radio-3/all">所有人</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-3" id="room-setting-radio-3/me"
-                    autocomplete="off">
+                    autocomplete="off" value="@me">
                   <label class="btn btn-outline-warning" for="room-setting-radio-3/me">我</label>
                 </li>
                 <p></p>
@@ -513,17 +515,35 @@
 
 
 
-                  <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" checked>
-                  <label class="btn btn-outline-primary" for="btn-check">輸入密碼</label>
+                  <input type="checkbox" class="btn-check" id="room-setting-checkbox-1" autocomplete="off" checked value="true">
+                  <label class="btn btn-outline-primary" for="room-setting-checkbox-1">輸入密碼</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-4" id="room-setting-radio-4/invite"
                     autocomplete="off" checked>
-                  <label class="btn btn-outline-primary" for="room-setting-radio-4/invite">接受邀請</label>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-4/invite" value="invite">接受邀請</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-4" id="room-setting-radio-4/auto"
                     autocomplete="off">
-                  <label class="btn btn-outline-warning" for="room-setting-radio-4/auto">自動加入</label>
+                  <label class="btn btn-outline-warning" for="room-setting-radio-4/auto" value="auto">自動加入</label>
 
+                </li>
+                <p></p>
+                <li>
+                  <div class="form-check form-switch" onclick="
+                  if(document.getElementById('room-setting-checkbox-2').checked){
+                    $('#room-setting-box-1').show()
+                  }else{
+                    $('#room-setting-box-1').hide()
+                  }
+                  
+                  ">
+                    <input class="form-check-input" checked type="checkbox" role="switch" id="room-setting-checkbox-2">
+                    <label class="form-check-label" for="room-setting-checkbox-2">歡迎訊息</label>
+                  </div>
+                  <div id="room-setting-box-1">
+                  請輸入歡迎訊息:<input type="text" id="room-setting-input-1" placeholder="輸入歡迎訊息...">
+                  <p><div class="alert alert-info">如果不設定此格，系統將使用預設歡迎訊息</div></p>
+                  </div>
                 </li>
 
 
@@ -549,7 +569,30 @@
                 $('#create-statue').append('房間名稱: '+$('#create-room-name').val()+'<br>')
       
                 $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
-                socket.emit('create',{'name':$('#create-room-name').val(),'pws':$('#create-room-pws').val()})
+                let arr = []
+                for(let i=0;i<2;i++){
+                  if($(`[name=room-setting-radio-${i+1}]`).val() == '@me'){
+                    arr.push(localStorage.getItem('myID'))
+                  }else{
+                    arr.push($(`[name=room-setting-radio-${i+1}]`).val())
+                  }
+                }
+
+                arr.push(document.querySelector('#room-setting-checkbox-1').checked)
+                arr.push($('[name=room-setting-radio-4]').val())
+                arr.push(document.querySelector('#room-setting-checkbox-2').checked)
+                socket.emit('create',
+                {
+                'name':$('#create-room-name').val(),
+                'pws':$('#create-room-pws').val(),
+                'setting':{
+                  'change':arr[0],
+                  'invite':arr[1],
+                  'remove':arr[2],
+                  'how_to_join':{'pws':arr[3],'invite':arr[4]}
+                }
+              
+              })
               }
               
               
@@ -1035,7 +1078,7 @@
 
       $(".bottom").css("width", $(".tab-content").css("width"))
 
-      BS_Toast.show({"title":"歡迎","img":"bi-bell-fill"},{"html":room.msg.replace("<!s>","&nbsp;").replace(">","&gt;").replace("<","&lt;")})
+      BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":room.msg.replace("<!s>","&nbsp;").replace(">","&gt;").replace("<","&lt;")})
     })
 
     socket.on("created", msg => {
