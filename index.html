@@ -1293,7 +1293,7 @@
         if (RoomList.includes(msg.to)) {
           if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
 
-            $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+            $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
             window.scrollTo(0, document.body.scrollHeight);
             isConnected = true
 
@@ -1303,11 +1303,15 @@
             let icon = "bi-bell-fill"
             if (msg.type == "join") {
               icon = "bi-person-plus-fill"
+              BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.head })
             } else
               if (msg.type == "leave") {
                 icon = "bi-person-x-fill"
+                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+              }else{
+                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
               }
-            BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+          
 
     
           }
@@ -1383,6 +1387,7 @@
       $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
 
       $(".messages").append("<li class='success'>裝置已連接到伺服器</li>")
+      BS_Toast.show({ "title": "已連線到伺服器", "img": "bi-cloud-fill" }, { "html": "裝置已連接到伺服器" })
       window.scrollTo(0, document.body.scrollHeight);
 
       document.getElementById("connectStatue").innerHTML = "已連線"

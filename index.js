@@ -139,8 +139,8 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
         
 
         console.log(GetUserInRoom(msg.room))
-        io.emit('sys-info chat message', { "to": roomName[roomID.indexOf(msg.room)], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入 "+roomName[roomID.indexOf(msg.room)] ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入",'type':"join"});
-        io.to(socket.id).emit("sys-info chat message", { "to": "you", "msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~" ,'head':"none"});
+        io.emit('sys-info chat message', { "to": roomName[roomID.indexOf(msg.room)], "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入 "+roomName[roomID.indexOf(msg.room)] ,'msg': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已加入",'type':"join"});
+//        io.to(socket.id).emit("sys-info chat message", { "to": "you", "msg": "[伺服器回應] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 歡迎來到聊天室~" ,'head':"none"});
 
         let room = msg.room,
           return_user_arr = [],
