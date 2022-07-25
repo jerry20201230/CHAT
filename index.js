@@ -29,7 +29,6 @@ var room_setting_change = ["@admin01","@admin01"]
 var room_setting_invite = ["@all","@all"]
 var room_setting_remove = ["@all","@all"]
 var room_setting_how_to_join = [{'pws':true,'invite':'allow'},{'pws':true,'invite':'auto'}]
-
 var room_welcome_msg = ["歡迎加入<!s>主聊天室","測試人員聊天室<!s>歡迎你"]
 
 var typeing = []
@@ -97,6 +96,14 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     roomName.push(msg.name)
     roomPws.push(msg.pws)
     room_socketID.push(["server"])
+
+    room_setting_change.push(msg.setting.change)
+    room_setting_invite.push(msg.setting.invite)
+    room_setting_remove.push(msg.setting.remove)
+    room_setting_how_to_join.push(msg.setting.how_to_join)
+    room_welcome_msg.push(msg.setting.welcome_msg)
+    
+
     roomID.push('@room-' + random)
     io.to(i).emit("created", { 'id': '@room-' + random, 'name': msg.name, 'pws': msg.pws })
   }
