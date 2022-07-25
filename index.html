@@ -1034,6 +1034,8 @@
       `)
 
       $(".bottom").css("width", $(".tab-content").css("width"))
+
+      BS_Toast.show({"title":"歡迎","img":"bi-bell-fill"},{"html":room.msg})
     })
 
     socket.on("created", msg => {

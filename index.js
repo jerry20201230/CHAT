@@ -30,6 +30,8 @@ var room_setting_invite = ["@all","@all"]
 var room_setting_remove = ["@all","@all"]
 var room_setting_how_to_join = [{'pws':true,'invite':'allow'},{'pws':true,'invite':'auto'}]
 
+var room_welcome_msg = ["歡迎加入<!s>主聊天室","測試人員聊天室<!s>歡迎你"]
+
 var typeing = []
 
 var TotalMsgCount = [0,0]
@@ -127,7 +129,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
 
         console.log("JOIN")
         console.log(GetUserInRoom('@room-1'))
-        io.to(socket.id).emit("welcome", { 'name': roomName[roomID.indexOf(msg.room)], 'id': roomID[roomID.indexOf(msg.room)] })
+        io.to(socket.id).emit("welcome", { 'name': roomName[roomID.indexOf(msg.room)], 'id': roomID[roomID.indexOf(msg.room)] ,"msg":room_welcome_msg[roomID.indexOf(msg.room)]})
         console.log(msg.id + "joined" + msg.room)
         nickname.push(msg.nickname)
         user.push(msg.id)
