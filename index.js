@@ -323,7 +323,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
   socket.on('send link', function (msg) {
     i = socket.id
     fileID++
-    io.emit('send img', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結:", "src": msg.src,  "id": 'link-' + fileID, "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結", "src": msg.src})
+    io.emit('send link', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結:", "src": msg.src,  "id": 'link-' + fileID, "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結", "src": msg.src})
 
     if (lastmsg == msg.src && i == lastID) {
       msgCount += 1

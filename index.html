@@ -857,7 +857,7 @@
             onclick=' 
             if($("#send-link-txt").val() !== ""){
               $("#link-alert").hide()
-            socket.emit("send link",{"src":$("#send-link-txt").val(),"filename":filename,"to":MyRoom})
+            socket.emit("send link",{"src":$("#send-link-txt").val(),"to":MyRoom})
                   
             socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
             }else{
