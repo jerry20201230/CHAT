@@ -839,19 +839,30 @@
 
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="">https:///</span>
+            <span class="input-group-text" id="send-link-txt">https:///</span>
             <input type="text" class="form-control" id="link-url" aria-describedby="basic-addon3">
           </div>
 
           <div class="alert alert-danger">請勿傳送惡意連結，並請先<a href="https://cofacts.tw/">確定真實性</a>再轉貼</div>
-
+          <div class="alert alert-warning" id="link-alert" style="display: none;">請輸入連結!</div>
 
 
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">送出</button>
+
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+          
+            onclick=' 
+            if($("#send-link-txt").val() !== ""){
+              $("#link-alert").hide()
+            socket.emit("send link",{"src":$("#send-link-txt").val(),"filename":filename,"to":MyRoom})
+                  
+            socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
+            }else{
+              $("#link-alert").show()
+            }'>送出</button>
           </div>
         </div>
       </div>
@@ -1372,6 +1383,26 @@
         }
       }
     });
+
+
+
+    socket.on('send img', function (msg) {
+     
+      
+     if (RoomList.includes(msg.to)) {
+       if (msg.to == MyRoom) {
+         $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text +" "+ msg.src + "</li>")
+         window.scrollTo(0, document.body.scrollHeight);
+         isConnected = true
+         $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+       } else {
+         BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+         $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text +" "+ msg.src + "</li>")
+         isConnected = true
+
+       }
+     }
+   });
 
     socket.on('send txt', function (msg) {
  

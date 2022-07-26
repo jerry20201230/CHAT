@@ -320,6 +320,32 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     }
   });
 
+  socket.on('send link', function (msg) {
+    i = socket.id
+    fileID++
+    io.emit('send img', { "to": msg.to, "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結:", "src": msg.src,  "id": 'link-' + fileID, "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了連結", "src": msg.src})
+
+    if (lastmsg == msg.src && i == lastID) {
+      msgCount += 1
+      if (msgCount == 2) {
+        io.to(i).emit('sys-warn chat message', "[伺服器警告!] " +  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
+      } else if (msgCount == 3) {
+        io.to(i).emit("BAN", "byebye");
+
+
+        io.emit("sys-info chat message", { "to": msg.to, "msg":  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線" ,'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線","type":"leave"})
+
+
+
+
+      }
+    }
+    else {
+      lastmsg = msg
+      msgCount = 0
+      lastID = i
+    }
+  });
 
 
 
