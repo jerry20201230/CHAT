@@ -966,7 +966,7 @@
         </div>
         <div class="modal-body">
 
-          <span>請於下方選擇要傳送的媒體類別</span>
+          <p>請於下方選擇要傳送的媒體類別</p>
 
           <p>
             <button class="btn btn-outline-primary" data-bs-target="#Modal-2" data-bs-toggle="modal">圖片</button>
@@ -978,9 +978,73 @@
             <button class="btn btn-outline-primary" data-bs-target="#Modal-4" data-bs-toggle="modal">連結</button>
           </p>
 
+          <p>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-7" data-bs-toggle="modal">行程</button>
+          </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+ 
+
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Modal-7" tabindex="-1" aria-labelledby="Moda6-7Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-7Label">傳送行程</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-header">
+              行程日期:
+              <div class="flex">
+                <div class="form-floating">
+                  <input type="datetime-local" class="form-control" id="journey-start-time" placeholder="行程開始時間">
+                  <label for="journey-title">行程開始時間</label>
+                </div>
+                <div class="form-floating">
+                  <input type="datetime-local" class="form-control" id="journey-end-time" placeholder="行程結束時間">
+                  <label for="journey-title">行程結束時間</label>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="journey-title" placeholder="行程名稱">
+                  <label for="journey-title">行程名稱</label>
+                </div>
+
+              </h5>
+              <p class="card-text">
+
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="行程說明" id="journey-text"></textarea>
+                  <label for="journey-text">行程說明</label>
+                </div>
+              </p>
+              
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
+
+       // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
+              
+       // socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
 
         </div>
       </div>
@@ -997,7 +1061,7 @@
   </div>
 
 
-  <div id="toast" class="position-fixed bottom-0 end-0 p-3">
+  <div id="toast" class="position-fixed bottom-0 end-0 p-3 toast-container">
 
 
   </div>
@@ -1172,6 +1236,7 @@
       
       
       `)
+      $(`room-ctrl-${room_num}`).click()
 
       $(".bottom").css("width", $(".tab-content").css("width"))
 
