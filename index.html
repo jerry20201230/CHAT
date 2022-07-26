@@ -839,11 +839,12 @@
 
 
           <div class="input-group mb-3">
-            <span class="input-group-text">https:///</span>
+            <span class="input-group-text">https://</span>
             <input type="text" class="form-control" id="link-url" aria-describedby="basic-addon3">
           </div>
 
-          <div class="alert alert-danger">請勿傳送惡意連結，並請先<a href="https://cofacts.tw/">確定真實性</a>再轉貼</div>
+          <div class="alert alert-danger">請勿傳送惡意連結，並請先確定真實性再轉貼</div>
+          <a href="https://cofacts.tw/">假訊息查證</a><a href="https://www.scamadviser.com/">連結安全性查證</a>
           <div class="alert alert-warning" id="link-alert" style="display: none;">請輸入連結!</div>
 
 
@@ -857,7 +858,7 @@
             onclick=' 
             if($("#link-url").val() !== ""){
               $("#link-alert").hide()
-            socket.emit("send link",{"src":$("#send-link-url").val(),"to":MyRoom})
+            socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
                   
             socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
             }else{
@@ -1393,13 +1394,15 @@
        if (msg.to == MyRoom) {
          $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
           ${msg.text}<br>
-          <a href='https://${msg.src}' target="_blank">
+          <a href='https://${msg.src}' target="_blank" style="text-decoration: none;">
           <div class="input-group mb-3">
             <span class="input-group-text">https://</span>
             <input readonly type="text" class="form-control" valur='${msg.src}'>
           </div>
           </a>
           <div class="alert alert-danger">小心!來路不明的連結可能不安全!</div>
+          <a href="https://cofacts.tw/">假訊息查證</a><a href="https://www.scamadviser.com/">連結安全性查證</a>
+
           `+"</li>")
          window.scrollTo(0, document.body.scrollHeight);
          isConnected = true
