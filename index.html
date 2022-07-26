@@ -769,7 +769,7 @@
 
           </span>
 
-          <img alt="顯示圖片時發生問題" onerror="isfile = false">
+          <img alt="顯示圖片時發生問題" onerror="isfile = false" id="img">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
@@ -942,13 +942,13 @@
           <span>請於下方選擇要傳送的媒體類別</span>
 
           <p>
-            <button class="btn btn-outline-primary" data-bs-target="Modal-2" data-bs-toggle="modal">圖片</button>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-2" data-bs-toggle="modal">圖片</button>
           </p>
           <p>
-            <button class="btn btn-outline-primary" data-bs-target="Modal-3" data-bs-toggle="modal">文字文件</button>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-3" data-bs-toggle="modal">文字文件</button>
           </p>
           <p>
-            <button class="btn btn-outline-primary" data-bs-target="Modal-4" data-bs-toggle="modal">連結</button>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-4" data-bs-toggle="modal">連結</button>
           </p>
           
         </div>
@@ -1158,9 +1158,9 @@
     })
 
     //img input
-    var img = $('img');
+    var img = $('#img');
     var isfile = false
-    img.css('display', 'none');
+    //img.css('display', 'none');
 
 
 
