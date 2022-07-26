@@ -1307,6 +1307,7 @@
     });
 
     socket.on('send img', function (msg) {
+      console.log(msg)
       if (RoomList.includes(msg.room)) {
         if (msg.to == MyRoom) {
           $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
@@ -1324,6 +1325,7 @@
     });
 
     socket.on('send txt', function (msg) {
+      console.log(msg)
       if (RoomList.includes(msg.room)) {
         if (msg.to == MyRoom) {
           console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
