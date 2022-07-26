@@ -417,20 +417,21 @@
                 style="flex-shrink:1; min-width:90px"
                 onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle")''>傳送文字</button>
               -->
-              <button class="btn btn-outline-dark" disabled><i class="bi bi-list"></i></button><form class="msg-form" action="" class="flex" style="width:100%">
-    
-    
-    
-    
-    
-            <input class="input" style="border: 1px #333 solid;" disabled autocomplete="off" placeholder="無法直接傳送訊息給🔧聊天室管理員" 
-            oninput="
+              <button class="btn btn-outline-dark" disabled><i class="bi bi-list"></i></button>
+              <form class="msg-form" action="" class="flex" style="width:100%">
+
+
+
+
+
+                <input class="input" style="border: 1px #333 solid;" disabled autocomplete="off"
+                  placeholder="無法直接傳送訊息給🔧聊天室管理員" oninput="
               socket.emit(' typeing', {'id':socket.id,'room':MyRoom});" onblur="
               socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});">
 
 
                 <button disabled class="btn btn-outline-dark">送出訊息</button>
-                </form>
+              </form>
             </div>
           </div>
 
@@ -489,13 +490,11 @@
 
                   <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/all"
                     autocomplete="off" checked value="@all">
-                  <label class="btn btn-outline-primary" for="room-setting-radio-2/all"
-                  >所有人</label>
+                  <label class="btn btn-outline-primary" for="room-setting-radio-2/all">所有人</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-2" id="room-setting-radio-2/me"
                     autocomplete="off" value="@me">
-                  <label class="btn btn-outline-warning" for="room-setting-radio-2/me"
-                 >我</label>
+                  <label class="btn btn-outline-warning" for="room-setting-radio-2/me">我</label>
                 </li>
                 <p></p>
                 <li>誰可以移除用戶<br>
@@ -516,7 +515,8 @@
 
 
 
-                  <input type="checkbox" class="btn-check" id="room-setting-checkbox-1" autocomplete="off" checked value="true">
+                  <input type="checkbox" class="btn-check" id="room-setting-checkbox-1" autocomplete="off" checked
+                    value="true">
                   <label class="btn btn-outline-primary" for="room-setting-checkbox-1">輸入密碼</label>
 
                   <input type="radio" class="btn-check" name="room-setting-radio-4" id="room-setting-radio-4/invite"
@@ -542,8 +542,10 @@
                     <label class="form-check-label" for="room-setting-checkbox-2">歡迎訊息</label>
                   </div>
                   <div id="room-setting-box-1">
-                  請輸入歡迎訊息:<input type="text" id="room-setting-input-1" placeholder="">
-                  <p><div class="alert alert-info">如果不設定此格，系統將使用預設歡迎訊息</div></p>
+                    請輸入歡迎訊息:<input type="text" id="room-setting-input-1" placeholder="">
+                    <p>
+                    <div class="alert alert-info">如果不設定此格，系統將使用預設歡迎訊息</div>
+                    </p>
                   </div>
                 </li>
 
@@ -769,11 +771,12 @@
 
           </span>
 
-          <img onerror="isfile = false" id="img" >
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
+          <img onerror="isfile = false" id="img">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
                   if(isfile){
                   let filename =  document.getElementById("upload-input").files[0].name                                                                        
                   socket.emit("send img",{"src":img.attr("src"),"filename":filename,"to":MyRoom})
@@ -782,7 +785,6 @@
                   //$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                   }
                   '>送出</button>
-          </div>
         </div>
       </div>
     </div>
@@ -806,10 +808,11 @@
           </span>
 
           <pre class="text" id="txt-preview"></pre>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-              onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
               
                    let filename =  document.getElementById("upload-input-txt").files[0].name  
                   socket.emit("send txt",{"src":txtfile,"filename":filename,"to":MyRoom})
@@ -818,7 +821,7 @@
                 //  $("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
                 
                   '>送出</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -844,7 +847,7 @@
           </div>
 
           <div class="alert alert-danger">請勿傳送惡意連結，並請先確定真實性再轉貼</div>
-          <a href="https://cofacts.tw/">假訊息查證</a><a href="https://www.scamadviser.com/">連結安全性查證</a>
+          <a href="https://cofacts.tw/">假訊息查證</a>&nbsp;<a href="https://www.scamadviser.com/">連結安全性查證</a>
           <div class="alert alert-warning" id="link-alert" style="display: none;">請輸入連結!</div>
 
 
@@ -853,9 +856,7 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
-          
-            onclick=' 
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
             if($("#link-url").val() !== ""){
               $("#link-alert").hide()
             socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
@@ -919,19 +920,26 @@
             </label>
           </div>
 
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="setting-1-4">
+            <label class="form-check-label" for="setting-1-4">
+              歡迎訊息(加入聊天室)
+            </label>
+          </div>
+
           <p>
-            <h3>關於</h3>
+          <h3>關於</h3>
 
-                        <div class="flex" style="user-select: none;">
+          <div class="flex" style="user-select: none;">
 
-                            <img src="/icon/icon.png" style="max-height:50px;max-width: 50px;" id="logo-img">
-                            <pre>
+            <img src="/icon/icon.png" style="max-height:50px;max-width: 50px;" id="logo-img">
+            <pre>
  CHAT - v1.0
  Jerry - 2022.7
 
 
                             </pre>
-                        </div>
+          </div>
           </p>
         </div>
         <div class="modal-footer">
@@ -941,7 +949,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="modal fade" id="Modal-6" tabindex="-1" aria-labelledby="Moda6-1Label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -950,7 +958,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
- 
+
           <span>請於下方選擇要傳送的媒體類別</span>
 
           <p>
@@ -962,7 +970,7 @@
           <p>
             <button class="btn btn-outline-primary" data-bs-target="#Modal-4" data-bs-toggle="modal">連結</button>
           </p>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
@@ -1041,11 +1049,11 @@
         if (r != null) return (r[2]); return null;
       }
     })(jQuery);
-    if(window.mobileAndTabletCheck() && $.UrlParam("mobile") == null){
-      if(location.href.slice(-1) == "/"){
-        location.href = location.href+"?mobile=true"
-      }else{
-        location.href = location.href+"/?mobile=true"
+    if (window.mobileAndTabletCheck() && $.UrlParam("mobile") == null) {
+      if (location.href.slice(-1) == "/") {
+        location.href = location.href + "?mobile=true"
+      } else {
+        location.href = location.href + "/?mobile=true"
       }
     }
 
@@ -1156,14 +1164,14 @@
 
       $(".bottom").css("width", $(".tab-content").css("width"))
 
-      try{
-        BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":room.msg.replace("<!s>","&nbsp;").replace(">","&gt;").replace("<","&lt;")})
-      }catch(e){
+      try {
+        BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": room.msg.replace("<!s>", "&nbsp;").replace(">", "&gt;").replace("<", "&lt;") })
+      } catch (e) {
         console.log(e)
-        BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":"歡迎加入&nbsp;"+room.name})
+        BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": "歡迎加入&nbsp;" + room.name })
 
       }
-      
+
     })
 
     socket.on("created", msg => {
@@ -1367,8 +1375,8 @@
     });
 
     socket.on('send img', function (msg) {
-     
-      
+
+
       if (RoomList.includes(msg.to)) {
         if (msg.to == MyRoom) {
           $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
@@ -1388,36 +1396,36 @@
 
 
     socket.on('send link', function (msg) {
-     
-      
-     if (RoomList.includes(msg.to)) {
-       if (msg.to == MyRoom) {
-         $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
+
+
+      if (RoomList.includes(msg.to)) {
+        if (msg.to == MyRoom) {
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
           ${msg.text}<br>
           <a href='https://${msg.src}' target="_blank" style="text-decoration: none;">
           <div class="input-group mb-3">
             <span class="input-group-text">https://</span>
-            <input readonly type="text" class="form-control" valur='${msg.src}'>
+            <input readonly type="text" class="form-control" value='${msg.src}'>
           </div>
           </a>
           <div class="alert alert-danger">小心!來路不明的連結可能不安全!</div>
-          <a href="https://cofacts.tw/">假訊息查證</a><a href="https://www.scamadviser.com/">連結安全性查證</a>
+          <a href="https://cofacts.tw/">假訊息查證</a>&nbsp;<a href="https://www.scamadviser.com/">連結安全性查證</a>
 
-          `+"</li>")
-         window.scrollTo(0, document.body.scrollHeight);
-         isConnected = true
-         $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
-       } else {
-         BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-         
-         isConnected = true
+          `+ "</li>")
+          window.scrollTo(0, document.body.scrollHeight);
+          isConnected = true
+          $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+        } else {
+          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
-       }
-     }
-   });
+          isConnected = true
+
+        }
+      }
+    });
 
     socket.on('send txt', function (msg) {
- 
+
       if (RoomList.includes(msg.to)) {
         if (msg.to == MyRoom) {
           console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
@@ -1472,12 +1480,12 @@
               if (msg.type == "leave") {
                 icon = "bi-person-x-fill"
                 BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
-              }else{
+              } else {
                 BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
               }
-          
 
-    
+
+
           }
         }
 
@@ -1732,7 +1740,7 @@
           $("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
         }
 
-    if($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()){
+    if ($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()) {
       $("body").html("<h2>暫時不支援行動裝置</h2><p>請使用桌上型電腦開啟此網站</p>")
     }
 
