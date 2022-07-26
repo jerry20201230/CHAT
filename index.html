@@ -769,7 +769,7 @@
 
           </span>
 
-          <img alt="顯示圖片時發生問題" onerror="isfile = false" id="img">
+          <img onerror="isfile = false" id="img" >
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
               onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
@@ -1144,7 +1144,14 @@
 
       $(".bottom").css("width", $(".tab-content").css("width"))
 
-      BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":room.msg.replace("<!s>","&nbsp;").replace(">","&gt;").replace("<","&lt;")})
+      try{
+        BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":room.msg.replace("<!s>","&nbsp;").replace(">","&gt;").replace("<","&lt;")})
+      }catch(e){
+        console.log(e)
+        BS_Toast.show({"title":"歡迎加入&nbsp;"+room.name,"img":"bi-bell-fill"},{"html":"歡迎加入&nbsp;"+room.name})
+
+      }
+      
     })
 
     socket.on("created", msg => {
@@ -1160,7 +1167,7 @@
     //img input
     var img = $('#img');
     var isfile = false
-    //img.css('display', 'none');
+    img.css('display', 'none');
 
 
 

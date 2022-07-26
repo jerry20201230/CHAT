@@ -14,6 +14,11 @@ app.get(/js|icon/, (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.send('what???', 404);
+});
+
 var user = ["admin01"]
 var nickname = ["🔧聊天室管理員&nbsp;<span class='badge bg-secondary text-light'>機器人</span>&nbsp;<span class='badge bg-success text-light'>官方帳號</span>"]
 var socketID = ["server"]
@@ -29,7 +34,7 @@ var room_setting_change = ["@admin01","@admin01"]
 var room_setting_invite = ["@all","@all"]
 var room_setting_remove = ["@all","@all"]
 var room_setting_how_to_join = [{'pws':true,'invite':'allow'},{'pws':true,'invite':'auto'}]
-var room_welcome_msg = ["歡迎加入<!s>主聊天室","測試人員聊天室<!s>歡迎你"]
+var room_welcome_msg = ["歡迎加入<!s>主聊天室","🎉🎉測試人員聊天室<!s>歡迎你~"]
 
 var typeing = []
 
