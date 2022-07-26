@@ -1386,18 +1386,27 @@
 
 
 
-    socket.on('send img', function (msg) {
+    socket.on('send link', function (msg) {
      
       
      if (RoomList.includes(msg.to)) {
        if (msg.to == MyRoom) {
-         $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text +" "+ msg.src + "</li>")
+         $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
+          ${msg.text}<br>
+          <a href='https://${msg.src}' target="_blank">
+          <div class="input-group mb-3">
+            <span class="input-group-text">https://</span>
+            <input readonly type="text" class="form-control" valur='${msg.src}'>
+          </div>
+          </a>
+          <div class="alert alert-danger">小心!來路不明的連結可能不安全!</div>
+          `+"</li>")
          window.scrollTo(0, document.body.scrollHeight);
          isConnected = true
          $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
        } else {
          BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-         $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text +" "+ msg.src + "</li>")
+         
          isConnected = true
 
        }
