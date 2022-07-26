@@ -839,7 +839,7 @@
 
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="send-link-txt">https:///</span>
+            <span class="input-group-text">https:///</span>
             <input type="text" class="form-control" id="link-url" aria-describedby="basic-addon3">
           </div>
 
@@ -855,9 +855,9 @@
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
           
             onclick=' 
-            if($("#send-link-txt").val() !== ""){
+            if($("#link-url").val() !== ""){
               $("#link-alert").hide()
-            socket.emit("send link",{"src":$("#send-link-txt").val(),"to":MyRoom})
+            socket.emit("send link",{"src":$("#send-link-url").val(),"to":MyRoom})
                   
             socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
             }else{
