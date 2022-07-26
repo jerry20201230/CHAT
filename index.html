@@ -573,7 +573,7 @@
       
                 $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
                 let arr = []
-                for(let i=0;i<10;i++){//0.1.2
+                for(let i=0;i<2;i++){//0.1.2
                   if($(`[name=room-setting-radio-${i+1}]`).val() == '@me'){
                     arr.push('@'+localStorage.getItem('myID'))
                   }else{
