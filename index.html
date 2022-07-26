@@ -573,7 +573,7 @@
       
                 $('#create-statue').append('正在新增房間，請先不要刷新頁面<br>')
                 let arr = []
-                for(let i=0;i<2;i++){
+                for(let i=0;i<10;i++){//0.1.2
                   if($(`[name=room-setting-radio-${i+1}]`).val() == '@me'){
                     arr.push('@'+localStorage.getItem('myID'))
                   }else{
@@ -581,11 +581,18 @@
                   }
                 }
 
-                arr.push(document.querySelector('#room-setting-checkbox-1').checked)
-                arr.push($('[name=room-setting-radio-4]').val())
-                arr.push(document.querySelector('#room-setting-checkbox-2').checked)
+               if(document.getElementById('room-setting-checkbox-1').checked){
+                 arr.push(true)
+               }else{
+                arr.push(false)
+               }
+                
+                arr.push($('[name=room-setting-radio-4]').val())                    //4
+                arr.push(document.getElementById('room-setting-checkbox-2').checked)//5
+                console.log(arr)
                 if(document.getElementById('room-setting-checkbox-2').checked){
 
+                  
                   socket.emit('create',
                 {
                 'name':$('#create-room-name').val(),
@@ -1090,6 +1097,10 @@
     })
     socket.on("room not found", function (room) {
       $('#join-statue').append("找不到聊天室: " + room + "<br>")
+
+    })
+    socket.on("room blocked", function (room) {
+      $('#join-statue').append("聊天室 " + room + "拒絕連線<br>")
 
     })
 
@@ -1754,6 +1765,7 @@
 
     if ($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()) {
       $("body").html("<h2>暫時不支援行動裝置</h2><p>請使用桌上型電腦開啟此網站</p>")
+      alert("暫時不支援行動裝置，請使用桌上型電腦開啟此網站")
     }
 
 
