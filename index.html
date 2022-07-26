@@ -929,6 +929,36 @@
       </div>
     </div>
   </div>
+  
+  <div class="modal fade" id="Modal-6" tabindex="-1" aria-labelledby="Moda6-1Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-6Label">傳送媒體</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+ 
+          <span>請於下方選擇要傳送的媒體類別</span>
+
+          <p>
+            <button class="btn btn-outline-primary" data-bs-target="Modal-2" data-bs-toggle="modal">圖片</button>
+          </p>
+          <p>
+            <button class="btn btn-outline-primary" data-bs-target="Modal-3" data-bs-toggle="modal">文字文件</button>
+          </p>
+          <p>
+            <button class="btn btn-outline-primary" data-bs-target="Modal-4" data-bs-toggle="modal">連結</button>
+          </p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="contextmenu" style="display: none;">
     <div id="content-tool"></div>
@@ -1075,13 +1105,8 @@
 
             <div class="bottom-bar">
 
-              <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-2"
-                style="flex-shrink:1; min-width:90px"
-                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});'>傳送圖片</button>
-              &nbsp;
-              <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-3"
-                style="flex-shrink:1; min-width:90px"
-                onclick='socket.emit("typeing",{"id":socket.id,"room":MyRoom});'>傳送文字</button>
+<button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-6"> <i class="bi bi-list"></i></button>
+
           <div class="msg-form" action="" class="flex" style="width:100%">
     
     
