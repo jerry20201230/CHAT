@@ -224,7 +224,7 @@ io.to(i).emit("create err", { 'id': '@room-' + random, 'name': msg.name, 'pws': 
     console.log(room_typeing[roomName.indexOf(msg.room)])
     console.log("----------------")
     if (room_typeing[roomName.indexOf(msg.room)].indexOf(i) == -1) {
-      typeing.push(i)
+      room_typeing[roomName.indexOf(msg.room)].push(i)
     }
     console.log(room_typeing[roomName.indexOf(msg.room)])
     if (room_typeing[roomName.indexOf(msg.room)] === []) {
