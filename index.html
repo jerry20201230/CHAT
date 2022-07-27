@@ -1183,7 +1183,7 @@
                let _arr = []
                for(i=1;1<Number($("#vote-tickets").attr("data-tickets"));i++){
     
-                _arr.push($(`vote-p-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
+                _arr.push($(`#vote-ticket-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
                }
                let ischecked;
                if(document.getElementById("vote-check-1").checked){
