@@ -1103,7 +1103,7 @@
                                     </div>
                                 </span><br>
                             <p></p>
-                            <div class="border-dark">
+                            <div class="border-dark" style="border-radius:5px ;">
                                 <div id="vote-tickets" data-tickets="2">
                                     <div class="form-floating" id="vote-p-1">
                                         <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
@@ -1160,36 +1160,38 @@
 
                     </div>
                 </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+    
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
+        
+               // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
+    
+               let _arr = []
+               for(i=1;1<Number($("#vote-tickets").attr("data-tickets"));i++){
+    
+                _arr.push($(`vote-p-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
+               }
+    
+               socket.emit("send vote",{
+        
+                "to":MyRoom,
+                "vote_title":($("#vote-title").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+                "vote_text":($("#vote-text").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+    
+                "vote_tickets":_arr,
+    
+       
+               })
+                socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
+    
+                </div>
             </div>
 
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
-
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
-    
-           // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
-
-           let _arr = []
-           for(i=1;1<Number($("#vote-tickets").attr("data-tickets"));i++){
-
-            _arr.push($(`vote-p-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
-           }
-
-           socket.emit("send vote",{
-    
-            "to":MyRoom,
-            "vote_title":($("#vote-title").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
-            "vote_text":($("#vote-text").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
-
-            "vote_tickets":_arr,
-
-   
-           })
-            socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
-
-            </div>
+           
         </div>
     </div>
 
