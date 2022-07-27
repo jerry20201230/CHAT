@@ -1086,7 +1086,7 @@
               <p class="card-text">
                 <span>
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="vote-text" placeholder="投票說明">
+                    <textarea class="form-control" placeholder="投票說明" id="vote-text"></textarea>
                     <label for="vote-text">投票說明</label>
                   </div>
                 </span><br>
@@ -1096,6 +1096,7 @@
                   <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
                   <label for="vote-ticket-1">選項1</label>
                 </div>
+                &nbsp;
                 <div class="form-floating">
                   <input type="text" class="form-control" id="vote-ticket-2" placeholder="選項2">
                   <label for="vote-ticket-2">選項2</label>
@@ -1108,10 +1109,12 @@
                   n = Number($('#vote-tickets').attr('data-tickets'))+1
                   $('#vote-tickets').append(`
                
+                  &nbsp;
                   <div class='form-floating'>
                     <input type='text' class='form-control' id='vote-ticket-${n}' placeholder='選項${n}'>
                     <label for='vote-ticket-${n}'>選項${n}</label>
                   </div>
+
                   `)
                   $('#vote-tickets').attr('data-tickets',n)
                   if(Number($('#vote-tickets').attr('data-tickets')) >=5){
