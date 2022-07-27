@@ -1048,8 +1048,8 @@
        socket.emit("send event",{
 
         "to":MyRoom,
-        "event_start_time":$("#event-start-time").val().replace("T","&nbsp;"),
-        "event_end_time":$("#event-end-tine").val().replace("T","&nbsp;"),
+        "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;"),
+        "event_end_time":($("#event-end-time").val()).replace("T","&nbsp;"),
         "event_title":$("#event-title").val(),
         "event_text":$("#event-text").val()
        })
