@@ -1117,6 +1117,7 @@
 
                   `)
                   $('#vote-tickets').attr('data-tickets',n)
+                  $('#vote-remove').attr('disabled',false)
                   if(Number($('#vote-tickets').attr('data-tickets')) >=5){
 
                     $(this).attr('disabled',true)

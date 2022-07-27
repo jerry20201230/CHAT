@@ -38,6 +38,9 @@ var room_welcome_msg = ["歡迎加入<!s>主聊天室", "🎉🎉測試人員聊
 
 var typeing = []
 
+
+var vote = []
+
 var TotalMsgCount = [0, 0]
 
 var lastmsg = ""
