@@ -151,7 +151,8 @@ io.on('connection', (socket) => {
     }
     else if (!room_setting_how_to_join[roomID.indexOf(msg.room)].pws) {
 
-      console.log("blocked")
+      io.to(socket.id).emit("room blocked", msg.room)
+  
     }
 
     else if (roomPws[roomID.indexOf(msg.room)] == msg.pws && room_setting_how_to_join[roomID.indexOf(msg.room)].pws) {
