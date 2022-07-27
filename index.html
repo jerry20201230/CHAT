@@ -1061,15 +1061,13 @@
                         onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
-
-       // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
        socket.emit("send event",{
 
         "to":MyRoom,
-        "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;"),
-        "event_end_time":($("#event-end-time").val()).replace("T","&nbsp;"),
-        "event_title":$("#event-title").val(),
-        "event_text":$("#event-text").val()
+        "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+        "event_end_time":($("#event-end-time").val()).replace("T","&nbsp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+        "event_title":$("#event-title").val().replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+        "event_text":$("#event-text").val().replace(/</g,"&lt;").replace(/>/g,"&gt;")
        })
         socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
 
@@ -1159,32 +1157,42 @@
                             </div>
                             </p>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
-       
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
 
-       // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
-       socket.emit("send vote",{
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
-        "to":MyRoom,
-        "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;"),
-        "event_end_time":($("#event-end-time").val()).replace("T","&nbsp;"),
-        "event_title":$("#event-title").val(),
-        "event_text":$("#event-text").val()
-       })
-        socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
+    
+           // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
 
+           let _arr = []
+           for(i=1;1<Number($("#vote-tickets").attr("data-tickets"));i++){
+
+            _arr.push($(`vote-p-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
+           }
+
+           socket.emit("send vote",{
+    
+            "to":MyRoom,
+            "vote_title":($("#vote-title").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+            "vote_text":($("#vote-text").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
+
+            "vote_tickets":_arr,
+
+   
+           })
+            socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
+
+            </div>
         </div>
     </div>
-    </div>
-    </div>
+
 
     <div id="contextmenu" style="display: none;">
         <div id="content-tool"></div>
