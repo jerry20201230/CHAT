@@ -878,6 +878,7 @@
             socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
             }else{
               $("#link-alert").show()
+              BS_Toast.show({"title":"傳送連結時發生錯誤","img":"bi-x-circle-fill","imgclass":"text-danger"},{"html":"請檢查輸入內容並重試"})
             }'>送出</button>
                     </div>
                 </div>
@@ -1154,6 +1155,15 @@
 
                                 ">移除選項</button>
 
+                            </div>
+                            <p></p>
+                            <div class="border-dark" style="border-radius:5px ; border: 1px solid; padding: 5px;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="vote-check-1">
+                                    <label class="form-check-label" for="vote-check-1">
+                                      多選
+                                    </label>
+                                  </div>
                             </div>
                             </p>
                         </div>
@@ -1943,7 +1953,7 @@
                 $("#toast").append(` 
             <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
               <div class="toast-header" >
-                <i class='bi ${header.img}'></i>&nbsp;
+                <i class='bi ${header.img} ${header.imgclass}'></i>&nbsp;
                 <strong class="me-auto">${header.title}</strong>
                 <small>${hour}:${mins}</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
