@@ -1102,14 +1102,16 @@
                 </div>
 
               </div>
+              <p></p>
               <button class="btn btn-primary" onclick="
                 if(Number($('#vote-tickets').attr('data-tickets')) >=4){
 
                   $(this).attr('disabled',true)
 
-                }else{
+                }else{    
+                  n = Number($('#vote-tickets').attr('data-tickets'))+1
                   $('#vote-tickets').append(`
-                   n = Number($('#vote-tickets').attr('data-tickets'))+1
+               
                   <div class='form-floating'>
                     <input type='text' class='form-control' id='vote-ticket-${n}' placeholder='選項${n}'>
                     <label for='vote-ticket-${n}'>選項${n}</label>
