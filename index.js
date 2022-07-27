@@ -138,7 +138,7 @@ io.on('connection', (socket) => {
     i = socket.id
     console.log(i);
     console.log(msg.room)
-    console.log(room_setting_how_to_join[roomID.indexOf(msg.room)].pws)
+  //  console.log(room_setting_how_to_join[roomID.indexOf(msg.room)].pws)
 
     if (roomName[roomID.indexOf(msg.room)] == -1) {
       io.to(socket.id).emit("room not found", msg.room)
