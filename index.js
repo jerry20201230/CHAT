@@ -413,8 +413,10 @@ socket.on('send vote', function (msg) {
      "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發起了投票", 
 
      "vote_title":msg.vote_title,
+     "vote_toptext":nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發起的投票",
      "vote_text":msg.vote_text,
-     "vote_tickets":msg.vote_tickets
+     "vote_tickets":msg.vote_tickets,
+     "vote_multiple" :msg.vote_multiple
      })
      io.to(i).emit("vote owner","vote-"+fileID)
 

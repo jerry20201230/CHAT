@@ -1022,8 +1022,9 @@
                 <div class="modal-body">
                     <div class="card">
                         <div class="card-header">
-                            行程日期:
+                            行程時間:
 
+                            <p></p>
                             <div class="form-floating">
                                 <input type="datetime-local" class="form-control" id="event-start-time"
                                     placeholder="行程開始時間">
@@ -1161,9 +1162,9 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="vote-check-1">
                                     <label class="form-check-label" for="vote-check-1">
-                                      多選
+                                        多選
                                     </label>
-                                  </div>
+                                </div>
                             </div>
                             </p>
                         </div>
@@ -1174,7 +1175,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
-    
+
                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
         
                // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
@@ -1184,6 +1185,13 @@
     
                 _arr.push($(`vote-p-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
                }
+               let ischecked;
+               if(document.getElementById("vote-check-1").checked){
+                ischecked = true
+
+               }else{
+                ischecked = false
+               }
     
                socket.emit("send vote",{
         
@@ -1192,16 +1200,16 @@
                 "vote_text":($("#vote-text").val()).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
     
                 "vote_tickets":_arr,
-    
-       
+            
+                "vote_multiple":ischecked
                })
                 socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
-    
+
                 </div>
             </div>
 
 
-           
+
         </div>
     </div>
 
@@ -1733,6 +1741,72 @@
 
         })
 
+        socket.on('send vote', function (msg) {
+
+
+            if (RoomList.includes(msg.to)) {
+                if (msg.to == MyRoom) {
+
+                    let txt = ""
+                    for(i in msg.vote_tickets){
+                        txt+=i
+                    }
+                    $(`.messages[data-room=${MyRoom}]`).append(`
+                    
+                    <li>
+                        <div class="card">
+                            <div class="card-header">
+                                ${msg.vote_toptext}
+                            </div>
+                            <div class="card-body">
+                                ${txt}
+                            </div>
+                        </div>
+                    
+                    </li>
+
+                    `)
+                    window.scrollTo(0, document.body.scrollHeight);
+                    isConnected = true
+                    $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                } else {
+                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+
+                    let txt = ""
+                    for(i in msg.vote_tickets){
+                        txt = txt + `<li class="list-group-item">i</li>`
+                    }
+                    $(`.messages[data-room=${MyRoom}]`).append(`
+                    
+                    <li>
+                        <div class="card">
+                            <div class="card-header">
+                                ${msg.vote_toptext}
+                            </div>
+                            <div class="card-body">
+                           
+                                <h5 class="card-title">${msg.vote_title}</h5>
+                                <p class="card-text">
+                                    <span>${msg.vote_text}</span>
+                                <ul class="list-group">
+                                    ${txt}
+                                </ul>
+                                <p>
+                                    <button class="btn btn-primary">送出</button>    
+                                </p>
+                                </p>
+                            </div>
+                        </div>
+                    
+                    </li>
+
+                    `)
+                  
+                    isConnected = true
+
+                }
+            }
+        });
 
         socket.on('sys-info chat message', function (msg) {
 
