@@ -1749,7 +1749,7 @@
 
                     let txt = ""
                     for(i in msg.vote_tickets){
-                        txt+=i
+                        txt = txt + `<li class="list-group-item">i</li>`
                     }
                     $(`.messages[data-room=${MyRoom}]`).append(`
                     
@@ -1759,7 +1759,17 @@
                                 ${msg.vote_toptext}
                             </div>
                             <div class="card-body">
-                                ${txt}
+                           
+                                <h5 class="card-title">${msg.vote_title}</h5>
+                                <p class="card-text">
+                                    <span>${msg.vote_text}</span>
+                                <ul class="list-group">
+                                    ${txt}
+                                </ul>
+                                <p>
+                                    <button class="btn btn-primary">送出</button>    
+                                </p>
+                                </p>
                             </div>
                         </div>
                     
