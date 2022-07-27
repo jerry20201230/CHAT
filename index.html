@@ -1090,27 +1090,27 @@
                     <label for="vote-text">投票說明</label>
                   </div>
                 </span><br>
-                <p></p>
+              <p></p>
               <div id="vote-tickets" data-tickets="2">
-                <div class="form-floating">
+                <div class="form-floating" id="vote-p-1">
                   <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
                   <label for="vote-ticket-1">選項1</label>
                 </div>
                 &nbsp;
-                <div class="form-floating">
+                <div class="form-floating" id="vote-p-2">
                   <input type="text" class="form-control" id="vote-ticket-2" placeholder="選項2">
                   <label for="vote-ticket-2">選項2</label>
                 </div>
 
               </div>
               <p></p>
-              <button class="btn btn-primary" onclick="
+              <button class="btn btn-primary" id="vote-add" onclick="
            
                   n = Number($('#vote-tickets').attr('data-tickets'))+1
                   $('#vote-tickets').append(`
                
                   &nbsp;
-                  <div class='form-floating'>
+                  <div class='form-floating' id='vote-p-${n}'>
                     <input type='text' class='form-control' id='vote-ticket-${n}' placeholder='選項${n}'>
                     <label for='vote-ticket-${n}'>選項${n}</label>
                   </div>
@@ -1120,10 +1120,25 @@
                   if(Number($('#vote-tickets').attr('data-tickets')) >=5){
 
                     $(this).attr('disabled',true)
+                    $('#vote-remove').attr('disabled',false)
                   }
                 
 
                 ">新增選項</button>
+
+
+              <button class="btn btn-warning" id="vote-remove" onclick="
+                   n = Number($('#vote-tickets').attr('data-tickets'))
+                   $('#vote-add').attr('disabled',false)
+                   $(`#vote-p-${n}`).remove()
+                   n--
+                   $('#vote-tickets').attr('data-tickets',n)
+                   if(Number($('#vote-tickets').attr('data-tickets'))<=2){
+                    $(this).attr('disabled',true)
+                   }
+
+
+              ">移除選項</button>
               </p>
 
             </div>
