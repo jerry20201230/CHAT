@@ -1014,7 +1014,7 @@
                 &nbsp;
                 <div class="form-floating">
                   <input type="datetime-local" class="form-control" id="event-end-time" placeholder="行程結束時間">
-                  <label for="event-title">行程結束時間</label>
+                  <label for="event-end-time">行程結束時間</label>
                 </div>
       
             </div>
@@ -1048,8 +1048,8 @@
        socket.emit("send event",{
 
         "to":MyRoom,
-        "event_start_time":$("#event-start-time").val(),
-        "event_end_time":$("#event-end-tine").val(),
+        "event_start_time":$("#event-start-time").val().replace("T","&nbsp;"),
+        "event_end_time":$("#event-end-tine").val().replace("T","&nbsp;"),
         "event_title":$("#event-title").val(),
         "event_text":$("#event-text").val()
        })
@@ -1559,8 +1559,9 @@
           
             $(`.messages[data-room=${MyRoom}]`).append(
               `<li>
+                ${msg.text}<br>
               <div class="card">
-                <div class="card-header">時間:${msg.event_start_time}~${msg.event_end_time}</div>
+                <div class="card-header">時間:&nbsp;${msg.event_start_time}~${msg.event_end_time}</div>
                 <div class="card-body">
                   <h5 class="card-title">${msg.event_title}</h5>
                   <p class="card-text">${msg.event_text}</p>
