@@ -1104,11 +1104,7 @@
               </div>
               <p></p>
               <button class="btn btn-primary" onclick="
-                if(Number($('#vote-tickets').attr('data-tickets')) >=4){
-
-                  $(this).attr('disabled',true)
-
-                }else{    
+           
                   n = Number($('#vote-tickets').attr('data-tickets'))+1
                   $('#vote-tickets').append(`
                
@@ -1117,7 +1113,12 @@
                     <label for='vote-ticket-${n}'>選項${n}</label>
                   </div>
                   `)
-                }
+                  $('#vote-tickets').attr('data-tickets',n)
+                  if(Number($('#vote-tickets').attr('data-tickets')) >=5){
+
+                    $(this).attr('disabled',true)
+                  }
+                
 
                 ">新增選項</button>
               </p>
