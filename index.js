@@ -358,6 +358,47 @@ socket.on('send link', function (msg) {
 
 
 
+
+socket.on('send event', function (msg) {
+  i = socket.id
+  fileID++
+  io.emit('send event', {
+     "to": msg.to, 
+     "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了行程:", 
+   
+     "id": 'event-' + fileID, 
+     "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了行程", 
+ 
+     "event_start_time":msg.event_start_time,
+     "event_end_time":msg.event_end_time,
+     "event_title":msg.event_title,
+     "event_text":msg.event_text
+    })
+
+  if (lastmsg == msg.src && i == lastID) {
+    msgCount += 1
+    if (msgCount == 2) {
+      io.to(i).emit('sys-warn chat message', "[伺服器警告!] " + nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 請勿洗版，否則我們將斷開你的連線!")
+    } else if (msgCount == 3) {
+      io.to(i).emit("BAN", "byebye");
+
+
+      io.emit("sys-info chat message", { "to": msg.to, "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 因大量發送相同訊息/洗版，已被伺服器中斷連線", 'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線", "type": "leave" })
+
+
+
+
+    }
+  }
+  else {
+    lastmsg = msg
+    msgCount = 0
+    lastID = i
+  }
+});
+
+
+
 socket.on('GetUsers', msg => {
   let room = msg.room
   //   decode the attr(data-room)is<server>?=>return:server.
