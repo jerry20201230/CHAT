@@ -957,7 +957,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="Modal-6" tabindex="-1" aria-labelledby="Moda6-1Label" aria-hidden="true">
+  <div class="modal fade" id="Modal-6" tabindex="-1" aria-labelledby="Moda-6Label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -979,14 +979,18 @@
           </p>
 
           <p>
-            <button class="btn btn-outline-primary" data-bs-target="#Modal-7" data-bs-toggle="modal">行程</button>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-7" data-bs-toggle="modal">行程資訊</button>
+          </p>
+
+          <p>
+            <button class="btn btn-outline-primary" data-bs-target="#Modal-8" data-bs-toggle="modal">投票</button>
           </p>
         </div>
         <div class="modal-footer">
- 
+
 
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-          onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+            onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
 
         </div>
@@ -994,8 +998,8 @@
     </div>
   </div>
 
-  <div class="modal fade" id="Modal-7" tabindex="-1" aria-labelledby="Moda6-7Label" aria-hidden="true"
-  data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal fade" id="Modal-7" tabindex="-1" aria-labelledby="Moda-7Label" aria-hidden="true"
+    data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -1006,17 +1010,17 @@
           <div class="card">
             <div class="card-header">
               行程日期:
-  
-                <div class="form-floating">
-                  <input type="datetime-local" class="form-control" id="event-start-time" placeholder="行程開始時間">
-                  <label for="event-title">行程開始時間</label>
-                </div>
-                &nbsp;
-                <div class="form-floating">
-                  <input type="datetime-local" class="form-control" id="event-end-time" placeholder="行程結束時間">
-                  <label for="event-end-time">行程結束時間</label>
-                </div>
-      
+
+              <div class="form-floating">
+                <input type="datetime-local" class="form-control" id="event-start-time" placeholder="行程開始時間">
+                <label for="event-title">行程開始時間</label>
+              </div>
+              &nbsp;
+              <div class="form-floating">
+                <input type="datetime-local" class="form-control" id="event-end-time" placeholder="行程結束時間">
+                <label for="event-end-time">行程結束時間</label>
+              </div>
+
             </div>
             <div class="card-body">
               <h5 class="card-title">
@@ -1029,20 +1033,100 @@
               </h5>
               <p class="card-text">
 
-                <div class="form-floating">
-                  <textarea class="form-control" placeholder="行程說明" id="event-text"></textarea>
-                  <label for="event-text">行程說明</label>
-                </div>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="行程說明" id="event-text"></textarea>
+                <label for="event-text">行程說明</label>
+              </div>
               </p>
-              
+
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-          onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+            onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
 
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
+
+       // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
+       socket.emit("send event",{
+
+        "to":MyRoom,
+        "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;"),
+        "event_end_time":($("#event-end-time").val()).replace("T","&nbsp;"),
+        "event_title":$("#event-title").val(),
+        "event_text":$("#event-text").val()
+       })
+        socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>送出</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="Modal-8" tabindex="-1" aria-labelledby="Modal-8Label" aria-hidden="true"
+    data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal-8Label">投票</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-header">
+              新增投票
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="vote-title" placeholder="投票名稱">
+                  <label for="vote-title">投票名稱</label>
+                </div>
+              </h5>
+              <p class="card-text">
+                <span>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="vote-text" placeholder="投票說明">
+                    <label for="vote-text">投票說明</label>
+                  </div>
+                </span>
+              <div id="vote-tickets" data-tickets="2">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
+                  <label for="vote-ticket-1">選項1</label>
+                </div>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="vote-ticket-2" placeholder="選項2">
+                  <label for="vote-ticket-2">選項2</label>
+                </div>
+
+              </div>
+              <button class="btn btn-primary" onclick="
+                if(Number($('#vote-tickets').attr('data-tickets')) >=4){
+
+                  $(this).attr('disabled',true)
+
+                }else{
+                  $('#vote-tickets').append(`
+                  let n = Number($('#vote-tickets').attr('data-tickets'))+1
+                  <div class='form-floating'>
+                    <input type='text' class='form-control' id='vote-ticket-${n}' placeholder='選項${n}'>
+                    <label for='vote-ticket-${n}'>選項${n}</label>
+                  </div>
+                  `)
+                }
+
+                ">新增選項</button>
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick='socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})'>關閉</button>
+
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
 
        // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
        socket.emit("send event",{
@@ -1464,13 +1548,13 @@
 
       if (RoomList.includes(msg.to)) {
         if (msg.to == MyRoom) {
-          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+          $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
           window.scrollTo(0, document.body.scrollHeight);
           isConnected = true
           $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
         } else {
           BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-          $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+          $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
 
           isConnected = true
           $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
@@ -1528,9 +1612,9 @@
         if (msg.to == MyRoom) {
           console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
           if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
           } else {
-            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
 
           }
           isConnected = true
@@ -1541,9 +1625,9 @@
 
           console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
           if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
           } else {
-            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
 
           }
           isConnected = true
@@ -1556,15 +1640,15 @@
 
       if (RoomList.includes(msg.to)) {
         if (msg.to == MyRoom) {
-          
-            $(`.messages[data-room=${MyRoom}]`).append(
-              `<li>
+
+          $(`.messages[data-room=${MyRoom}]`).append(
+            `<li>
                 ${msg.text}<br>
               <div class="card">
-                <div class="card-header">時間:&nbsp;${msg.event_start_time.replace(/</g,"&lt;").replace(/>/g,"&gt;")}~${msg.event_end_time.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>
+                <div class="card-header">時間:&nbsp;${msg.event_start_time.replace(/</g, "&lt;").replace(/>/g, "&gt;")}~${msg.event_end_time.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
                 <div class="card-body">
-                  <h5 class="card-title">${msg.event_title.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h5>
-                  <p class="card-text">${msg.event_text.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</p>
+                  <h5 class="card-title">${msg.event_title.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</h5>
+                  <p class="card-text">${msg.event_text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
               
                 </div>
               </div>
@@ -1577,7 +1661,7 @@
         } else {
           BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
-         
+
           isConnected = true
           $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
         }
