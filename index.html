@@ -1128,7 +1128,7 @@
                 ">新增選項</button>
 
 
-              <button class="btn btn-warning" id="vote-remove" onclick="
+              <button disabled class="btn btn-warning" id="vote-remove" onclick="
                    n = Number($('#vote-tickets').attr('data-tickets'))
                    $('#vote-add').attr('disabled',false)
                    $(`#vote-p-${n}`).remove()
@@ -1152,7 +1152,7 @@
           <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick=' 
 
        // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
-       socket.emit("send event",{
+       socket.emit("send vote",{
 
         "to":MyRoom,
         "event_start_time":($("#event-start-time").val()).replace("T","&nbsp;"),
@@ -1601,7 +1601,7 @@
           </div>
           </a>
           <div class="alert alert-danger">小心!來路不明的連結可能不安全!</div>
-          <a href="https://cofacts.tw/">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
+          <a target="_blank" href="https://cofacts.tw/">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a target="_blank" href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
 
           `+ "</li>")
           window.scrollTo(0, document.body.scrollHeight);
@@ -1620,8 +1620,8 @@
           </a>
           <div class="alert alert-danger">小心!來路不明的連結可能不安全!</div>
 
-          <a href="https://cofacts.tw/">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
-
+          <a href="https://cofacts.tw/" target="_blank">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a target="_blank" href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
+          
           `+ "</li>")
           isConnected = true
 
@@ -1986,6 +1986,7 @@
     }
 
 
+    
   </script>
 </body>
 
