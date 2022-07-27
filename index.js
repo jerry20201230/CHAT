@@ -24,17 +24,17 @@ var nickname = ["🔧聊天室管理員&nbsp;<span class='badge bg-secondary tex
 var socketID = ["server"]
 var statue = ["線上"]
 
-var roomName = ["主聊天室", "MyRoom"]
-var roomID = ["@room-1", "@room-123"]
-var roomPws = ["", "102030."]
+var roomName = ["主聊天室", "example_room_1","example_room_2"]
+var roomID = ["@room-1", "@room-100","@room-404"]
+var roomPws = ["", "102030.","1121310"]
 var room_socketID = [["server"], ["server"]]
 var room_typeing = [[], []]
 
-var room_setting_change = ["@admin01", "@admin01"]
-var room_setting_invite = ["@all", "@all"]
-var room_setting_remove = ["@all", "@all"]
-var room_setting_how_to_join = [{ 'pws': true, 'invite': 'allow' }, { 'pws': true, 'invite': 'auto' }]
-var room_welcome_msg = ["歡迎加入<!s>主聊天室", "🎉🎉測試人員聊天室<!s>歡迎你~"]
+var room_setting_change = ["@admin01", "@admin01", "@admin01"]
+var room_setting_invite = ["@all", "@all", "@all"]
+var room_setting_remove = ["@all", "@all", "@all"]
+var room_setting_how_to_join = [{ 'pws': true, 'invite': 'allow' }, { 'pws': true, 'invite': 'auto' }, { 'pws': false, 'invite': 'auto' }]
+var room_welcome_msg = ["歡迎加入<!s>主聊天室", "🎉🎉測試人員聊天室-1<!s>歡迎你~", "🎉🎉測試人員聊天室-2<!s>歡迎你~"]
 
 var typeing = []
 
