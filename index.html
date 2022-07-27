@@ -1748,12 +1748,13 @@
                 if (msg.to == MyRoom) {
 
                     let txt = ""
-                    for(i in msg.vote_tickets){
-                        txt = txt + `<li class="list-group-item">i</li>`
+                    for(i=0;i<msg.vote_tickets.length;i++){
+                        txt = txt + `<li class="list-group-item">${msg.vote_tickets[i]}</li>`
                     }
                     $(`.messages[data-room=${MyRoom}]`).append(`
                     
                     <li>
+                        ${msg.text}
                         <div class="card">
                             <div class="card-header">
                                 ${msg.vote_toptext}
@@ -1763,9 +1764,11 @@
                                 <h5 class="card-title">${msg.vote_title}</h5>
                                 <p class="card-text">
                                     <span>${msg.vote_text}</span>
+                                以下是投票內容:
                                 <ul class="list-group">
                                     ${txt}
                                 </ul>
+                                <br>
                                 <p>
                                     <button class="btn btn-primary">送出</button>    
                                 </p>
