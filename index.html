@@ -1091,20 +1091,21 @@
                   </div>
                 </span><br>
               <p></p>
-              <div id="vote-tickets" data-tickets="2">
-                <div class="form-floating" id="vote-p-1">
-                  <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
-                  <label for="vote-ticket-1">選項1</label>
-                </div>
-                &nbsp;
-                <div class="form-floating" id="vote-p-2">
-                  <input type="text" class="form-control" id="vote-ticket-2" placeholder="選項2">
-                  <label for="vote-ticket-2">選項2</label>
-                </div>
+              <div class="border-dark">
+                <div id="vote-tickets" data-tickets="2">
+                  <div class="form-floating" id="vote-p-1">
+                    <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
+                    <label for="vote-ticket-1">選項1</label>
+                  </div>
+                  &nbsp;
+                  <div class="form-floating" id="vote-p-2">
+                    <input type="text" class="form-control" id="vote-ticket-2" placeholder="選項2">
+                    <label for="vote-ticket-2">選項2</label>
+                  </div>
 
-              </div>
-              <p></p>
-              <button class="btn btn-primary" id="vote-add" onclick="
+                </div>
+                <p></p>
+                <button class="btn btn-primary" id="vote-add" onclick="
            
                   n = Number($('#vote-tickets').attr('data-tickets'))+1
                   $('#vote-tickets').append(`
@@ -1128,7 +1129,7 @@
                 ">新增選項</button>
 
 
-              <button disabled class="btn btn-warning" id="vote-remove" onclick="
+                <button disabled class="btn btn-warning" id="vote-remove" onclick="
                    n = Number($('#vote-tickets').attr('data-tickets'))
                    $('#vote-add').attr('disabled',false)
                    $(`#vote-p-${n}`).remove()
@@ -1140,8 +1141,9 @@
 
 
               ">移除選項</button>
-              </p>
+                </p>
 
+              </div>
             </div>
           </div>
         </div>
@@ -1986,7 +1988,7 @@
     }
 
 
-    
+
   </script>
 </body>
 
