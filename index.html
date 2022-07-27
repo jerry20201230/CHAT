@@ -1089,7 +1089,8 @@
                     <input type="text" class="form-control" id="vote-text" placeholder="投票說明">
                     <label for="vote-text">投票說明</label>
                   </div>
-                </span>
+                </span><br>
+                <p></p>
               <div id="vote-tickets" data-tickets="2">
                 <div class="form-floating">
                   <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
@@ -1108,7 +1109,7 @@
 
                 }else{
                   $('#vote-tickets').append(`
-                  let n = Number($('#vote-tickets').attr('data-tickets'))+1
+                   n = Number($('#vote-tickets').attr('data-tickets'))+1
                   <div class='form-floating'>
                     <input type='text' class='form-control' id='vote-ticket-${n}' placeholder='選項${n}'>
                     <label for='vote-ticket-${n}'>選項${n}</label>
