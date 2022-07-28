@@ -1820,10 +1820,10 @@
 
         $('.li-group>input[type=radio]').on("change",function(){
             if(this.checked){
-            $('.li-group>input[type=radio]').attr('class', 'li-group list-group-item list-group-item-action')
+            $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
             $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
             }else{
-                $('.li-group>input[type=radio]').attr('class', 'li-group list-group-item list-group-item-action')
+                $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
                 $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
             }
         })
