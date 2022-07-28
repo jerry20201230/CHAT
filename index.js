@@ -404,6 +404,7 @@ socket.on('send event', function (msg) {
 
 
 socket.on('send vote', function (msg) {
+
   i = socket.id
   fileID++
   let respond = []

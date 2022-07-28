@@ -1745,7 +1745,7 @@
         })
 
         socket.on('send vote', function (msg) {
-
+            console.log(msg)
 
             if (RoomList.includes(msg.to)) {
                 if (msg.to == MyRoom) {
