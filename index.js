@@ -426,7 +426,7 @@ socket.on('send vote', function (msg) {
      "vote_tickets":msg.vote_tickets,
      "vote_multiple" :msg.vote_multiple
      })
-     io.to(i).emit("vote owner","#vote-"+fileID+"viewbox")
+     io.to(i).emit("vote owner","#vote-"+fileID+"-viewbox")
      vote.push({
      "vote_id":'vote-' + fileID,
      "vote_title":msg.vote_title,
