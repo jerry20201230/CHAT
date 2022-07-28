@@ -405,6 +405,8 @@ socket.on('send event', function (msg) {
 
 socket.on('send vote', function (msg) {
 
+  console.log(msg)
+  console.log(nickname[socketID.indexOf(i)])
   i = socket.id
   fileID++
   let respond = []
