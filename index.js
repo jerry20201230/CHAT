@@ -368,10 +368,10 @@ socket.on('send event', function (msg) {
   fileID++
   io.emit('send event', {
      "to": msg.to, 
-     "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了行程:", 
+     "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了活動:", 
    
      "id": 'event-' + fileID, 
-     "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了行程", 
+     "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發送了活動", 
  
      "event_start_time":msg.event_start_time,
      "event_end_time":msg.event_end_time,
