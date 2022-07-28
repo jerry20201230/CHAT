@@ -1770,8 +1770,34 @@
                         }
                     }
                   
-                    txt = txt+`
+
+                    $(`.messages[data-room=${MyRoom}]`).append(`
                     
+                    <li>
+                        ${msg.text}
+                        <div class="card">
+                            <div class="card-header">
+                                ${msg.vote_toptext}
+                            </div>
+                            <div class="card-body">
+                           
+                                <h5 class="card-title">${msg.vote_title}</h5>
+                                <p class="card-text">
+                                    <span>${msg.vote_text}</span>
+                                    <p></p><br>
+                                    投票內容:
+                                    <ul class="list-group">
+                                        ${txt}
+                                    </ul>
+                                    <br>
+                                    <p>
+                                        <button class="btn btn-primary">送出</button>    
+                                    </p>
+                                </p>
+                            </div>
+                        </div>
+                    
+                    </li>
                     <script>
                     $('.li-group').on("click",function () {
             if ($(this).hasClass('active')) {
@@ -1804,35 +1830,6 @@
 
 
                     <\/script>
-                    
-                    `
-                    $(`.messages[data-room=${MyRoom}]`).append(`
-                    
-                    <li>
-                        ${msg.text}
-                        <div class="card">
-                            <div class="card-header">
-                                ${msg.vote_toptext}
-                            </div>
-                            <div class="card-body">
-                           
-                                <h5 class="card-title">${msg.vote_title}</h5>
-                                <p class="card-text">
-                                    <span>${msg.vote_text}</span>
-                                    <p></p><br>
-                                    投票內容:
-                                    <ul class="list-group">
-                                        ${txt}
-                                    </ul>
-                                    <br>
-                                    <p>
-                                        <button class="btn btn-primary">送出</button>    
-                                    </p>
-                                </p>
-                            </div>
-                        </div>
-                    
-                    </li>
 
                     `)
                     window.scrollTo(0, document.body.scrollHeight);
