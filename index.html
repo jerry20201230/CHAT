@@ -793,6 +793,7 @@
                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick='
                   if(isfile){
                   let filename =  document.getElementById("upload-input").files[0].name                                                                        
+                  BS_Toast.show({"img":"bi-file-earmark","title":"正在傳送圖片"},{"html":"正在傳送圖片，請稍等..."})
                   socket.emit("send img",{"src":img.attr("src"),"filename":filename,"to":MyRoom})
                   console.log(img.attr("src"))
                   socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
