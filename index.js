@@ -417,6 +417,8 @@ socket.on('send vote', function (msg) {
     "to": msg.to, 
     "text": un+ " (" + uid + ") 發起了投票:", 
     
+    "owner":uid,
+
     "id": 'vote-' + fileID, 
     "head":un+ " (" + uid + ") 發起了投票", 
 
@@ -431,11 +433,7 @@ socket.on('send vote', function (msg) {
   for(i=0;i<msg.vote_tickets.length;i++){
     respond.push(0)
   }
-  io.to(i).emit("owned vote",{
 
-    "owned_vote_id":'#vote-' + fileID+"-viewbox"
-  
- })
 
 
 

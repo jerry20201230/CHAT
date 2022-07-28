@@ -1746,11 +1746,27 @@
 
         socket.on('send vote', function (msg) {
             console.log(msg)
+            let txt = "",multiple,owner_ctrl;
+                    if(msg.owner == localStorage.getItem("myID")){
+                        owner_ctrl = `
+                        <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
+    查看結果
+  </button>
 
+<div class="collapse" id="collapse-for-${msg.id}">
+  <div class="card card-body">
+    <p>投票人數:0人</p>
+    <p>總票數:0票</p>
+  </div>
+</div>
+                        
+  
+                        `
+                    }
             if (RoomList.includes(msg.to)) {
                 if (msg.to == MyRoom) {
 
-                    let txt = "",multiple;
+
                     if (msg.vote_multiple) {
                         multiple = `<span class="badge rounded-pill bg-info text-dark">多選</span>`
                         for (i = 0; i < msg.vote_tickets.length; i++) {
@@ -1797,7 +1813,8 @@
                                     </ul>
                                     <br>
                                     <p class="flex" id="${msg.id}-viewbox">
-                                        <button class="btn btn-primary">送出</button>    
+                                        <button class="btn btn-primary">送出</button>   
+                                        ${owner_ctrl} 
                                     </p>
                                 </p>
                             </div>
@@ -1892,7 +1909,8 @@
                                     </ul>
                                     <br>
                                     <p class="flex" id="${msg.id}-viewbox">
-                                        <button class="btn btn-primary">送出</button>    
+                                        <button class="btn btn-primary">送出</button>   
+                                        ${owner_ctrl} 
                                     </p>
                                 </p>
                             </div>
@@ -1940,23 +1958,7 @@
             }
         });
 
-        socket.on('owned vote', function (msg) {
-            console.log("lhgf")
-            $(msg.owned_vote_id).append(`
 
-  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.owned_vote_id}" aria-expanded="false" aria-controls="collapseExample">
-    查看結果
-  </button>
-
-<div class="collapse" id="collapse-for-${msg.owned_vote_id}">
-  <div class="card card-body">
-    <p>投票人數:0人</p>
-    <p>總票數:0票</p>
-  </div>
-</div>
-          
-          `)
-        })
        
         socket.on('sys-info chat message', function (msg) {
 
