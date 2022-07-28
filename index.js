@@ -406,27 +406,27 @@ socket.on('send event', function (msg) {
 socket.on('send vote', function (msg) {
 
   console.log(msg)
-  console.log(nickname[socketID.indexOf(i)])
+
   i = socket.id
   fileID++
-  let respond = []
+  let respond = [],un = nickname[socketID.indexOf(i)],uid = user[socketID.indexOf(i)]
   for(i=0;i<msg.vote_tickets.length;i++){
     respond.push(0)
   }
   io.emit('send vote', {
      "to": msg.to, 
-     "text": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發起了投票:", 
+     "text": un+ " (" + uid + ") 發起了投票:", 
      
      "id": 'vote-' + fileID, 
-     "head": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發起了投票", 
+     "head":un+ " (" + uid + ") 發起了投票", 
 
      "vote_title":msg.vote_title,
-     "vote_toptext":nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 發起的投票",
+     "vote_toptext":un + " (" + uid + ") 發起的投票",
      "vote_text":msg.vote_text,
      "vote_tickets":msg.vote_tickets,
      "vote_multiple" :msg.vote_multiple
      })
-     io.to(i).emit("vote owner","vote-"+fileID)
+     io.to(i).emit("vote owner","#vote-"+fileID+"viewbox")
      vote.push({
      "vote_id":'vote-' + fileID,
      "vote_title":msg.vote_title,
@@ -434,8 +434,8 @@ socket.on('send vote', function (msg) {
      "vote_tickets":msg.vote_tickets, //array[n]
      "vote_multiple" :msg.vote_multiple,
 
-     "sender_id":user[socketID.indexOf(i)],
-     "sender_nickname":nickname[socketID.indexOf(i)],
+     "sender_id":uid,
+     "sender_nickname":un,
      
      "vote_respond_arr":respond,
      "vote_respond_num":[]
