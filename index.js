@@ -411,6 +411,12 @@ socket.on('send vote', function (msg) {
   fileID++
   
   let respond = [],un = nickname[socketID.indexOf(i)],uid = user[socketID.indexOf(i)]
+  
+  io.to(i).emit("owned vote",{
+
+    "owned_vote_id":'#vote-' + fileID+"-viewbox"
+  
+ })
   io.emit('send vote', {
     "to": msg.to, 
     "text": un+ " (" + uid + ") 發起了投票:", 
@@ -453,11 +459,6 @@ socket.on('send vote', function (msg) {
 
 
 
-     io.to(i).emit("owned vote",{
-
-        "owned_vote_id":'#vote-' + fileID+"-viewbox"
-      
-     })
   if (lastmsg == msg.src && i == lastID) {
     msgCount += 1
     if (msgCount == 2) {
