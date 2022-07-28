@@ -798,6 +798,8 @@
                   console.log(img.attr("src"))
                   socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
                   //$("#statue-circle").attr("class","position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+                  }else{
+                    BS_Toast.show({"img":"bi-file-earmark","title":"無法傳送圖片","imgclass":"text-danger"},{"html":": ( 無法傳送圖片，請重試"})
                   }
                   '>送出</button>
                 </div>
@@ -1848,6 +1850,23 @@
                 }
             }
         });
+
+        socket.on('vote owner', function (msg) {
+          $("#msg").append(`
+
+  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg}" aria-expanded="false" aria-controls="collapseExample">
+    查看結果
+  </button>
+
+<div class="collapse" id="collapse-for-${msg}">
+  <div class="card card-body">
+    <p>投票人數:0人</p>
+    <p>總票數:0票</p>
+  </div>
+</div>
+          
+          `)
+        })
        
         socket.on('sys-info chat message', function (msg) {
 
