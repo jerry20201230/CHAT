@@ -1746,7 +1746,7 @@
 
         socket.on('send vote', function (msg) {
             console.log(msg)
-            let txt = "",multiple,owner_ctrl;
+            let txt = "",multiple,owner_ctrl = " ";
                     if(msg.owner == localStorage.getItem("myID")){
                         owner_ctrl = `
                         <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
@@ -1813,7 +1813,7 @@
                                     </ul>
                                     <br>
                                     <p class="flex" id="${msg.id}-viewbox">
-                                        <button class="btn btn-primary">送出</button>   
+                                        <button class="btn btn-primary"  id="${msg.id}-send">送出</button>   &nbsp;
                                         ${owner_ctrl} 
                                     </p>
                                 </p>
@@ -1851,6 +1851,14 @@
             }
         })
 
+        $('#${msg.id}-send').on("click",function(){
+            socket.emit('vote',{
+              vote_id:${msg.id},
+              vote_checked:200
+
+
+            })
+        })
 
                     <\/script>
 
@@ -1909,7 +1917,7 @@
                                     </ul>
                                     <br>
                                     <p class="flex" id="${msg.id}-viewbox">
-                                        <button class="btn btn-primary">送出</button>   
+                                        <button class="btn btn-primary" id="${msg.id}-send">送出</button>   &nbsp;
                                         ${owner_ctrl} 
                                     </p>
                                 </p>
