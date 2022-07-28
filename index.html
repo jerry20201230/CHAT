@@ -1753,7 +1753,7 @@
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
                             <input class="form-check-input me-1" type="checkbox" value="" hidden id="vote-tickets-input-${i}">
-                    
+                            ${msg.vote_tickets[i]}
                         </label>
                       `
                         }
@@ -1764,41 +1764,12 @@
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
                             <input class="form-check-input me-1" type="radio" value="" hidden>
-                    
+                            ${msg.vote_tickets[i]}
                         </label>
                       `
                         }
                     }
-                    txt = txt + `
-                    
-                    <script>
-        $('.li-group').on("click",function () {
-            if ($(this).hasClass('active')) {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action')
-                console.log(1)
-            } else {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-
-
-        })
-
-       $('.li-group>input').on("change",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
-
-        $('.li-group>input').on("input",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-        })
-        <\/script>`
+                  
                     $(`.messages[data-room=${MyRoom}]`).append(`
                     
                     <li>
@@ -1869,7 +1840,32 @@
                 }
             }
         });
+        $('.li-group').on("click",function () {
+            if ($(this).hasClass('active')) {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action')
+                console.log(1)
+            } else {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
+            }
 
+
+        })
+
+       $('.li-group>input').on("change",function(){
+            if(this.checked){
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }else{
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }
+        })
+
+        $('.li-group>input').on("input",function(){
+            if(this.checked){
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }else{
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }
+        })
         socket.on('sys-info chat message', function (msg) {
 
             if (msg.to == "you") {
