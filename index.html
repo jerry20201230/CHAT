@@ -1747,8 +1747,9 @@
             if (RoomList.includes(msg.to)) {
                 if (msg.to == MyRoom) {
 
-                    let txt = ""
+                    let txt = "",multiple;
                     if (msg.vote_multiple) {
+                        multiple = `<span class="badge rounded-pill bg-info text-dark">多選</span>`
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
@@ -1760,6 +1761,7 @@
                    
                     
                     } else {
+                        multiple = `<span class="badge rounded-pill bg-primary">單選</span>`
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
@@ -1785,7 +1787,7 @@
                                 <p class="card-text">
                                     <span>${msg.vote_text}</span>
                                     <p></p><br>
-                                    投票內容:
+                                    ${multiple}&nbsp;投票內容:
                                     <ul class="list-group">
                                         ${txt}
                                     </ul>
