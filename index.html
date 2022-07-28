@@ -1635,8 +1635,6 @@
             }
         });
 
-
-
         socket.on('send link', function (msg) {
 
 
@@ -1887,7 +1885,7 @@
                                     <br>
                                     ${multiple}&nbsp;投票內容:
                                     <p></p>
-                                    <ul class="list-group">
+                                    <ul class="list-group" id="${msg.id}-tickets">
                                         ${txt}
                                     </ul>
                                     <br>
@@ -1911,7 +1909,7 @@
 
         })
 
-       $('.li-group>input[type=checkbox]').on("change",function(){
+       $('#${msg.id}-tickets>input[type=checkbox]').on("change",function(){
             if(this.checked){
             $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
             }else{
@@ -1919,7 +1917,7 @@
             }
         })
 
-        $('.li-group>input[type=radio]').on("change",function(){
+        $('#${msg.id}-tickets>input[type=radio]').on("change",function(){
             if(this.checked){
             $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
             $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
@@ -1940,14 +1938,15 @@
             }
         });
 
-        socket.on('vote owner', function (msg) {
-          $(msg).append(`
+        socket.on('owned vote', function (msg) {
+            console.log("lhgf")
+            $(msg.owned_vote_id).append(`
 
-  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg}" aria-expanded="false" aria-controls="collapseExample">
+  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.owned_vote_id}" aria-expanded="false" aria-controls="collapseExample">
     查看結果
   </button>
 
-<div class="collapse" id="collapse-for-${msg}">
+<div class="collapse" id="collapse-for-${msg.owned_vote_id}">
   <div class="card card-body">
     <p>投票人數:0人</p>
     <p>總票數:0票</p>
@@ -2023,12 +2022,12 @@
             socket.disconnect()
         })
 
-        socket.on('people online', function (msg) {
+        /*socket.on('people online', function (msg) {
             if (msg.for == MyRoom) {
                 $(".onlinePeople").html(msg)
                 isConnected = true
             }
-        });
+        });*/
         socket.on('typeing', function (msg) {
             /*if(msg.to == MyRoom){
             if (msg.msg == " 正在輸入...") {
