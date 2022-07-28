@@ -1181,9 +1181,9 @@
                // socket.emit("send link",{"src":$("#link-url").val(),"to":MyRoom})
     
                let _arr = []
-               for(i=1;i<Number($("#vote-tickets").attr("data-tickets"));i++){
+               for(i=0;i<Number($("#vote-tickets").attr("data-tickets"))+1;i++){
     
-                _arr.push($(`#vote-ticket-${i}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
+                _arr.push($(`#vote-ticket-${i+1}`).val().replace(/</g,"&lt;").replace(/>/g,"&gt;"))
                }
                let ischecked;
                if(document.getElementById("vote-check-1").checked){
@@ -1748,9 +1748,57 @@
                 if (msg.to == MyRoom) {
 
                     let txt = ""
-                    for(i=0;i<msg.vote_tickets.length;i++){
-                        txt = txt + `<li class="list-group-item">${msg.vote_tickets[i]}</li>`
+                    if (msg.vote_multiple) {
+                        for (i = 0; i < msg.vote_tickets.length; i++) {
+                            txt = txt + `
+                        <label class="li-group list-group-item list-group-item-action">
+                            <input class="form-check-input me-1" type="checkbox" value="" hidden id="vote-tickets-input-${i}">
+                    
+                        </label>
+                      `
+                        }
+                   
+                    
+                    } else {
+                        for (i = 0; i < msg.vote_tickets.length; i++) {
+                            txt = txt + `
+                        <label class="li-group list-group-item list-group-item-action">
+                            <input class="form-check-input me-1" type="radio" value="" hidden>
+                    
+                        </label>
+                      `
+                        }
                     }
+                    txt = txt + `
+                    
+                    <script>
+        $('.li-group').on("click",function () {
+            if ($(this).hasClass('active')) {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action')
+                console.log(1)
+            } else {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
+            }
+
+
+        })
+
+       $('.li-group>input').on("change",function(){
+            if(this.checked){
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }else{
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }
+        })
+
+        $('.li-group>input').on("input",function(){
+            if(this.checked){
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }else{
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }
+        })
+        <\/script>`
                     $(`.messages[data-room=${MyRoom}]`).append(`
                     
                     <li>
@@ -1764,14 +1812,15 @@
                                 <h5 class="card-title">${msg.vote_title}</h5>
                                 <p class="card-text">
                                     <span>${msg.vote_text}</span>
-                                以下是投票內容:
-                                <ul class="list-group">
-                                    ${txt}
-                                </ul>
-                                <br>
-                                <p>
-                                    <button class="btn btn-primary">送出</button>    
-                                </p>
+                                    <p></p><br>
+                                    投票內容:
+                                    <ul class="list-group">
+                                        ${txt}
+                                    </ul>
+                                    <br>
+                                    <p>
+                                        <button class="btn btn-primary">送出</button>    
+                                    </p>
                                 </p>
                             </div>
                         </div>
@@ -1786,7 +1835,7 @@
                     BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
                     let txt = ""
-                    for(i in msg.vote_tickets){
+                    for (i in msg.vote_tickets) {
                         txt = txt + `<li class="list-group-item">i</li>`
                     }
                     $(`.messages[data-room=${MyRoom}]`).append(`
@@ -1814,7 +1863,7 @@
                     </li>
 
                     `)
-                  
+
                     isConnected = true
 
                 }
