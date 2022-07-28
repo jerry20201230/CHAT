@@ -1763,13 +1763,49 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" value="" hidden>
+                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="" hidden>
                             ${msg.vote_tickets[i]}
                         </label>
                       `
                         }
                     }
                   
+                    txt = txt+`
+                    
+                    <script>
+                    $('.li-group').on("click",function () {
+            if ($(this).hasClass('active')) {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action')
+                console.log(1)
+            } else {
+                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
+            }
+
+
+        })
+
+       $('.li-group>input[type=checkbox]').on("change",function(){
+            if(this.checked){
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }else{
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }
+        })
+
+        $('.li-group>input[type=radio]').on("change",function(){
+            if(this.checked){
+            $('.li-group>input[type=radio]').attr('class', 'li-group list-group-item list-group-item-action')
+            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
+            }else{
+                $('.li-group>input[type=radio]').attr('class', 'li-group list-group-item list-group-item-action')
+                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
+            }
+        })
+
+
+                    <\/script>
+                    
+                    `
                     $(`.messages[data-room=${MyRoom}]`).append(`
                     
                     <li>
@@ -1805,67 +1841,13 @@
                 } else {
                     BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
-                    let txt = ""
-                    for (i in msg.vote_tickets) {
-                        txt = txt + `<li class="list-group-item">i</li>`
-                    }
-                    $(`.messages[data-room=${MyRoom}]`).append(`
-                    
-                    <li>
-                        <div class="card">
-                            <div class="card-header">
-                                ${msg.vote_toptext}
-                            </div>
-                            <div class="card-body">
-                           
-                                <h5 class="card-title">${msg.vote_title}</h5>
-                                <p class="card-text">
-                                    <span>${msg.vote_text}</span>
-                                <ul class="list-group">
-                                    ${txt}
-                                </ul>
-                                <p>
-                                    <button class="btn btn-primary">送出</button>    
-                                </p>
-                                </p>
-                            </div>
-                        </div>
-                    
-                    </li>
-
-                    `)
-
+                   /*****************************************/
                     isConnected = true
 
                 }
             }
         });
-        $('.li-group').on("click",function () {
-            if ($(this).hasClass('active')) {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action')
-                console.log(1)
-            } else {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-
-
-        })
-
-       $('.li-group>input').on("change",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
-
-        $('.li-group>input').on("input",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-        })
+       
         socket.on('sys-info chat message', function (msg) {
 
             if (msg.to == "you") {
