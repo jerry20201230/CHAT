@@ -1831,9 +1831,10 @@
                     <script>
 
         $('#${msg.id}-send').on("click",function(){
+           
             let arr = []
             for(i=0;i< ${msg.vote_tickets.length};i++){
-              arr.push(document.getElementById("${msg.id}-ticket-input-"+i).checked)
+              arr.push(document.getElementById("${msg.id}-tickets-input-"+i).checked)
             }
             
             
@@ -1930,7 +1931,8 @@
         $('#${msg.id}-send').on("click",function(){
             let arr = []
             for(i=0;i< ${msg.vote_tickets.length};i++){
-              arr.push(document.getElementById("${msg.id}-ticket-input-"+i).checked)
+           
+              arr.push(document.getElementById("${msg.id}-tickets-input-"+i).checked)
             }
             
             
