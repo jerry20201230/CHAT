@@ -1791,7 +1791,7 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="">
+                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
@@ -1876,7 +1876,7 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" name="${msg.id}-check-tickets" value="" id="${msg.id}-tickets-input-${i}"">
+                            <input class="form-check-input me-1" type="radio" name="${msg.id}-check-tickets" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
