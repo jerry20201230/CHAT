@@ -1796,7 +1796,7 @@
                     
                     <li>
                         ${msg.text}
-                        <div class="card">
+                        <div class="card" id="${msg.id}">
                             <div class="card-header">
                                 ${msg.vote_toptext}
                             </div>
@@ -1808,7 +1808,7 @@
                                     <br>
                                     ${multiple}&nbsp;投票內容:
                                     <p></p>
-                                    <ul class="list-group">
+                                    <ul class="list-group"  id="${msg.id}-tickets">
                                         ${txt}
                                     </ul>
                                     <br>
@@ -1833,7 +1833,7 @@
 
         })
 
-       $('.li-group>input[type=checkbox]').on("change",function(){
+       $('#${msg.id}-tickets>input[type=checkbox]').on("change",function(){
             if(this.checked){
             $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
             }else{
@@ -1841,7 +1841,7 @@
             }
         })
 
-        $('.li-group>input[type=radio]').on("change",function(){
+        $('#${msg.id}-tickets>input[type=radio]').on("change",function(){
             if(this.checked){
             $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
             $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
@@ -1896,7 +1896,7 @@
                     }
                   
 
-                    $(`.messages[data-room=${MyRoom}]`).append(`
+                    $(`.messages[data-room=${msg.to}]`).append(`
                     
                     <li>
                         ${msg.text}
@@ -1955,6 +1955,14 @@
             }
         })
 
+        $('#${msg.id}-send').on("click",function(){
+            socket.emit('vote',{
+              vote_id:${msg.id},
+              vote_checked:200
+
+
+            })
+        })
 
                     <\/script>
 
