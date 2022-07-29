@@ -1252,7 +1252,10 @@
         crossorigin="anonymous"></script>
     <script>
         //warning msg to console.
-        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
         var socket = io();
 
         var messages = document.getElementById('messages');
@@ -1567,6 +1570,12 @@
                 $("#PeopleOnLine").html("")
                 let count = 0
                 console.log(msg)
+                        //warning msg to console.
+        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+
 
                 for (let r = 0; r < (msg.userID).length; r++) {
 
@@ -1833,15 +1842,18 @@
         $('#${msg.id}-send').on("click",function(){
            
             let arr = []
-            for(i=0;i< ${msg.vote_tickets.length-1};i++){
-              arr.push(document.getElementById("${msg.id}-tickets-input-"+i).checked)
+            for(i=0;i< ${msg.vote_tickets.length};i++){
+              //arr.push(document.getElementById().checked)
+              arr.push($('#' + "${msg.id}-tickets-input-"+i).is(":checked"))
+              console.log($('#' + "${msg.id}-tickets-input-"+i).is(":checked"))
+              $('#' + "${msg.id}-tickets-input-"+i).attr("disabled",true)
             }
             
-            
+            console.log(arr)
             socket.emit('vote',{
               "vote_id":"${msg.id}",
               "vote_ticket":arr,
-              "user_id":${localStorage.getItem("myID")}
+              "user_id":"${localStorage.getItem("myID")}"
 
 
             })
@@ -1856,98 +1868,8 @@
                     $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
                 } else {
                     BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-
-
-                    let txt = "", multiple;
-                    if (msg.vote_multiple) {
-                        multiple = `<span class="badge rounded-pill bg-info text-dark">多選</span>`
-                        for (i = 0; i < msg.vote_tickets.length; i++) {
-                            txt = txt + `
-                        <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="checkbox" value="" id="${msg.id}-tickets-input-${i}">
-                            ${msg.vote_tickets[i]}
-                        </label>
-                      `
-
-                        }
-
-
-                    } else {
-                        multiple = `<span class="badge rounded-pill bg-primary">單選</span>`
-                        for (i = 0; i < msg.vote_tickets.length; i++) {
-                            txt = txt + `
-                        <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" name="${msg.id}-check-tickets" value="" id="${msg.id}-tickets-input-${i}">
-                            ${msg.vote_tickets[i]}
-                        </label>
-                      `
-                        }
-                    }
-
-
-                    $(`.messages[data-room=${msg.to}]`).append(`
-                    
-                    <li>
-                        ${msg.text}
-                        <div class="card" id="${msg.id}">
-                            <div class="card-header">
-                                ${msg.vote_toptext}
-                            </div>
-                            <div class="card-body">
-                           
-                                <h5 class="card-title">${msg.vote_title}</h5>
-                                <p class="card-text">
-                                    <span>${msg.vote_text}</span>
-                                    <br>
-                                    ${multiple}&nbsp;投票內容:
-                                    <p></p>
-                                    <ul class="list-group" id="${msg.id}-tickets" data-tickets="${msg.vote_tickets.length}">
-                                        ${txt}
-                                    </ul>
-                                    <br>
-                                    <p class="flex" id="${msg.id}-viewbox">
-                                        <button class="btn btn-primary" id="${msg.id}-send">送出</button>   &nbsp;
-                                        ${owner_ctrl} 
-                                    </p>
-                                </p>
-                            </div>
-                        </div>
-                    
-                    </li>
-                    <script>
-                    $('.li-group').on("click",function () {
-            if ($(this).hasClass('active')) {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action')
-                console.log(1)
-            } else {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-
-
-        })
-
-
-
-        $('#${msg.id}-send').on("click",function(){
-            let arr = []
-            for(i=0;i< ${msg.vote_tickets.length};i++){
-           
-              arr.push(document.getElementById("${msg.id}-tickets-input-"+i).checked)
-            }
-            
-            
-            socket.emit('vote',{
-              vote_id:${msg.id},
-              vote_ticket:arr,
-              user_id:${localStorage.getItem("myID")}
-
-
-            })
-        })
-
-                    <\/script>
-
-                    `)
+/**********************************************************/
+/**********************************************************/
 
                     isConnected = true
 
@@ -2251,10 +2173,12 @@
             $("body").html("<h2>暫時不支援行動裝置</h2><p>請使用桌上型電腦開啟此網站</p>")
             alert("暫時不支援行動裝置，請使用桌上型電腦開啟此網站")
         }
-
         //warning msg to console.
-        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
-
+        //warning msg to console.
+        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
 
     </script>
 </body>
