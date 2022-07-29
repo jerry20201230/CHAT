@@ -402,6 +402,9 @@ socket.on('send event', function (msg) {
   }
 });
 
+socket.on("vote",function(msg){
+  vote[vote_namelist.indexOf(msg.vote_id)]
+})
 
 socket.on('send vote', function (msg) {
 
@@ -448,8 +451,8 @@ socket.on('send vote', function (msg) {
      "sender_id":uid,
      "sender_nickname":un,
      
-     "vote_respond_arr":respond,
-     "vote_respond_num":[]
+     "vote_respond_arr":respond,//投票內容e.g.[T,F,T]
+     "vote_respond_num":0//投票人數
 
 
      })

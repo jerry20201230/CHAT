@@ -1772,7 +1772,7 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="checkbox" value="" hidden id="vote-tickets-input-${i}">
+                            <input class="form-check-input me-1" type="checkbox" value="" id="vote-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
@@ -1784,7 +1784,7 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="" hidden>
+                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
@@ -1808,7 +1808,7 @@
                                     <br>
                                     ${multiple}&nbsp;投票內容:
                                     <p></p>
-                                    <ul class="list-group"  id="${msg.id}-tickets">
+                                    <ul class="list-group" data-tickets="${msg.vote_tickets.length}"  id="${msg.id}-tickets">
                                         ${txt}
                                     </ul>
                                     <br>
@@ -1822,42 +1822,22 @@
                     
                     </li>
                     <script>
-                    $('.li-group').on("click",function () {
-            if ($(this).hasClass('active')) {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action')
-                console.log(1)
-            } else {
-                $(this).attr('class', 'li-group list-group-item list-group-item-action active')
-            }
-
-
-        })
-
-       $('#${msg.id}-tickets>input[type=checkbox]').on("change",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
-
-        $('#${msg.id}-tickets>input[type=radio]').on("change",function(){
-            if(this.checked){
-            $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
 
         $('#${msg.id}-send').on("click",function(){
+            let arr = []
+            for(i=0;i< ${msg.vote_tickets.length};i++){
+              arr.push(document.getElementById("${msg.id}-ticket-input-"+i).checked)
+            }
+            
+            
             socket.emit('vote',{
               vote_id:${msg.id},
-              vote_checked:200
+              vote_ticket:arr,
+              user_id:${localStorage.getItem("myID")}
 
 
             })
+            $('#${msg.id}-send').attr("disabled",true)
         })
 
                     <\/script>
@@ -1876,10 +1856,11 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="checkbox" value="" hidden id="vote-tickets-input-${i}">
+                            <input class="form-check-input me-1" type="checkbox" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
+                      
                         }
                    
                     
@@ -1888,7 +1869,7 @@
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="" hidden>
+                            <input class="form-check-input me-1" type="radio" name="${msg.id}-check-tickets" value="" id="${msg.id}-tickets-input-${i}"">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
@@ -1912,7 +1893,7 @@
                                     <br>
                                     ${multiple}&nbsp;投票內容:
                                     <p></p>
-                                    <ul class="list-group" id="${msg.id}-tickets">
+                                    <ul class="list-group" id="${msg.id}-tickets" data-tickets="${msg.vote_tickets.length}">
                                         ${txt}
                                     </ul>
                                     <br>
@@ -1937,28 +1918,19 @@
 
         })
 
-       $('#${msg.id}-tickets>input[type=checkbox]').on("change",function(){
-            if(this.checked){
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
 
-        $('#${msg.id}-tickets>input[type=radio]').on("change",function(){
-            if(this.checked){
-            $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
-            $(this).parent().attr('class', 'li-group list-group-item list-group-item-action active')
-            }else{
-                $('.li-group>input[type=radio]').parent().attr('class', 'li-group list-group-item list-group-item-action')
-                $(this).parent().attr('class', 'li-group list-group-item list-group-item-action')
-            }
-        })
 
         $('#${msg.id}-send').on("click",function(){
+            let arr = []
+            for(i=0;i< ${msg.vote_tickets.length};i++){
+              arr.push(document.getElementById("${msg.id}-ticket-input-"+i).checked)
+            }
+            
+            
             socket.emit('vote',{
               vote_id:${msg.id},
-              vote_checked:200
+              vote_ticket:arr,
+              user_id:${localStorage.getItem("myID")}
 
 
             })
