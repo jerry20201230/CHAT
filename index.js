@@ -407,11 +407,14 @@ socket.on("vote",function(msg){
   for (let i = 0; i < msg.vote_ticket.length; i++) {
     if(msg.vote_ticket[i]){
       vote[vote_namelist.indexOf(msg.vote_id)].vote_respond_arr[i] += 1
-      
+
     }
     
   }
-  
+  io.emit("vote data",{
+    to:msg.to
+
+  })
 })
 
 socket.on('send vote', function (msg) {
