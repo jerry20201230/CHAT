@@ -1833,7 +1833,7 @@
         $('#${msg.id}-send').on("click",function(){
            
             let arr = []
-            for(i=0;i< ${msg.vote_tickets.length};i++){
+            for(i=0;i< ${msg.vote_tickets.length-1};i++){
               arr.push(document.getElementById("${msg.id}-tickets-input-"+i).checked)
             }
             
