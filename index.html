@@ -1228,7 +1228,7 @@
 
         <div id="contextmenu" style="display: none;">
             <div id="content-tool"></div>
-            <ul id="contextmenu-ul">
+            <ul id="contextmenu-ul" class="list-group">
 
             </ul>
 
@@ -2109,15 +2109,16 @@
                 menu: $("#contxtmenu"),
                 x: 0,
                 y: 0,
-                set: function (count, text, callback) {
+
+                show: function (count, text,callback) {
+                    //count:num,text:[],callback:[]
 
                     for (let i = 0; i < count; i++) {
 
-                        $("#contextmenu-ul").append("<li onclick='" + callback[i] + "'>" + text[i] + "</li>")
+                        $("#contextmenu-ul").append(`<li onclick="${callback[i]}">${text[i]}</li>`)
                     }
-                },
-                show: function (callback) {
 
+                    console.log("contexe menu Build successed!")
                     //選單出現後的位置
                     contextmenu.menu.css("display", "block")
                     contextmenu.menu.css("left", contextmenu.x + 'px')
