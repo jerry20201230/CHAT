@@ -1113,7 +1113,7 @@
                                     </div>
                                 </span><br>
                             <p></p>
-                            <div class="border-dark" style="border-radius:5px ; border: 1px solid; padding: 5px;">
+                            <div class="border-secondary" style="border-radius:5px ; border: 1px solid; padding: 5px;">
                                 <div id="vote-tickets" data-tickets="2">
                                     <div class="form-floating" id="vote-p-1">
                                         <input type="text" class="form-control" id="vote-ticket-1" placeholder="選項1">
@@ -1166,11 +1166,20 @@
 
                             </div>
                             <p></p>
-                            <div class="border-dark" style="border-radius:5px ; border: 1px solid; padding: 5px;">
+                            <div class="border-secondary" style="border-radius:5px ; border: 1px solid; padding: 5px;">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="vote-check-1">
                                     <label class="form-check-label" for="vote-check-1">
                                         多選
+                                    </label>
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="border-warning" style="border-radius:5px ; border: 1px solid; padding: 5px;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="vote-check-2">
+                                    <label class="form-check-label" for="vote-check-2">
+                                        記錄使用者
                                     </label>
                                 </div>
                             </div>
@@ -1209,7 +1218,8 @@
     
                 "vote_tickets":_arr,
             
-                "vote_multiple":ischecked
+                "vote_multiple":ischecked,
+                "vote_record_user":document.getElementById("vote-check-2").checked
                })
                 socket.emit("typeing-end",{"id":socket.id,"room":MyRoom})
 
@@ -1788,7 +1798,7 @@ console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; 
                         for (i = 0; i < msg.vote_tickets.length; i++) {
                             txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
-                            <input class="form-check-input me-1" type="checkbox" value="" id="vote-tickets-input-${i}">
+                            <input class="form-check-input me-1" type="checkbox" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
@@ -1846,7 +1856,9 @@ console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; 
               //arr.push(document.getElementById().checked)
               arr.push($('#' + "${msg.id}-tickets-input-"+i).is(":checked"))
               console.log($('#' + "${msg.id}-tickets-input-"+i).is(":checked"))
+              console.log($('#' + "${msg.id}-tickets-input-"+i))
               $('#' + "${msg.id}-tickets-input-"+i).attr("disabled",true)
+             //document.getElementById("${msg.id}-tickets-input-"+i).disabled = true;
             }
             
             console.log(arr)

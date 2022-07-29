@@ -403,19 +403,24 @@ socket.on('send event', function (msg) {
 });
 
 socket.on("vote",function(msg){
-  vote[vote_namelist.indexOf(msg.vote_id)]
+  vote[vote_namelist.indexOf(msg.vote_id)].vote_respond_num += 1;
+  for (let i = 0; i < msg.vote_ticket.length; i++) {
+    if(msg.vote_ticket[i]){
+      vote[vote_namelist.indexOf(msg.vote_id)].vote_respond_arr[i] += 1
+      
+    }
+    
+  }
+  
 })
 
 socket.on('send vote', function (msg) {
-
   console.log(msg)
-
   i = socket.id
   fileID++
   
   let respond = [],un = nickname[socketID.indexOf(i)],uid = user[socketID.indexOf(i)]
   
-
   io.emit('send vote', {
     "to": msg.to, 
     "text": un+ " (" + uid + ") 發起了投票:", 
@@ -432,14 +437,9 @@ socket.on('send vote', function (msg) {
     "vote_multiple" :msg.vote_multiple
     })
 
-
   for(i=0;i<msg.vote_tickets.length;i++){
     respond.push(0)
   }
-
-
-
-
 
      vote.push({
      "vote_id":'vote-' + fileID,
@@ -451,7 +451,7 @@ socket.on('send vote', function (msg) {
      "sender_id":uid,
      "sender_nickname":un,
      
-     "vote_respond_arr":respond,//投票內容e.g.[T,F,T]
+     "vote_respond_arr":respond,//投票內容e.g.[3,0,2]
      "vote_respond_num":0//投票人數
 
 
