@@ -1778,7 +1778,7 @@
 
         socket.on('send vote', function (msg) {
             console.log(msg)
-            let txt = "", multiple, owner_ctrl = " ";
+            let txt = "", multiple, owner_ctrl = " ",record_user=" ";
             if (msg.owner == localStorage.getItem("myID")) {
                 owner_ctrl = `
                         <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
@@ -1794,6 +1794,12 @@
                         
   
                         `
+            }
+            if(msg.vote_record_user){
+                record_user = `
+                
+                <div class='alert alert-warning'>注意:此投票會記錄你的暱稱和ID</div>
+                `
             }
             if (RoomList.includes(msg.to)) {
                 if (msg.to == MyRoom) {
@@ -1872,7 +1878,7 @@
               "vote_id":"${msg.id}",
               "vote_ticket":arr,
               "user_id":"${localStorage.getItem("myID")}",
-              "to":MyRoom
+              "room":"${MyRoom}"
 
             })
             $('#${msg.id}-send').attr("disabled",true)

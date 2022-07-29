@@ -437,7 +437,8 @@ socket.on('send vote', function (msg) {
     "vote_toptext":un + " (" + uid + ") 發起的投票",
     "vote_text":msg.vote_text,
     "vote_tickets":msg.vote_tickets,
-    "vote_multiple" :msg.vote_multiple
+    "vote_multiple" :msg.vote_multiple,
+    "vote_record_user":msg.vote_record_user
     })
 
   for(i=0;i<msg.vote_tickets.length;i++){
