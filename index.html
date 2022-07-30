@@ -1775,10 +1775,10 @@
 
 
         })
-
+        var owner_ctrl = " "
         socket.on('send vote', function (msg) {
             console.log(msg)
-            var txt = "", multiple, owner_ctrl = " ",record_user=" ";
+            var txt = "", multiple, record_user=" ";
             if (msg.owner == localStorage.getItem("myID")) {
                 owner_ctrl = `
   <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
