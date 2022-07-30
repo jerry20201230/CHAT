@@ -411,8 +411,14 @@ socket.on("vote",function(msg){
     }
     
   }
+  if(vote[vote_namelist.indexOf(msg.vote_id)].vote_record_user &&!vote[vote_namelist.indexOf(msg.vote_id)].vote_respond_user.includes(msg.user_id)){
+    vote[vote_namelist.indexOf(msg.vote_id)].vote_respond_user.push(msg.user_id)
+  }
   io.emit("vote data",{
-    to:msg.to
+    "to":msg.to,
+    "vote_id":vote[vote_namelist.indexOf(msg.vote_id)].id,
+
+    
 
   })
 })
@@ -451,12 +457,14 @@ socket.on('send vote', function (msg) {
      "vote_text":msg.vote_text,
      "vote_tickets":msg.vote_tickets, //array[n]
      "vote_multiple" :msg.vote_multiple,
+     "vote_record_user":msg.vote_record_user,
 
      "sender_id":uid,
      "sender_nickname":un,
      
      "vote_respond_arr":respond,//投票內容e.g.[3,0,2]
-     "vote_respond_num":0//投票人數
+     "vote_respond_num":0,//投票人數
+     "vote_respond_user":[]//user
 
 
      })
