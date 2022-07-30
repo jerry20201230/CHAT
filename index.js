@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/404.html', 404);
+  res.sendFile(__dirname + '/404.html');
 });
 
 var user = ["admin01"]

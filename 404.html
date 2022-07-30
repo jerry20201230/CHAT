@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404</title>
+    <!--BS CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!--BS icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css"
+        integrity="sha512-CaTMQoJ49k4vw9XO0VpTBpmMz8XpCWP5JhGmBvuBqCOaOHWENWO1CrVl09u4yp8yBVSID6smD4+gpzDJVQOPwQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body{
+            margin: 8px;
+    padding-bottom: 3rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark flex" style="position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 1050;">
+
+        <div class="container-fluid">
+            <h1 style="color:#fff">CHAT</h1>
+        </div>
+    </nav>
+
+    <center>
+        <h1>Error 404</h1>
+        <h3>非常抱歉，你要找的網頁不見了!</h3>
+        <h5>請聯絡開發人員，並提供下列資訊</h5>
+        <div class="border border-primary rounded-3" id="debug-info"
+            style="padding: 5px; text-align: left; width: 50%;">
+
+
+
+        </div>
+        <p></p>
+        <button class="btn btn-primary" onclick="copyEvent('debug-info')">複製</button>
+        <a href="mailto:jerry20200815@gmail.com" class="btn btn-primary">聯絡開發人員(jerry20200815@gmail.com)</a>
+    </center>
+
+    <div id="toast" class="position-fixed bottom-0 end-0 p-3 toast-container">
+
+
+    </div>
+    <!--BS JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <!--Jquery-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+        integrity='sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=='
+        crossorigin='anonymous'></script>
+
+    <script>
+        var
+            NowDate = new Date()
+        sec = NowDate.getSeconds(),
+            mins = NowDate.getMinutes(),
+            hour = NowDate.getHours(),
+            month = (NowDate.getMonth() + 1),
+            year = NowDate.getFullYear(),
+            date = NowDate.getDate();
+
+        if (sec < 10) {
+            sec = '0' + sec;
+        }
+        if (mins < 10) {
+            mins = '0' + mins;
+        }
+        if (hour < 10) {
+            hour = '0' + (hour);
+        }
+
+        $("#debug-info").append(`
+            URL : ${location.href}<br>
+            瀏覽器資料: ${navigator.userAgent}<br>
+
+            時間: ${year}/${month}/${date} ${hour}:${mins}:${sec}.${NowDate.getMilliseconds()}
+            `)
+
+        function copyEvent(id) {
+            var str = document.getElementById(id);
+            window.getSelection().selectAllChildren(str);
+            document.execCommand("Copy");
+            BS_Toast.show({"img":"bi-check-circle","title":"已複製"},{"html":"已經將文字複製到剪貼簿"})
+        }
+
+        var BS_Toast = {
+            toast_id: 0,
+            show: function (header, body) {
+                $("#toast").append(` 
+            <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        style="margin-top:0 ;" class="bi bi-check-circle black-svg" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                    </svg>&nbsp;
+                <strong class="me-auto">${header.title}</strong>
+                <small>${hour}:${mins}</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+             </div>
+            <div class="toast-body">${body.html}</div>
+            </div>`)
+
+                let Thistoast = new bootstrap.Toast(document.getElementById(`BS-Toast-${BS_Toast.toast_id}`))
+
+                Thistoast.show()
+
+                BS_Toast.toast_id += 1
+            }
+        }
+
+        //warning msg to console.
+        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+        console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+        console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+
+    </script>
+</body>
+
+</html>
