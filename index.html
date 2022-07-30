@@ -215,7 +215,7 @@
         }
     </style>
 
-    <script>
+    <script> //time
         var
             NowDate = new Date(),
             sec = NowDate.getSeconds(),
@@ -251,7 +251,7 @@
 </head>
 
 <body onload="Time()">
-    <span hidden>即時的線上聊天應用程式</span>
+    <span hidden>即時的線上聊天應用程式，支援群組與圖片傳送功能</span>
     <div id="logined-ui">
 
 
@@ -1236,7 +1236,7 @@
 
 
     <div id="contextmenu" style="display: none;">
-        <div id="content-tool"></div>
+        <div id="content-tool" class="flex"></div>
         <ul id="contextmenu-ul" class="list-group">
 
         </ul>
@@ -1781,7 +1781,7 @@
             let txt = "", multiple, owner_ctrl = " ",record_user=" ";
             if (msg.owner == localStorage.getItem("myID")) {
                 owner_ctrl = `
-                        <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
+  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
     查看結果
   </button>
 
@@ -1790,10 +1790,7 @@
     <p>投票人數:0人</p>
     <p>總票數:0票</p>
   </div>
-</div>
-                        
-  
-                        `
+</div>`
             }
             if(msg.vote_record_user){
                 record_user = `
@@ -1882,6 +1879,7 @@
               "room":"${MyRoom}"
 
             })
+            $("#${msg.id}-viewbox").append(' <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">查看結果</button><div class="collapse" id="collapse-for-${msg.id}"><div class="card card-body"><p>投票人數:0人</p><p>總票數:0票</p></div></div>')
             $('#${msg.id}-send').attr("disabled",true)
         })
 
