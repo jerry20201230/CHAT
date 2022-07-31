@@ -144,7 +144,10 @@ io.on('connection', (socket) => {
     console.log(msg.room)
   //  console.log(room_setting_how_to_join[roomID.indexOf(msg.room)].pws)
 
-    if (roomName[roomID.indexOf(msg.room)] == -1) {
+  if (user.includes(msg.id)) {
+    io.to(socket.id).emit("blocked connection", msg.room)
+  } 
+   else if (roomName[roomID.indexOf(msg.room)] == -1) {
       io.to(socket.id).emit("room not found", msg.room)
     } 
     else if (roomPws[roomID.indexOf(msg.room)] !== msg.pws) {
@@ -497,6 +500,7 @@ socket.on('send vote', function (msg) {
 
 socket.on('GetUsers', msg => {
   let room = msg.room
+
   //   decode the attr(data-room)is<server>?=>return:server.
   if (room == 'server') {
     io.emit("UserList", { "to": room, "userID": [user[0]], "nickname": [nickname[0]], "statue": statue[0], "self": true })
@@ -525,8 +529,12 @@ socket.on('GetUsers', msg => {
     console.log(return_nickname_arr)
     console.log(return_user_arr)
     console.log(return_statue_arr)
+    if(msg.for == 'privateRoom'){
+      io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr ,"for":msg.for})
+    }else{
     io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
   }
+}
 })
 socket.on('rename_nickname', msg => {
   i = socket.id
@@ -548,6 +556,7 @@ socket.on('rename_nickname', msg => {
 
 socket.on('disconnect', function () {
   i = socket.id
+ 
 
   typeing = arrayRemove(typeing, i)
 
@@ -561,8 +570,6 @@ socket.on('disconnect', function () {
 
   console.log(_display + " 正在輸入...")
   io.emit('typeing', _display + " 正在輸入...")
-
-
 
 
   console.log(`user[${socket.id}] disconnected`);
@@ -594,9 +601,9 @@ socket.on('disconnect', function () {
   //io.to(room_socketID[room_socketID.indexOf(i)]).emit("sys-info chat message",  nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線")
 
   console.log(socketID.indexOf(i))
-  user = arrayRemove_val(user, socketID.indexOf(i))
-  nickname = arrayRemove_val(nickname, socketID.indexOf(i))
-  socketID = arrayRemove_val(socketID, socketID.indexOf(i))
+  user = arrayRemove(user, user[socketID.indexOf(i)])
+  nickname = arrayRemove(nickname,nickname[socketID.indexOf(i)])
+  socketID = arrayRemove(socketID, i)
 
 
 

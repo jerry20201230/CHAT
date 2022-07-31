@@ -447,6 +447,7 @@
               if(document.getElementById('dl-file-1').checked){
                 $('#createRoom').hide();
                 $('#joinRoom').show();
+                $('#privateRoom').hide()
                 
               }"><input type='radio' id='dl-file-1' name='dl-radio'><span class='round button'>
                                     <center>加入房間</center>
@@ -456,11 +457,24 @@
               if(document.getElementById('dl-file-2').checked){
                 $('#createRoom').show();
                 $('#joinRoom').hide();
+                $('#privateRoom').hide()
               }">
                                 <input type='radio' id='dl-file-2' name='dl-radio'><span class='round button'>
                                     <center>建立房間</center>
                                 </span></label>
                         </div>
+
+                        <div class='radio'><label onclick="
+                            if(document.getElementById('dl-file-3').checked){
+                              $('#createRoom').hide();
+                              $('#joinRoom').hide();
+                              $('#privateRoom').show();
+                              socket.emit('GetUser',{'room':'@room-1','for':'privateRoom'})
+                            }">
+                                              <input type='radio' id='dl-file-3' name='dl-radio'><span class='round button'>
+                                                  <center>加入好友</center>
+                                              </span></label>
+                            </div>
 
                         <p></p><br>
 
@@ -651,6 +665,9 @@
               }
               ">確定</button></p>
                         <p><span id="join-statue"></span></p>
+                    </div>
+                    <div id="privateRoom">
+
                     </div>
 
 
@@ -1234,6 +1251,19 @@
         </div>
     </div>
 
+    <div id="fullpage-alert"
+    style="    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    background-color:var(--bs-warning)">
+
+    
+    </div>
 
     <div id="contextmenu" style="display: none;">
         <div id="content-tool" class="flex"></div>
@@ -1359,6 +1389,16 @@
         })
         socket.on("room blocked", function (room) {
             $('#join-statue').append("聊天室 " + room + "拒絕連線<br>")
+
+        })
+        socket.on("blocked connection", function (room) {
+            $('#fullpage-alert').html(`
+            <center style="margin-top:40vh">
+              <h1>你已經在其他分頁/視窗加入聊天</h1>  
+              <h3>請勿同時使用2個以上的分頁加入!</h3>  
+            </center>
+            `).show()
+            socket.disconnect()
 
         })
 
@@ -1582,7 +1622,7 @@
         })
 
         socket.on("UserList", function (msg) {
-            if (msg.to == MyRoom) {
+            if (msg.to == MyRoom && msg.for !== 'privateRoom') {
                 $("#PeopleOnLine").html("")
                 let count = 0
                 console.log(msg)
