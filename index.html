@@ -1730,15 +1730,7 @@
                             <tr>
                             `)
                             }
-                            if(friend == 0){
-                                $("#private-invite-tbody").append(`
-                                
-                                <tr>
-                                  <td colspan=4>目前沒有可加入的使用者</td>    
-                                </tr>
-                                `)
-                            }
-                            
+
                             count++
                         } else {
 
@@ -1746,6 +1738,15 @@
 
                         }
                     }
+                    if(friend == 0){
+                                $("#private-invite-tbody").append(`
+                                
+                                <tr>
+                                  <td colspan=4 style="background:var(--bs-warning)">目前沒有可加入的使用者</td>    
+                                </tr>
+                                `)
+                            }
+                            
                 }
 
             }
