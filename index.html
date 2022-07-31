@@ -1679,6 +1679,7 @@
                     $("#private-invite-tbody").html("")
 
                     for (let r = 0; r < (msg.userID).length; r++) {
+                        let friend = 0 // can join
 
                         if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
                             let _statue = msg.statue[r]
@@ -1709,6 +1710,7 @@
                                 </td>
                             <tr>
                             `)
+                            friend++
                             }else{
                                 $("#private-invite-tbody").append(`
                             <tr>
@@ -1724,6 +1726,14 @@
                                 </td>
                             <tr>
                             `)
+                            }
+                            if(friend == 0){
+                                $("#private-invite-tbody").append(`
+                                
+                                <tr colspan=4>
+                                  <td>目前沒有可加入的使用者</td>    
+                                </tr>
+                                `)
                             }
                             
                             count++
