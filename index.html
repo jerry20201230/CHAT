@@ -469,12 +469,12 @@
                               $('#createRoom').hide();
                               $('#joinRoom').hide();
                               $('#privateRoom').show();
-                              socket.emit('GetUser',{'room':'@room-1','for':'privateRoom'})
+                              socket.emit('GetUsers',{'room':'主聊天室','for':'privateRoom'})
                             }">
-                                              <input type='radio' id='dl-file-3' name='dl-radio'><span class='round button'>
-                                                  <center>加入好友</center>
-                                              </span></label>
-                            </div>
+                                <input type='radio' id='dl-file-3' name='dl-radio'><span class='round button'>
+                                    <center>加入好友</center>
+                                </span></label>
+                        </div>
 
                         <p></p><br>
 
@@ -666,8 +666,22 @@
               ">確定</button></p>
                         <p><span id="join-statue"></span></p>
                     </div>
-                    <div id="privateRoom">
+                    <div id="privateRoom" style="display: none;">
+                        <table id="private-invite-table">
+                            <thead>
+                                <tr>
+                                    <td>暱稱</td>
+                                    <td>ID</td>
+                                    <td>狀態</td>
+                                    <td>加入</td>
+                                </tr>
+                            </thead>
+                            <tbody id="private-invite-tbody">
 
+
+
+                            </tbody>
+                        </table>
                     </div>
 
 
@@ -986,7 +1000,7 @@
     </div>
 
     <div class="modal fade" id="Modal-6" tabindex="-1" aria-labelledby="Moda-6Label" aria-hidden="true"
-    data-bs-keyboard="false" data-bs-backdrop="static">
+        data-bs-keyboard="false" data-bs-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1251,8 +1265,7 @@
         </div>
     </div>
 
-    <div id="fullpage-alert"
-    style="    
+    <div id="fullpage-alert" style="    
     position: fixed;
     top: 0;
     left: 0;
@@ -1262,7 +1275,7 @@
     display: none;
     background-color:var(--bs-warning)">
 
-    
+
     </div>
 
     <div id="contextmenu" style="display: none;">
@@ -1394,7 +1407,7 @@
         socket.on("blocked connection", function (room) {
             $('#fullpage-alert').html(`
             <center style="margin-top:40vh">
-              <h1>你已經在其他分頁/視窗加入聊天</h1>  
+              <h1>你已經在其他分頁/視窗上加入聊天</h1>  
               <h3>請勿同時使用2個以上的分頁加入!</h3>  
             </center>
             `).show()
@@ -1622,43 +1635,78 @@
         })
 
         socket.on("UserList", function (msg) {
-            if (msg.to == MyRoom && msg.for !== 'privateRoom') {
-                $("#PeopleOnLine").html("")
-                let count = 0
-                console.log(msg)
-                //warning msg to console.
-                console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
-                console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
-                console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
-                console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+        console.log(msg)
+            if (msg.to == MyRoom) {
+                if (msg.for !== 'privateRoom') {
+                    $("#PeopleOnLine").html("")
+                    let count = 0
+                    console.log(msg)
+                    //warning msg to console.
+                    console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+                    console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+                    console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+                    console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
 
 
-                for (let r = 0; r < (msg.userID).length; r++) {
+                    for (let r = 0; r < (msg.userID).length; r++) {
 
-                    if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
-                        let _statue = msg.statue[r]
-                        if (_statue == "線上") { _statue = "🟢 " + _statue }
-                        else if (_statue == "離開") { _statue = "🟡 " + _statue }
-                        else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
-                        else if (_statue == "離線") { _statue = "⚪ " + _statue }
-                        $("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
-                        count++
-                    } else {
+                        if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
+                            let _statue = msg.statue[r]
+                            if (_statue == "線上") { _statue = "🟢 " + _statue }
+                            else if (_statue == "離開") { _statue = "🟡 " + _statue }
+                            else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
+                            else if (_statue == "離線") { _statue = "⚪ " + _statue }
+                            $("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+                            count++
+                        } else {
+
+                        }
 
                     }
+                    if (msg.self == true) {
+                        let _statue = $("#statue_select").val()
+                        if (_statue.includes("online")) { _statue = "🟢 " + _statue }
+                        else if (_statue.includes("leave")) { _statue = "🟡 " + _statue }
+                        else if (_statue.includes("busy")) { _statue = "🔴 " + _statue }
+                        else if (_statue.includes("disconnect")) { _statue = "⚪ " + _statue }
+                        $("#PeopleOnLine").append("<tr>" + "<td>" + localStorage.getItem("myNickname") + "</td>" + "<td>" + localStorage.getItem("myID") + "</td>" + "<td>" + $("#statue_select") + "</td>" + "</tr>")
+                        count++
+                    }
+                    $(".onlinePeople").html(count);
+                    $('#getuser-connecting').hide();
+                } else {
+                    $("#private-invite-tbody").html("")
 
+                    for (let r = 0; r < (msg.userID).length; r++) {
+
+                        if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
+                            let _statue = msg.statue[r]
+                            if (_statue == "線上") { _statue = "🟢 " + _statue }
+                            else if (_statue == "離開") { _statue = "🟡 " + _statue }
+                            else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
+                            else if (_statue == "離線") { _statue = "⚪ " + _statue }
+                            //$("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+                            $("#private-invite-tbody").append(`
+                            <tr>
+                            
+                                <td>${msg.nickname[r]}</td>
+                                <td>${msg.userID[r]}</td>
+                                <td>${_statue}</td>
+                                <td>
+                                    <button class="btn btn-secondary" data-private="${msg.userID[r]}">
+                                        <i class="bi bi-person-plus-fill"></i>    
+                                    </button>
+                                </td>
+                            <tr>
+                            `)
+                            count++
+                        } else {
+
+
+
+                        }
+                    }
                 }
-                if (msg.self == true) {
-                    let _statue = $("#statue_select").val()
-                    if (_statue.includes("online")) { _statue = "🟢 " + _statue }
-                    else if (_statue.includes("leave")) { _statue = "🟡 " + _statue }
-                    else if (_statue.includes("busy")) { _statue = "🔴 " + _statue }
-                    else if (_statue.includes("disconnect")) { _statue = "⚪ " + _statue }
-                    $("#PeopleOnLine").append("<tr>" + "<td>" + localStorage.getItem("myNickname") + "</td>" + "<td>" + localStorage.getItem("myID") + "</td>" + "<td>" + $("#statue_select") + "</td>" + "</tr>")
-                    count++
-                }
-                $(".onlinePeople").html(count);
-                $('#getuser-connecting').hide();
 
             }
             count = 0;
@@ -1817,7 +1865,7 @@
         })
 
 
-        socket.on("vote data",msg=>{
+        socket.on("vote data", msg => {
 
         })
 
@@ -1826,7 +1874,7 @@
         var owner_ctrl = " "
         socket.on('send vote', function (msg) {
             console.log(msg)
-            var txt = "", multiple, record_user=" ";
+            var txt = "", multiple, record_user = " ";
             if (msg.owner == localStorage.getItem("myID")) {
                 owner_ctrl = `
   <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
@@ -1840,7 +1888,7 @@
   </div>
 </div>`
             }
-            if(msg.vote_record_user){
+            if (msg.vote_record_user) {
                 record_user = `
                 
                 <div class='alert alert-warning'>注意:此投票會記錄你的暱稱和ID</div>
@@ -1953,39 +2001,39 @@
 
 
         socket.on('sys-info chat message', function (msg) {
-            if(msg.msg !== "undefined (undefined ) 已離線"){
+            if (msg.msg !== "undefined (undefined ) 已離線") {
 
-            if (msg.to == "you") {
-                $(`.messages[data-room=${RoomList.indexOf(MyRoom)}]`).append("<li class='info'>" + msg.msg + "</li>")
-                window.scrollTo(0, document.body.scrollHeight);
-                isConnected = true
-            } else
-                if (RoomList.includes(msg.to)) {
-                    if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
+                if (msg.to == "you") {
+                    $(`.messages[data-room=${RoomList.indexOf(MyRoom)}]`).append("<li class='info'>" + msg.msg + "</li>")
+                    window.scrollTo(0, document.body.scrollHeight);
+                    isConnected = true
+                } else
+                    if (RoomList.includes(msg.to)) {
+                        if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
 
-                        $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
-                        window.scrollTo(0, document.body.scrollHeight);
-                        isConnected = true
+                            $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
+                            window.scrollTo(0, document.body.scrollHeight);
+                            isConnected = true
 
-                    } else {
-                        $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+                        } else {
+                            $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
 
-                        let icon = "bi-bell-fill"
-                        if (msg.type == "join") {
-                            icon = "bi-person-plus-fill"
-                            BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.head })
-                        } else
-                            if (msg.type == "leave") {
-                                icon = "bi-person-x-fill"
-                                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
-                            } else {
-                                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
-                            }
+                            let icon = "bi-bell-fill"
+                            if (msg.type == "join") {
+                                icon = "bi-person-plus-fill"
+                                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.head })
+                            } else
+                                if (msg.type == "leave") {
+                                    icon = "bi-person-x-fill"
+                                    BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+                                } else {
+                                    BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+                                }
 
 
 
+                        }
                     }
-                }
             }
 
 
@@ -2241,7 +2289,14 @@
                 $("#createRoom").hide();
             } else
                 if ($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true') {
-                    $("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
+                    //$("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
+                    socket.disconnect()
+                    $("#fullpage-alert").html(`
+                    <center style="margin-top:45vh">
+                    <h1>系統發生錯誤</h1>
+                    <h3>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a></h3>
+                    </center>
+                    `).show()
                 }
 
         if ($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()) {
