@@ -341,6 +341,9 @@
 
                         <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#Modal-5" onclick='    $(".nickname").html(localStorage.getItem("myNickname"))
             $(".Sid").html(localStorage.getItem("myID"))'>設定</button>
+
+            &nbsp;
+            <a class="btn btn-outline-light" href="/docs/index.html" target="_blank">使用約定</a>
                     </div>
 
                 </div>
@@ -1730,8 +1733,8 @@
                             if(friend == 0){
                                 $("#private-invite-tbody").append(`
                                 
-                                <tr colspan=4>
-                                  <td>目前沒有可加入的使用者</td>    
+                                <tr>
+                                  <td colspan=4>目前沒有可加入的使用者</td>    
                                 </tr>
                                 `)
                             }
