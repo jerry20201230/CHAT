@@ -135,6 +135,8 @@ io.on('connection', (socket) => {
         else
           if (msg.statue.includes('disconnect')) { statue[socketID.indexOf(socket.id)] = "離線" }
 
+    
+
 
   })
 

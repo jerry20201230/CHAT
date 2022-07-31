@@ -1329,8 +1329,8 @@
         var isConnected = false
 
         var MyRoom
-        var RoomList = []
-        var RoomID = []
+        var RoomList = ["admin01"]
+        var RoomID = ["admin01"]
         var room_num = 1
 
         var notifications = false
@@ -1686,7 +1686,10 @@
                             else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
                             else if (_statue == "離線") { _statue = "⚪ " + _statue }
                             //$("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
-                            $("#private-invite-tbody").append(`
+                            
+                            if(!RoomID.includes(msg.userID[r]) && msg.userID[r] !== localStorage.getItem("myID")){
+
+                                $("#private-invite-tbody").append(`
                             <tr>
                             
                                 <td>${msg.nickname[r]}</td>
@@ -1700,6 +1703,23 @@
                                 </td>
                             <tr>
                             `)
+                            }else{
+                                $("#private-invite-tbody").append(`
+                            <tr>
+                            
+                                <td>${msg.nickname[r]}</td>
+                                <td>${msg.userID[r]}</td>
+                                <td>${_statue}</td>
+
+                                <td style="padding:5px">
+                                    <button class="btn btn-secondary" data-private="${msg.userID[r]}" disabled>
+                                        <i class="bi bi-person-plus-fill"></i>    
+                                    </button>
+                                </td>
+                            <tr>
+                            `)
+                            }
+                            
                             count++
                         } else {
 
