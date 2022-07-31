@@ -1680,9 +1680,9 @@
                     $('#getuser-connecting').hide();
                 } else {
                     $("#private-invite-tbody").html("")
-
+ let friend = 0 // can join
                     for (let r = 0; r < (msg.userID).length; r++) {
-                        let friend = 0 // can join
+                       
 
                         if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
                             let _statue = msg.statue[r]
@@ -1742,7 +1742,7 @@
                                 $("#private-invite-tbody").append(`
                                 
                                 <tr>
-                                  <td colspan=4 style="background:var(--bs-warning)">目前沒有可加入的使用者</td>    
+                                  <td colspan=4 style="background:var(--bs-warning);text-align:center;">目前沒有可加入的使用者</td>    
                                 </tr>
                                 `)
                             }
