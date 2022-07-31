@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="ufrA26T5KMQ5TkSwY6HqQ0tJCCCcoCAXf8uhfxT1ljY" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">CHAT - 即時的聊天系統</title>
     <link rel="shortcut icon" href="/icon/favicon.ico" />
@@ -1697,7 +1698,12 @@
                                 <td>${_statue}</td>
 
                                 <td style="padding:5px">
-                                    <button class="btn btn-secondary" data-private="${msg.userID[r]}">
+                                    <button class="btn btn-secondary" data-private="${msg.userID[r]}"
+                                    onclick="socket.emit('join',{
+                                        'room':'${msg.userID[r]}"',
+                                        'private':true,
+                                        ''
+                                    })">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
                                 </td>
