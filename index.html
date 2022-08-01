@@ -2308,7 +2308,7 @@
         window.onresize = function () {
             $(".bottom").css("width", $(".tab-content").css("width"))
             $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-            if (700 <= window.innerWidth < 936) {
+        /*if (700 <= window.innerWidth < 936) {
             console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
@@ -2319,6 +2319,21 @@
             $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
         }else{
             console.log(">936")
+            $("#offcanvas-toggle").hide()
+        }*/ if (window.innerWidth < 800) {
+            console.log("<800")
+            /*console.log("700-936")
+            $("#v-pills-tab").appendTo($("#chat-tabs"));
+            $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+            $("#offcanvas-toggle").hide()*/
+            $("#offcanvas-toggle").show()
+            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+      /*  }else if(700 > window.innerWidth ){
+            console.log("<700")
+*/
+        }else{
+            console.log(">=800")
+            //console.log(">936")
             $("#offcanvas-toggle").hide()
         }
 
