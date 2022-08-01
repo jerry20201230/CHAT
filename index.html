@@ -344,7 +344,12 @@
 
             &nbsp;
             <a class="btn btn-outline-light" href="/docs/index.html" target="_blank">使用約定</a>
-                    </div>
+            &nbsp;
+            <button id="offcanvas-toggle" style="display: none;" class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                群組清單
+              </button>
+        
+        </div>
 
                 </div>
             </div>
@@ -1266,6 +1271,20 @@
 
         </div>
     </div>
+
+
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="chat-tab-offcanvas">
+          
+        </div>
+      </div>
+
+
 
     <div id="fullpage-alert" style="    
     position: fixed;
@@ -2290,11 +2309,18 @@
         window.onresize = function () {
             $(".bottom").css("width", $(".tab-content").css("width"))
             $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-            if (window.innerWidth < 936) {
-                $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-                $("#v-pills-tab").appendTo($("#chat-tabs"));
+        if (700 <= window.innerWidth < 936) {
+            $("#v-pills-tab").appendTo($("#chat-tabs"));
+            $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+            $("#offcanvas-toggle").hide()
+        }else if(700 > window.innerWidth ){
+            $("#offcanvas-toggle").show()
+            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+        }else{
+            $("#offcanvas-toggle").hide()
+        }
 
-            }
+        $(".bottom").css("width", $(".tab-content").css("width"))
 
         }
 
@@ -2308,10 +2334,15 @@
 
         //width => tabs display
 
-        if (window.innerWidth < 936) {
+        if (700 <= window.innerWidth < 936) {
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-
+            $("#offcanvas-toggle").hide()
+        }else if(700 > window.innerWidth ){
+            $("#offcanvas-toggle").show()
+            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+        }else{
+            $("#offcanvas-toggle").hide()
         }
 
 
