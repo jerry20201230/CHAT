@@ -1721,14 +1721,16 @@
                                 <td style="padding:5px">
                                     <button class="btn btn-secondary" data-private="${msg.userID[r]}"
                                     onclick="socket.emit('join PrivateRoom',{
-                                        'room':'${msg.userID[r]}"',
-                                        'private':true
+                                        'userName':'${msg.userID[r]}"',
+                                        'private':true,
+                                        'myID':localStorage.getItem("myID")
                                     })">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
                                 </td>
                             <tr>
                             `)
+                            
                             friend++
                             }else{
                                 $("#private-invite-tbody").append(`
@@ -2320,17 +2322,20 @@
         }else{
             console.log(">936")
             $("#offcanvas-toggle").hide()
-        }*/ if (window.innerWidth < 800) {
+        }*/
+                //width => tabs display
+
+                if (window.innerWidth < 800) {
             console.log("<800")
-            /*console.log("700-936")
+        //    console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-            $("#offcanvas-toggle").hide()*/
-            $("#offcanvas-toggle").show()
-            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-      /*  }else if(700 > window.innerWidth ){
-            console.log("<700")
-*/
+            $("#offcanvas-toggle").hide()
+           // $("#offcanvas-toggle").show()
+            //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+      // }else if(700 > window.innerWidth ){
+       //     console.log("<700")
+
         }else{
             console.log(">=800")
             //console.log(">936")
@@ -2353,15 +2358,15 @@
 
         if (window.innerWidth < 800) {
             console.log("<800")
-            /*console.log("700-936")
+        //    console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-            $("#offcanvas-toggle").hide()*/
-            $("#offcanvas-toggle").show()
-            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-      /*  }else if(700 > window.innerWidth ){
-            console.log("<700")
-*/
+            $("#offcanvas-toggle").hide()
+           // $("#offcanvas-toggle").show()
+            //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+      // }else if(700 > window.innerWidth ){
+       //     console.log("<700")
+
         }else{
             console.log(">=800")
             //console.log(">936")
