@@ -667,7 +667,11 @@
 
              $('#join-statue').append('你已經加入了此房間<br>') }
               else{
-                    socket.emit('join',{'id':localStorage.getItem('myID'),'nickname':localStorage.getItem('myNickname'),'room':$('#join-room-name').val(),'pws':$('#join-room-pws').val()})
+             socket.emit('join',{
+                'id':localStorage.getItem('myID'),
+                'nickname':localStorage.getItem('myNickname'),
+                'room':$('#join-room-name').val(),
+                'pws':$('#join-room-pws').val()})
               $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
               }
               ">確定</button></p>
