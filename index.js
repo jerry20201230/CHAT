@@ -140,6 +140,11 @@ io.on('connection', (socket) => {
 
   })
 
+  socket.on("join PrivateRoom", msg => {
+
+    
+  })
+
   socket.on("join", msg => {
     i = socket.id
     console.log(i);

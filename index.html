@@ -1720,10 +1720,9 @@
 
                                 <td style="padding:5px">
                                     <button class="btn btn-secondary" data-private="${msg.userID[r]}"
-                                    onclick="socket.emit('join',{
+                                    onclick="socket.emit('join PrivateRoom',{
                                         'room':'${msg.userID[r]}"',
-                                        'private':true,
-                                        ''
+                                        'private':true
                                     })">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
@@ -2309,14 +2308,17 @@
         window.onresize = function () {
             $(".bottom").css("width", $(".tab-content").css("width"))
             $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-        if (700 <= window.innerWidth < 936) {
+            if (700 <= window.innerWidth < 936) {
+            console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
             $("#offcanvas-toggle").hide()
         }else if(700 > window.innerWidth ){
+            console.log("<700")
             $("#offcanvas-toggle").show()
             $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
         }else{
+            console.log(">936")
             $("#offcanvas-toggle").hide()
         }
 
@@ -2335,13 +2337,16 @@
         //width => tabs display
 
         if (700 <= window.innerWidth < 936) {
+            console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
             $("#offcanvas-toggle").hide()
         }else if(700 > window.innerWidth ){
+            console.log("<700")
             $("#offcanvas-toggle").show()
             $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
         }else{
+            console.log(">936")
             $("#offcanvas-toggle").hide()
         }
 
