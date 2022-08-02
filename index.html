@@ -1305,9 +1305,9 @@
 
     </div>
 
-    <div id="contextmenu" style="display: none;position: relative; max-width: 250px;">
+    <div id="contextmenu" style="display: none;position: absolute; max-width: 5vw;">
         <div id="content-tool" class="flex"></div>
-        <ul id="contextmenu-ul">
+        <ul id="contextmenu-ul" class="list-group">
 
         </ul>
 
@@ -2340,11 +2340,11 @@
             //5,display,...(code)
             for(i=0;i<n;i++){
 
-                $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${c[i]}">${t[i]}</li>`)
+                $("#contextmenu-ul").append(`<li class="list-group-item list-group-item-action" onclick="${c[i]}">${t[i]}</li>`)
             }
             
         }
-        setMenu(2,["iris","ooz"],["console.log('iris')","console.log('ooz')"])
+        setMenu(2,["重新載入","收回訊息"],["location.reload()","console.log('ooz')"])
 
         //==============Toast notification============//
         /*  <div id="toast">
