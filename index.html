@@ -684,6 +684,7 @@
                         <p><span id="join-statue"></span></p>
                     </div>
                     <div id="privateRoom" style="display: none;">
+                        <p>目前顯示線上所有的使用者</p>
                         <table id="private-invite-table">
                             <thead>
                                 <tr>
@@ -696,9 +697,15 @@
                             <tbody id="private-invite-tbody">
 
 
-
+<td 
                             </tbody>
                         </table>
+                        <p>
+                            <button class="btn btn-outline-primary"
+                            onclick="
+                            socket.emit('GetUsers',{'room':'主聊天室','for':'privateRoom'})
+                            $('#private-invite-tbody').html(`<tr><td colspan=4 style='text-align:center' class=text-primary >正在取得資料...</td></tr>`)">重新整理</button>
+                        </p>
                     </div>
 
 
