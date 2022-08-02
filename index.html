@@ -1798,7 +1798,8 @@
                                         'myID':localStorage.getItem('myID'),
                                         'myNickname':localStorage.getItem('myNickname')
                                     })
-                                    console.log('invited')">
+                                    console.log('invited')
+                                    $(this).attr('disabled',true)">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
                                 </td>
@@ -2329,7 +2330,7 @@
         }
         document.onclick = function (e) {
             var e = e || window.event;
-            menu.style.display = "none"
+            menu.hide()
         }
         menu.on("click",function (e) {
             var e = e || window.event;
