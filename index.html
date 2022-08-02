@@ -342,14 +342,16 @@
                         <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#Modal-5" onclick='    $(".nickname").html(localStorage.getItem("myNickname"))
             $(".Sid").html(localStorage.getItem("myID"))'>設定</button>
 
-            &nbsp;
-            <a class="btn btn-outline-light" href="/docs/index.html" target="_blank">使用約定</a>
-            &nbsp;
-            <button id="offcanvas-toggle" style="display: none;" class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                群組清單
-              </button>
-        
-        </div>
+                        &nbsp;
+                        <a class="btn btn-outline-light" href="/docs/index.html" target="_blank">使用約定</a>
+                        &nbsp;
+                        <button id="offcanvas-toggle" style="display: none;" class="btn btn-outline-light" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                            aria-controls="offcanvasExample">
+                            群組清單
+                        </button>
+
+                    </div>
 
                 </div>
             </div>
@@ -1280,13 +1282,13 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body" id="chat-tab-offcanvas">
-          
+
         </div>
-      </div>
+    </div>
 
 
 
@@ -1303,7 +1305,7 @@
 
     </div>
 
-    <div id="contextmenu" style="display: none;position: relative;">
+    <div id="contextmenu" style="display: none;position: relative; max-width: 250px;">
         <div id="content-tool" class="flex"></div>
         <ul id="contextmenu-ul">
 
@@ -1726,7 +1728,7 @@
         })
 
         socket.on("UserList", function (msg) {
-        console.log(msg)
+            console.log(msg)
             if (msg.to == MyRoom) {
                 if (msg.for !== 'privateRoom') {
                     $("#PeopleOnLine").html("")
@@ -1767,9 +1769,9 @@
                     $('#getuser-connecting').hide();
                 } else {
                     $("#private-invite-tbody").html("")
- let friend = 0 // can join
+                    let friend = 0 // can join
                     for (let r = 0; r < (msg.userID).length; r++) {
-                       
+
 
                         if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
                             let _statue = msg.statue[r]
@@ -1778,8 +1780,8 @@
                             else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
                             else if (_statue == "離線") { _statue = "⚪ " + _statue }
                             //$("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
-                            
-                            if(!RoomID.includes(msg.userID[r]) && msg.userID[r] !== localStorage.getItem("myID")){
+
+                            if (!RoomID.includes(msg.userID[r]) && msg.userID[r] !== localStorage.getItem("myID")) {
 
                                 $("#private-invite-tbody").append(`
                             <tr>
@@ -1795,15 +1797,16 @@
                                         'private':true,
                                         'myID':localStorage.getItem('myID'),
                                         'myNickname':localStorage.getItem('myNickname')
-                                    })">
+                                    })
+                                    console.log('invited')">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
                                 </td>
                             <tr>
                             `)
-                            
-                            friend++
-                            }else{
+
+                                friend++
+                            } else {
                                 $("#private-invite-tbody").append(`
                             <tr>
                             
@@ -1825,15 +1828,15 @@
 
                         }
                     }
-                    if(friend == 0){
-                                $("#private-invite-tbody").append(`
+                    if (friend == 0) {
+                        $("#private-invite-tbody").append(`
                                 
                                 <tr>
                                   <td colspan=4 style="background:var(--bs-warning);text-align:center;">目前沒有可加入的使用者</td>    
                                 </tr>
                                 `)
-                            }
-                            
+                    }
+
                 }
 
             }
@@ -2279,12 +2282,12 @@
             e.preventDefault()
             contextmenu.show()
         }
-        window.onclick = function(e) {
-            contextmenu.x = e.clientX;
-            contextmenu.y = e.clientY;
+        document.onclick = function (e) {
+            var e = e || window.event;
+            contextmenu.menu.hide()
         }
         var contextmenu = {
-            menu:$("#contextmenu"),
+            menu: $("#contextmenu"),
             x: 0,
             y: 0,
             set: function (count, text, callback) {
@@ -2308,7 +2311,7 @@
                 contextmenu.menu.show()
             }
         }
-        contextmenu.set(1,["重啟"],["location.reload()"])
+        contextmenu.set(1, ["重啟"], ["location.reload()"])
 
 
         //==============Toast notification============//
@@ -2384,39 +2387,39 @@
         window.onresize = function () {
             $(".bottom").css("width", $(".tab-content").css("width"))
             $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-        /*if (700 <= window.innerWidth < 936) {
-            console.log("700-936")
-            $("#v-pills-tab").appendTo($("#chat-tabs"));
-            $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-            $("#offcanvas-toggle").hide()
-        }else if(700 > window.innerWidth ){
-            console.log("<700")
-            $("#offcanvas-toggle").show()
-            $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-        }else{
-            console.log(">936")
-            $("#offcanvas-toggle").hide()
-        }*/
-                //width => tabs display
+            /*if (700 <= window.innerWidth < 936) {
+                console.log("700-936")
+                $("#v-pills-tab").appendTo($("#chat-tabs"));
+                $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+                $("#offcanvas-toggle").hide()
+            }else if(700 > window.innerWidth ){
+                console.log("<700")
+                $("#offcanvas-toggle").show()
+                $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+            }else{
+                console.log(">936")
+                $("#offcanvas-toggle").hide()
+            }*/
+            //width => tabs display
 
-                if (window.innerWidth < 800) {
-            console.log("<800")
-        //    console.log("700-936")
-            $("#v-pills-tab").appendTo($("#chat-tabs"));
-            $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-            $("#offcanvas-toggle").hide()
-           // $("#offcanvas-toggle").show()
-            //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-      // }else if(700 > window.innerWidth ){
-       //     console.log("<700")
+            if (window.innerWidth < 800) {
+                console.log("<800")
+                //    console.log("700-936")
+                $("#v-pills-tab").appendTo($("#chat-tabs"));
+                $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+                $("#offcanvas-toggle").hide()
+                // $("#offcanvas-toggle").show()
+                //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+                // }else if(700 > window.innerWidth ){
+                //     console.log("<700")
 
-        }else{
-            console.log(">=800")
-            //console.log(">936")
-            $("#offcanvas-toggle").hide()
-        }
+            } else {
+                console.log(">=800")
+                //console.log(">936")
+                $("#offcanvas-toggle").hide()
+            }
 
-        $(".bottom").css("width", $(".tab-content").css("width"))
+            $(".bottom").css("width", $(".tab-content").css("width"))
 
         }
 
@@ -2432,16 +2435,16 @@
 
         if (window.innerWidth < 800) {
             console.log("<800")
-        //    console.log("700-936")
+            //    console.log("700-936")
             $("#v-pills-tab").appendTo($("#chat-tabs"));
             $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
             $("#offcanvas-toggle").hide()
-           // $("#offcanvas-toggle").show()
+            // $("#offcanvas-toggle").show()
             //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-      // }else if(700 > window.innerWidth ){
-       //     console.log("<700")
+            // }else if(700 > window.innerWidth ){
+            //     console.log("<700")
 
-        }else{
+        } else {
             console.log(">=800")
             //console.log(">936")
             $("#offcanvas-toggle").hide()
