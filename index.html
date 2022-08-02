@@ -457,6 +457,7 @@
                 $('#createRoom').hide();
                 $('#joinRoom').show();
                 $('#privateRoom').hide()
+                $('#add-root').hide()
                 
               }"><input type='radio' id='dl-file-1' name='dl-radio'><span class='round button'>
                                     <center>加入房間</center>
@@ -467,6 +468,7 @@
                 $('#createRoom').show();
                 $('#joinRoom').hide();
                 $('#privateRoom').hide()
+                $('#add-root').hide()
               }">
                                 <input type='radio' id='dl-file-2' name='dl-radio'><span class='round button'>
                                     <center>建立房間</center>
@@ -478,6 +480,7 @@
                               $('#createRoom').hide();
                               $('#joinRoom').hide();
                               $('#privateRoom').show();
+                              $('#add-root').hide()
                               socket.emit('GetUsers',{'room':'主聊天室','for':'privateRoom'})
                             }">
                                 <input type='radio' id='dl-file-3' name='dl-radio'><span class='round button'>
@@ -488,6 +491,7 @@
                         <p></p><br>
 
                     </div>
+                    <div id="add-root">請選擇功能</div>
                     <div id="createRoom">
                         <span>輸入房間名稱<input type="text" id="create-room-name"></span>
                         <p><span>輸入房間密碼(若不想設定請勿輸入)<input type="password" id="create-room-pws"></span></p>
@@ -1305,7 +1309,7 @@
 
     </div>
 
-    <div id="contextmenu" style="display: none;position: absolute; max-width: 5vw;">
+    <div id="contextmenu" style="display: none;position: absolute; max-width: 20vw;">
         <div id="content-tool" class="flex"></div>
         <ul id="contextmenu-ul" class="list-group">
 
