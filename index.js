@@ -151,8 +151,8 @@ io.on('connection', (socket) => {
 
     io.to(socketID[user.indexOf(msg.myID)]).emit("PrivateRoom invite owner",{
 
-      'userID':msg.myID,
-      "userNickname":msg.myNickname
+      'userID':user[nickname.indexOf(msg.userName)],
+      "userNickname":msg.userName
     })
     
   })

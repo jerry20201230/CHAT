@@ -1599,8 +1599,9 @@
       
       
       `)
+      $(".bottom").css("width", $(".tab-content").css("width"))
         })
-            socket.on("PrivateRoom invite owner", msg => {
+        socket.on("PrivateRoom invite owner", msg => {
                 room_num++
                 $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=private-with-${msg.userID}>${msg.userNickname}<br><small>(${msg.userID})</small></button>`)
                 $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="private-with-${msg.userID}"></div>`)
