@@ -685,7 +685,7 @@
                         <p><button class="btn btn-primary" onclick="
               if(RoomID.includes($('#join-room-name').val())){
 
-             $('#join-statue').append('你已經加入了此房間<br>') }
+             $('#join-statue').append('<span class=text-danger>你已經加入了此房間</span><br>') }
               else{
              socket.emit('join',{
                 'id':localStorage.getItem('myID'),
@@ -1446,15 +1446,15 @@
 
         })
         socket.on("password incorrect", function (room) {
-            $('#join-statue').append("輸入的聊天室ID或密碼錯誤<br>")
+            $('#join-statue').append("<span class='text-danger'>輸入的聊天室ID或密碼錯誤</span><br>")
 
         })
         socket.on("room not found", function (room) {
-            $('#join-statue').append("找不到聊天室: " + room + "<br>")
+            $('#join-statue').append("<span class='text-danger'>找不到聊天室: " + room + "</span><br>")
 
         })
         socket.on("room blocked", function (room) {
-            $('#join-statue').append("聊天室 " + room + "拒絕連線<br>")
+            $('#join-statue').append("<span class='text-danger'>聊天室 " + room + "拒絕連線</span><br>")
 
         })
         socket.on("blocked connection", function (room) {
