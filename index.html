@@ -2276,44 +2276,74 @@
      
           </ul>
         </div>*/
-        window.oncontextmenu = function (e) {
-            contextmenu.x = e.clientX;
-            contextmenu.y = e.clientY;
-            e.preventDefault()
-            contextmenu.show()
-            console.log(contextmenu)
+        /*  window.oncontextmenu = function (e) {
+              contextmenu.x = e.clientX;
+              contextmenu.y = e.clientY;
+              e.preventDefault()
+              contextmenu.show()
+              console.log(contextmenu)
+          }
+          document.onclick = function (e) {
+              var e = e || window.event;
+              contextmenu.menu.hide()
+          }
+          var contextmenu = {
+              menu: $("#contextmenu"),
+              x: 0,
+              y: 0,
+              set: function (count, text, callback) {
+                  //count:num,text:[],callback:[]
+  
+                  for (let i = 0; i < count; i++) {
+  
+                      $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
+                  }
+  
+                  console.log("contextmenu Build successed!")
+              },
+  
+              show: function () {
+  
+                  //選單出現後的位置
+                  contextmenu.menu.css("display", "block")
+                  contextmenu.menu.css("left", contextmenu.x )
+                  contextmenu.menu.css("top", contextmenu.y )
+  
+                  contextmenu.menu.show()
+              }
+          }
+          contextmenu.set(1, ["重啟"], ["location.reload()"])
+  */
+        var menu = $("#contextmenu");
+        document.oncontextmenu = function (e) {
+            var e = e || window.event;
+            //滑鼠點的座標
+            var oX = e.clientX;
+            var oY = e.clientY;
+            //選單出現後的位置
+            menu.css("display","block");
+            menu.css("left",oX + "px");
+            menu.css("top",oY + "px");
+            //阻止瀏覽器預設事件
+            return false;//一般點選右鍵會出現瀏覽器預設的右鍵選單，寫了這句程式碼就可以阻止該預設事件。
         }
         document.onclick = function (e) {
             var e = e || window.event;
-            contextmenu.menu.hide()
+            menu.style.display = "none"
         }
-        var contextmenu = {
-            menu: $("#contextmenu"),
-            x: 0,
-            y: 0,
-            set: function (count, text, callback) {
-                //count:num,text:[],callback:[]
+        menu.on("click",function (e) {
+            var e = e || window.event;
+            e.cancelBubble = true;
+        })
+        function setMenu(n,t,c) {
+            //5,display,...(code)
+            for(i=0;i<n;i++){
 
-                for (let i = 0; i < count; i++) {
-
-                    $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
-                }
-
-                console.log("contextmenu Build successed!")
-            },
-
-            show: function () {
-
-                //選單出現後的位置
-                contextmenu.menu.css("display", "block")
-                contextmenu.menu.css("left", contextmenu.x )
-                contextmenu.menu.css("top", contextmenu.y )
-
-                contextmenu.menu.show()
+                $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
             }
+            
         }
-        contextmenu.set(1, ["重啟"], ["location.reload()"])
-
+        setMenu(2,["iris","ooz"],["console.log('iris')","console.log('ooz')"])
 
         //==============Toast notification============//
         /*  <div id="toast">
