@@ -1303,9 +1303,9 @@
 
     </div>
 
-    <div id="contextmenu" style="display: none;">
+    <div id="contextmenu" style="display: none;position: relative;">
         <div id="content-tool" class="flex"></div>
-        <ul id="contextmenu-ul" class="list-group">
+        <ul id="contextmenu-ul">
 
         </ul>
 
@@ -2237,7 +2237,7 @@
                 contextmenu.menu.css("left", contextmenu.x + 'px')
                 contextmenu.menu.css("top", contextmenu.y + 'px')
 
-                $("#contxtmenu").show()
+                contextmenu.menu.show()
             }
         }
         contextmenu.set(1,["重啟"],["location.reload()"])
