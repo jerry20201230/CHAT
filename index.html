@@ -697,12 +697,12 @@
                             <tbody id="private-invite-tbody">
 
 
-<td 
+
                             </tbody>
                         </table>
                         <p>
                             <button class="btn btn-outline-primary"
-                            onclick="
+                                onclick="
                             socket.emit('GetUsers',{'room':'主聊天室','for':'privateRoom'})
                             $('#private-invite-tbody').html(`<tr><td colspan=4 style='text-align:center' class=text-primary >正在取得資料...</td></tr>`)">重新整理</button>
                         </p>
@@ -1316,7 +1316,7 @@
 
     </div>
 
-    <div id="contextmenu" style="display: none;position: absolute; max-width: 20vw;">
+    <div id="contextmenu" style="display: none;position: absolute; max-width: 20vw; cursor: default;">
         <div id="content-tool" class="flex"></div>
         <ul id="contextmenu-ul" class="list-group">
 
@@ -1599,202 +1599,256 @@
       
       
       `)
-            $(`#room-ctrl-${room_num}`).click()
-
-            $(".bottom").css("width", $(".tab-content").css("width"))
-
-            try {
-                BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": room.msg.replace("<!s>", "&nbsp;").replace(">", "&gt;").replace("<", "&lt;") })
-            } catch (e) {
-                console.log(e)
-                BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": "歡迎加入&nbsp;" + room.name })
-
-            }
         })
-        //img input
-        var img = $('#img');
-        var isfile = false
-        img.css('display', 'none');
+            socket.on("PrivateRoom invite owner", msg => {
+                room_num++
+                $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=private-with-${msg.userID}>${msg.userNickname}<br><small>(${msg.userID})</small></button>`)
+                $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="private-with-${msg.userID}"></div>`)
+                $("#room-tab-" + room_num).html(`
+      <div>
+            <ul class="messages" data-room="private-with-${msg.userID}">
+              <li>聊天室:${msg.userNickname} (@${msg.userID})</li>
+
+            </ul>
+          </div>
+          <div class="bottom" data-room="private-with-${msg.userID}">
+            <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
+
+            <div class="bottom-bar">
+
+<button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-6"> <i class="bi bi-list"></i></button>
+
+          <div class="msg-form" action="" class="flex" style="width:100%">
+    
+    
+    
+    
+    
+            <input class="input" autocomplete="off" data-room="private-with-${msg.userID}" placeholder="輸入新訊息" 
+            onfocus="input_focus=true; input_room = MyRoom"
+            oninput="
+              socket.emit(' typeing', {'id':socket.id,'room':MyRoom});
+              input_room = MyRoom
+                "
+                onblur="
+              socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});
+              input_focus = false;
+              input_room = MyRoom
+              ">
 
 
+                <button class="btn btn-outline-dark"
+                onclick="submit_chat(MyRoom)"
+                
+                
+                
+                
+                >送出訊息</button>
+                </div>
+            </div>
+          </div>
 
-        function readfichier(e) {
-            if (window.FileReader) {
-                var file = e.target.files[0];
-                var reader = new FileReader();
-                if (file && file.type.match('image.*')) {
-                    reader.readAsDataURL(file);
-                    isfile = true;
-                } else {
-                    img.css('display', 'none');
-                    img.attr('src', '');
+      
+      
+      
+      `)
+
+                $(`#room-ctrl-${room_num}`).click()
+
+                $(".bottom").css("width", $(".tab-content").css("width"))
+
+                try {
+                    BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": room.msg.replace("<!s>", "&nbsp;").replace(">", "&gt;").replace("<", "&lt;") })
+                } catch (e) {
+                    console.log(e)
+                    BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": "歡迎加入&nbsp;" + room.name })
+
                 }
-                reader.onloadend = function (e) {
-                    img.attr('src', reader.result);
-                    img.css('display', 'block');
-
-                    img.css("max-width", (img.parent().width() - 15))
-                }
-            }
-        }
-
-        document.getElementById('upload-input').addEventListener('change', readfichier, false);
+            })
+            //img input
+            var img = $('#img');
+            var isfile = false
+            img.css('display', 'none');
 
 
 
-        //txt input
+            function readfichier(e) {
+                if (window.FileReader) {
+                    var file = e.target.files[0];
+                    var reader = new FileReader();
+                    if (file && file.type.match('image.*')) {
+                        reader.readAsDataURL(file);
+                        isfile = true;
+                    } else {
+                        img.css('display', 'none');
+                        img.attr('src', '');
+                    }
+                    reader.onloadend = function (e) {
+                        img.attr('src', reader.result);
+                        img.css('display', 'block');
 
-        var istxtfile = false
-        var preview_txt = $("#txt-preview")
-        var txtfile = ""
-
-
-        function treadfichier(e) {
-            if (window.FileReader) {
-                var tfile = e.target.files[0];
-                var treader = new FileReader();
-                if (tfile) {
-                    treader.readAsText(tfile);
-                    istxtfile = true;
-                } else {
-
-                }
-                treader.onloadend = function (e) {
-                    preview_txt.html(treader.result)
-                    txtfile = treader.result
-
-
-
-                }
-            }
-        }
-
-        document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
-
-
-        $(`.input[data-room=${MyRoom}]`).on('input', function () {
-            console.log(`.input[data-room=${MyRoom}]`)
-        })
-
-
-
-
-        function submit_chat(room) {
-            console.log({ 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room })
-            if ($(`.input[data-room=${room}]`).val() !== '') {
-                socket.emit('chat message room', { 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room });
-                if (!isConnected) {
-
-                    $(`.msssages[data-room=${room}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${room}]`).val() + '</li>')
-
-                    window.scrollTo(0, document.body.scrollHeight);
-                }
-                //input.value = '';
-                socket.emit("typeing-end", { 'id': socket.id, 'room': room })
-
-                $(`.input[data-room=${room}]`).val("")
-            }
-        }
-        window.onkeydown = function (e) {
-            if (e.keyCode == 13 && input_focus) {
-                submit_chat(input_room)
-            }
-
-        }
-        //Do Not Use The Code Below (JQ BUG in submit)
-        form.on('submit', function () {
-            //  e.preventDefault();
-            if ($(`.input[data-room=${MyRoom}]`).val() !== '') {
-                socket.emit('chat message room', { 'msg': ($(`.input[data-room=${MyRoom}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': MyRoom });
-                if (!isConnected) {
-
-                    $(`.msssages[data-room=${MyRoom}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${MyRoom}]`).val() + '</li>')
-
-                    window.scrollTo(0, document.body.scrollHeight);
-                }
-                //input.value = '';
-                socket.emit("typeing-end", { 'id': socket.id, 'room': MyRoom })
-
-            }
-        });
-        /////////////////////////////
-        rename_nickname_farm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
-                socket.emit('rename_nickname', document.getElementById("NMinput").value);
-                last_nickname = my_nickname
-                my_nickname = document.getElementById("NMinput").value
-
-                if (!isConnected) {
-
-                    $(".messages").append("<li>: ( 與伺服器連接失敗!</li>")
-
-                    window.scrollTo(0, document.body.scrollHeight);
+                        img.css("max-width", (img.parent().width() - 15))
+                    }
                 }
             }
-        });
 
-        $("#statue_select").on("blur", function () {
-            socket.emit("statue", { "statue": $("#statue_select").val(), "room": MyRoom })
-        })
-
-        socket.on("UserList", function (msg) {
-            console.log(msg)
-            if (msg.to == MyRoom) {
-                if (msg.for !== 'privateRoom') {
-                    $("#PeopleOnLine").html("")
-                    let count = 0
-                    console.log(msg)
-                    //warning msg to console.
-                    console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
-                    console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
-                    console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
-                    console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+            document.getElementById('upload-input').addEventListener('change', readfichier, false);
 
 
-                    for (let r = 0; r < (msg.userID).length; r++) {
 
-                        if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
-                            let _statue = msg.statue[r]
-                            if (_statue == "線上") { _statue = "🟢 " + _statue }
-                            else if (_statue == "離開") { _statue = "🟡 " + _statue }
-                            else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
-                            else if (_statue == "離線") { _statue = "⚪ " + _statue }
-                            $("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
-                            count++
-                        } else {
+            //txt input
+
+            var istxtfile = false
+            var preview_txt = $("#txt-preview")
+            var txtfile = ""
+
+
+            function treadfichier(e) {
+                if (window.FileReader) {
+                    var tfile = e.target.files[0];
+                    var treader = new FileReader();
+                    if (tfile) {
+                        treader.readAsText(tfile);
+                        istxtfile = true;
+                    } else {
+
+                    }
+                    treader.onloadend = function (e) {
+                        preview_txt.html(treader.result)
+                        txtfile = treader.result
+
+
+
+                    }
+                }
+            }
+
+            document.getElementById('upload-input-txt').addEventListener('change', treadfichier, false);
+
+
+            $(`.input[data-room=${MyRoom}]`).on('input', function () {
+                console.log(`.input[data-room=${MyRoom}]`)
+            })
+
+
+
+
+            function submit_chat(room) {
+                console.log({ 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room })
+                if ($(`.input[data-room=${room}]`).val() !== '') {
+                    socket.emit('chat message room', { 'msg': ($(`.input[data-room=${room}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': room });
+                    if (!isConnected) {
+
+                        $(`.msssages[data-room=${room}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${room}]`).val() + '</li>')
+
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                    //input.value = '';
+                    socket.emit("typeing-end", { 'id': socket.id, 'room': room })
+
+                    $(`.input[data-room=${room}]`).val("")
+                }
+            }
+            window.onkeydown = function (e) {
+                if (e.keyCode == 13 && input_focus) {
+                    submit_chat(input_room)
+                }
+
+            }
+            //Do Not Use The Code Below (JQ BUG in submit)
+            form.on('submit', function () {
+                //  e.preventDefault();
+                if ($(`.input[data-room=${MyRoom}]`).val() !== '') {
+                    socket.emit('chat message room', { 'msg': ($(`.input[data-room=${MyRoom}]`).val()).replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'), 'room': MyRoom });
+                    if (!isConnected) {
+
+                        $(`.msssages[data-room=${MyRoom}]`).append('<li class="warn">' + "訊息發送失敗! 無法發送的訊息: " + $(`.input[data-room=${MyRoom}]`).val() + '</li>')
+
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                    //input.value = '';
+                    socket.emit("typeing-end", { 'id': socket.id, 'room': MyRoom })
+
+                }
+            });
+            /////////////////////////////
+            rename_nickname_farm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (document.getElementById("NMinput").value && document.getElementById("NMinput").value !== my_nickname) {
+                    socket.emit('rename_nickname', document.getElementById("NMinput").value);
+                    last_nickname = my_nickname
+                    my_nickname = document.getElementById("NMinput").value
+
+                    if (!isConnected) {
+
+                        $(".messages").append("<li>: ( 與伺服器連接失敗!</li>")
+
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                }
+            });
+
+            $("#statue_select").on("blur", function () {
+                socket.emit("statue", { "statue": $("#statue_select").val(), "room": MyRoom })
+            })
+
+            socket.on("UserList", function (msg) {
+                console.log(msg)
+                if (msg.to == MyRoom) {
+                    if (msg.for !== 'privateRoom') {
+                        $("#PeopleOnLine").html("")
+                        let count = 0
+                        console.log(msg)
+                        //warning msg to console.
+                        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+                        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+                        console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+                        console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+
+
+                        for (let r = 0; r < (msg.userID).length; r++) {
+
+                            if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
+                                let _statue = msg.statue[r]
+                                if (_statue == "線上") { _statue = "🟢 " + _statue }
+                                else if (_statue == "離開") { _statue = "🟡 " + _statue }
+                                else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
+                                else if (_statue == "離線") { _statue = "⚪ " + _statue }
+                                $("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+                                count++
+                            } else {
+
+                            }
 
                         }
-
-                    }
-                    if (msg.self == true) {
-                        let _statue = $("#statue_select").val()
-                        if (_statue.includes("online")) { _statue = "🟢 " + _statue }
-                        else if (_statue.includes("leave")) { _statue = "🟡 " + _statue }
-                        else if (_statue.includes("busy")) { _statue = "🔴 " + _statue }
-                        else if (_statue.includes("disconnect")) { _statue = "⚪ " + _statue }
-                        $("#PeopleOnLine").append("<tr>" + "<td>" + localStorage.getItem("myNickname") + "</td>" + "<td>" + localStorage.getItem("myID") + "</td>" + "<td>" + $("#statue_select") + "</td>" + "</tr>")
-                        count++
-                    }
-                    $(".onlinePeople").html(count);
-                    $('#getuser-connecting').hide();
-                } else {
-                    $("#private-invite-tbody").html("")
-                    let friend = 0 // can join
-                    for (let r = 0; r < (msg.userID).length; r++) {
+                        if (msg.self == true) {
+                            let _statue = $("#statue_select").val()
+                            if (_statue.includes("online")) { _statue = "🟢 " + _statue }
+                            else if (_statue.includes("leave")) { _statue = "🟡 " + _statue }
+                            else if (_statue.includes("busy")) { _statue = "🔴 " + _statue }
+                            else if (_statue.includes("disconnect")) { _statue = "⚪ " + _statue }
+                            $("#PeopleOnLine").append("<tr>" + "<td>" + localStorage.getItem("myNickname") + "</td>" + "<td>" + localStorage.getItem("myID") + "</td>" + "<td>" + $("#statue_select") + "</td>" + "</tr>")
+                            count++
+                        }
+                        $(".onlinePeople").html(count);
+                        $('#getuser-connecting').hide();
+                    } else {
+                        $("#private-invite-tbody").html("")
+                        let friend = 0 // can join
+                        for (let r = 0; r < (msg.userID).length; r++) {
 
 
-                        if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
-                            let _statue = msg.statue[r]
-                            if (_statue == "線上") { _statue = "🟢 " + _statue }
-                            else if (_statue == "離開") { _statue = "🟡 " + _statue }
-                            else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
-                            else if (_statue == "離線") { _statue = "⚪ " + _statue }
-                            //$("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
+                            if (msg.nickname !== undefined && msg.nickname !== null && msg.userID !== null) {
+                                let _statue = msg.statue[r]
+                                if (_statue == "線上") { _statue = "🟢 " + _statue }
+                                else if (_statue == "離開") { _statue = "🟡 " + _statue }
+                                else if (_statue == "忙碌") { _statue = "🔴 " + _statue }
+                                else if (_statue == "離線") { _statue = "⚪ " + _statue }
+                                //$("#PeopleOnLine").append("<tr>" + "<td>" + msg.nickname[r] + "</td>" + "<td>" + msg.userID[r] + "</td>" + "<td>" + _statue + "</td>" + "</tr>")
 
-                            if (!RoomID.includes(msg.userID[r]) && msg.userID[r] !== localStorage.getItem("myID")) {
+                                if (!RoomID.includes(msg.userID[r]) && msg.userID[r] !== localStorage.getItem("myID")) {
 
-                                $("#private-invite-tbody").append(`
+                                    $("#private-invite-tbody").append(`
                             <tr>
                             
                                 <td>${msg.nickname[r]}</td>
@@ -1817,9 +1871,9 @@
                             <tr>
                             `)
 
-                                friend++
-                            } else {
-                                $("#private-invite-tbody").append(`
+                                    friend++
+                                } else {
+                                    $("#private-invite-tbody").append(`
                             <tr>
                             
                                 <td>${msg.nickname[r]}</td>
@@ -1833,79 +1887,79 @@
                                 </td>
                             <tr>
                             `)
+                                }
+                            } else {
+
+
+
                             }
-                        } else {
-
-
-
                         }
-                    }
-                    if (friend == 0) {
-                        $("#private-invite-tbody").append(`
+                        if (friend == 0) {
+                            $("#private-invite-tbody").append(`
                                 
                                 <tr>
                                   <td colspan=4 style="background:var(--bs-warning);text-align:center;">目前沒有可加入的使用者</td>    
                                 </tr>
                                 `)
+                        }
+
                     }
 
                 }
-
-            }
-            count = 0;
+                count = 0;
 
 
-        })
+            })
 
-        socket.on('chat message room', function (msg) {
+            socket.on('chat message room', function (msg) {
 
-            if (RoomList.includes(msg.room)) {
-
-
-                if (msg.room == MyRoom) {
-
-                    $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
-                    isConnected = true
+                if (RoomList.includes(msg.room)) {
 
 
-                    window.scrollTo(0, document.body.scrollHeight);
-                } else {
-                    BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') })
-                    $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
-                    isConnected = true
-                    $(`#chat-msg-${msg.count}`).html(msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+                    if (msg.room == MyRoom) {
+
+                        $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
+                        isConnected = true
+
+
+                        window.scrollTo(0, document.body.scrollHeight);
+                    } else {
+                        BS_Toast.show({ 'title': msg.room + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': (msg.msg).replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') })
+                        $(`.messages[data-room=${msg.room}]`).append(`<li id='chat-msg-${msg.count}'>${msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`)
+                        isConnected = true
+                        $(`#chat-msg-${msg.count}`).html(msg.msg.replace(/<!b>/g, '<br>').replace(/<!t>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<!s>/g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+
+                    }
+
 
                 }
+            });
+
+            socket.on('send img', function (msg) {
 
 
-            }
-        });
+                if (RoomList.includes(msg.to)) {
+                    if (msg.to == MyRoom) {
+                        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
+                        window.scrollTo(0, document.body.scrollHeight);
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                    } else {
+                        BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+                        $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
 
-        socket.on('send img', function (msg) {
-
-
-            if (RoomList.includes(msg.to)) {
-                if (msg.to == MyRoom) {
-                    $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
-                    window.scrollTo(0, document.body.scrollHeight);
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
-                } else {
-                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-                    $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><img src='" + msg.src + "' id='" + msg.id + "' alt='" + msg.alt + "'></li>")
-
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                    }
                 }
-            }
-        });
+            });
 
-        socket.on('send link', function (msg) {
+            socket.on('send link', function (msg) {
 
 
-            if (RoomList.includes(msg.to)) {
-                if (msg.to == MyRoom) {
-                    $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
+                if (RoomList.includes(msg.to)) {
+                    if (msg.to == MyRoom) {
+                        $(`.messages[data-room=${MyRoom}]`).append("<li>" + `
           ${msg.text}<br>
           <a href='https://${msg.src}' target="_blank" style="text-decoration: none;">
           <div class="input-group mb-3">
@@ -1917,13 +1971,13 @@
           <a target="_blank" href="https://cofacts.tw/">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a target="_blank" href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
 
           `+ "</li>")
-                    window.scrollTo(0, document.body.scrollHeight);
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
-                } else {
-                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+                        window.scrollTo(0, document.body.scrollHeight);
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                    } else {
+                        BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
-                    $(`.messages[data-room=${msg.to}]`).append("<li>" + `
+                        $(`.messages[data-room=${msg.to}]`).append("<li>" + `
           ${msg.text}<br>
           <a href='https://${msg.src}' target="_blank" style="text-decoration: none;">
           <div class="input-group mb-3">
@@ -1936,49 +1990,49 @@
           <a href="https://cofacts.tw/" target="_blank">假訊息查證(真的假的-轉傳查證)</a>&nbsp;<a target="_blank" href="https://www.scamadviser.com/check-website/${msg.src}">連結安全性查證(scamadviser)</a>
           
           `+ "</li>")
-                    isConnected = true
-
-                }
-            }
-        });
-
-        socket.on('send txt', function (msg) {
-
-            if (RoomList.includes(msg.to)) {
-                if (msg.to == MyRoom) {
-                    console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
-                    if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-                        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
-                    } else {
-                        $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+                        isConnected = true
 
                     }
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
-                    window.scrollTo(0, document.body.scrollHeight);
-                } else {
-                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-
-                    console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
-                    if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
-                        $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
-                    } else {
-                        $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
-
-                    }
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
                 }
-            }
-        });
+            });
 
-        socket.on('send event', function (msg) {
+            socket.on('send txt', function (msg) {
 
-            if (RoomList.includes(msg.to)) {
-                if (msg.to == MyRoom) {
+                if (RoomList.includes(msg.to)) {
+                    if (msg.to == MyRoom) {
+                        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+                        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+                            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+                        } else {
+                            $(`.messages[data-room=${MyRoom}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
 
-                    $(`.messages[data-room=${MyRoom}]`).append(
-                        `<li>
+                        }
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+                        window.scrollTo(0, document.body.scrollHeight);
+                    } else {
+                        BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+
+                        console.log(("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length)
+                        if (("https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>'))).length > 10000) {
+                            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre></li>")
+                        } else {
+                            $(`.messages[data-room=${msg.to}]`).append("<li>" + msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<br>檔案名稱:" + msg.filename.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "<p></p><pre class='text'" + "' id='" + msg.id + "'>" + msg.src + "</pre><br>在<a target='_blank' href='https://jerry20201230.github.io/%E6%96%87%E5%AD%97%E7%B7%A8%E8%BC%AF%E5%99%A8/?file-name=" + encodeURIComponent(msg.filename) + "&data=" + encodeURIComponent(msg.src.replace(/\n/g, '<!b>').replace(/\t/g, '<!t>').replace(/ /g, '<!s>')) + "'>文字編輯器</a>中編輯</li>")
+
+                        }
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+                    }
+                }
+            });
+
+            socket.on('send event', function (msg) {
+
+                if (RoomList.includes(msg.to)) {
+                    if (msg.to == MyRoom) {
+
+                        $(`.messages[data-room=${MyRoom}]`).append(
+                            `<li>
                 ${msg.text}<br>
               <div class="card">
                 <div class="card-header">時間:&nbsp;${msg.event_start_time.replace(/</g, "&lt;").replace(/>/g, "&gt;")}~${msg.event_end_time.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
@@ -1991,35 +2045,35 @@
                 
               </li>`)
 
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
-                    window.scrollTo(0, document.body.scrollHeight);
-                } else {
-                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+                        window.scrollTo(0, document.body.scrollHeight);
+                    } else {
+                        BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
 
 
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", (($(".messages").css("widih") - 50)))
+                    }
                 }
-            }
 
 
 
-        })
+            })
 
 
-        socket.on("vote data", msg => {
+            socket.on("vote data", msg => {
 
-        })
+            })
 
 
 
-        var owner_ctrl = " "
-        socket.on('send vote', function (msg) {
-            console.log(msg)
-            var txt = "", multiple, record_user = " ";
-            if (msg.owner == localStorage.getItem("myID")) {
-                owner_ctrl = `
+            var owner_ctrl = " "
+            socket.on('send vote', function (msg) {
+                console.log(msg)
+                var txt = "", multiple, record_user = " ";
+                if (msg.owner == localStorage.getItem("myID")) {
+                    owner_ctrl = `
   <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-for-${msg.id}" aria-expanded="false" aria-controls="#collapse-for-${msg.id}">
     查看結果
   </button>
@@ -2030,43 +2084,43 @@
     <p>總票數:0票</p>
   </div>
 </div>`
-            }
-            if (msg.vote_record_user) {
-                record_user = `
+                }
+                if (msg.vote_record_user) {
+                    record_user = `
                 
                 <div class='alert alert-warning'>注意:此投票會記錄你的暱稱和ID</div>
                 `
-            }
-            if (RoomList.includes(msg.to)) {
-                if (msg.to == MyRoom) {
+                }
+                if (RoomList.includes(msg.to)) {
+                    if (msg.to == MyRoom) {
 
 
-                    if (msg.vote_multiple) {
-                        multiple = `<span class="badge rounded-pill bg-info text-dark">多選</span>`
-                        for (i = 0; i < msg.vote_tickets.length; i++) {
-                            txt = txt + `
+                        if (msg.vote_multiple) {
+                            multiple = `<span class="badge rounded-pill bg-info text-dark">多選</span>`
+                            for (i = 0; i < msg.vote_tickets.length; i++) {
+                                txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
                             <input class="form-check-input me-1" type="checkbox" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
-                        }
+                            }
 
 
-                    } else {
-                        multiple = `<span class="badge rounded-pill bg-primary">單選</span>`
-                        for (i = 0; i < msg.vote_tickets.length; i++) {
-                            txt = txt + `
+                        } else {
+                            multiple = `<span class="badge rounded-pill bg-primary">單選</span>`
+                            for (i = 0; i < msg.vote_tickets.length; i++) {
+                                txt = txt + `
                         <label class="li-group list-group-item list-group-item-action">
                             <input class="form-check-input me-1" type="radio" name="${msg.id}-tickets" value="" id="${msg.id}-tickets-input-${i}">
                             ${msg.vote_tickets[i]}
                         </label>
                       `
+                            }
                         }
-                    }
 
 
-                    $(`.messages[data-room=${MyRoom}]`).append(`
+                        $(`.messages[data-room=${MyRoom}]`).append(`
                     
                     <li>
                         ${msg.text}
@@ -2127,282 +2181,282 @@
                     <\/script>
 
                     `)
-                    window.scrollTo(0, document.body.scrollHeight);
-                    isConnected = true
-                    $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
-                } else {
-                    BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
-                    /**********************************************************/
-                    /**********************************************************/
+                        window.scrollTo(0, document.body.scrollHeight);
+                        isConnected = true
+                        $("#" + msg.id).css("max-width", ($(`.messages[data-room=${MyRoom}]`).css("widih") - 50))
+                    } else {
+                        BS_Toast.show({ 'title': msg.to + ' 有新訊息', 'time': '現在', 'img': 'bi-chat-left-text-fill' }, { 'html': msg.head })
+                        /**********************************************************/
+                        /**********************************************************/
 
-                    isConnected = true
+                        isConnected = true
 
-                }
-            }
-        });
-
-
-
-        socket.on('sys-info chat message', function (msg) {
-            if (msg.msg !== "undefined (undefined ) 已離線") {
-
-                if (msg.to == "you") {
-                    $(`.messages[data-room=${RoomList.indexOf(MyRoom)}]`).append("<li class='info'>" + msg.msg + "</li>")
-                    window.scrollTo(0, document.body.scrollHeight);
-                    isConnected = true
-                } else
-                    if (RoomList.includes(msg.to)) {
-                        if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
-
-                            $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
-                            window.scrollTo(0, document.body.scrollHeight);
-                            isConnected = true
-
-                        } else {
-                            $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
-
-                            let icon = "bi-bell-fill"
-                            if (msg.type == "join") {
-                                icon = "bi-person-plus-fill"
-                                BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.head })
-                            } else
-                                if (msg.type == "leave") {
-                                    icon = "bi-person-x-fill"
-                                    BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
-                                } else {
-                                    BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
-                                }
-
-
-
-                        }
                     }
-            }
+                }
+            });
 
 
-        });
 
-        socket.on('sys-warn chat message', function (msg) {
+            socket.on('sys-info chat message', function (msg) {
+                if (msg.msg !== "undefined (undefined ) 已離線") {
 
-            $(`.messages[data-room=${MyRoom}]`).append("<li class='warn'>" + msg + "</li>")
+                    if (msg.to == "you") {
+                        $(`.messages[data-room=${RoomList.indexOf(MyRoom)}]`).append("<li class='info'>" + msg.msg + "</li>")
+                        window.scrollTo(0, document.body.scrollHeight);
+                        isConnected = true
+                    } else
+                        if (RoomList.includes(msg.to)) {
+                            if (msg.to == MyRoom || msg.to == localStorage.getItem("MyID")) {
+
+                                $(`.messages[data-room=${MyRoom}]`).append("<li class='info'>" + msg.msg + "</li>")
+                                window.scrollTo(0, document.body.scrollHeight);
+                                isConnected = true
+
+                            } else {
+                                $(`.messages[data-room=${RoomList.indexOf(msg.to)}]`).append("<li class='info'>" + msg.msg + "</li>")
+
+                                let icon = "bi-bell-fill"
+                                if (msg.type == "join") {
+                                    icon = "bi-person-plus-fill"
+                                    BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.head })
+                                } else
+                                    if (msg.type == "leave") {
+                                        icon = "bi-person-x-fill"
+                                        BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+                                    } else {
+                                        BS_Toast.show({ 'img': icon, 'title': msg.head }, { 'html': msg.msg })
+                                    }
 
 
-            window.scrollTo(0, document.body.scrollHeight);
-            isConnected = true
+
+                            }
+                        }
+                }
 
 
-        });
-        /*socket.on('nickname', function (msg) {
-          document.getElementById("NMinput").setAttribute("value", msg)
-          var item = document.createElement('li');
-          item.textContent = "系統自動生成暱稱: " + msg;
-          messages.appendChild(item);
-          item.setAttribute("class", "info")
-          window.scrollTo(0, document.body.scrollHeight);
-          isConnected = true
-          my_nickname = msg
-    
-    
-        });*/
-        socket.on("BAN", function (msg) {
+            });
 
-            $(`.messages[data-room=${MyRoom}]`).append("<li>你的連接已被伺服器中斷 [原因] 大量發送相同訊息/洗版</li>")
-            window.scrollTo(0, document.body.scrollHeight);
-            socket.disconnect()
-        })
+            socket.on('sys-warn chat message', function (msg) {
 
-        /*socket.on('people online', function (msg) {
-            if (msg.for == MyRoom) {
-                $(".onlinePeople").html(msg)
+                $(`.messages[data-room=${MyRoom}]`).append("<li class='warn'>" + msg + "</li>")
+
+
+                window.scrollTo(0, document.body.scrollHeight);
                 isConnected = true
-            }
-        });*/
-        socket.on('typeing', function (msg) {
-            /*if(msg.to == MyRoom){
-            if (msg.msg == " 正在輸入...") {
-              $("#isTypeing").html("")
-            } else {
-              $("#isTypeing").html(msg.msg)
-            }
-          }*/
-            console.log(msg)
-
-        });
-        socket.on('typeing-end', function (msg) {
-            /*if(msg.to == MyRoom){
-            if (msg.msg == " 正在輸入...") {
-              $("#isTypeing").html("")
-            } else {
-              $("#isTypeing").html(msg.msg)
-            }
-          }*/
-            console.log(msg)
-        });
 
 
-        socket.on("connect", () => {
-            isConnected = true
-            console.log(socket.id);
-            console.log("connected")
-            $("#statue_select").val("statue_Green:online")
-            $("#statue_select").attr("disabled", false)
-            $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+            });
+            /*socket.on('nickname', function (msg) {
+              document.getElementById("NMinput").setAttribute("value", msg)
+              var item = document.createElement('li');
+              item.textContent = "系統自動生成暱稱: " + msg;
+              messages.appendChild(item);
+              item.setAttribute("class", "info")
+              window.scrollTo(0, document.body.scrollHeight);
+              isConnected = true
+              my_nickname = msg
+        
+        
+            });*/
+            socket.on("BAN", function (msg) {
 
-            $(".messages").append("<li class='success'>裝置已連接到伺服器</li>")
-            BS_Toast.show({ "title": "已連線到伺服器", "img": "bi-cloud-fill" }, { "html": "裝置已連接到伺服器" })
-            window.scrollTo(0, document.body.scrollHeight);
+                $(`.messages[data-room=${MyRoom}]`).append("<li>你的連接已被伺服器中斷 [原因] 大量發送相同訊息/洗版</li>")
+                window.scrollTo(0, document.body.scrollHeight);
+                socket.disconnect()
+            })
 
-            document.getElementById("connectStatue").innerHTML = "已連線"
-            document.getElementById("connectStatue").style.color = "#39ef2f"
-            document.getElementById("isTypeing").innerHTML = " "
+            /*socket.on('people online', function (msg) {
+                if (msg.for == MyRoom) {
+                    $(".onlinePeople").html(msg)
+                    isConnected = true
+                }
+            });*/
+            socket.on('typeing', function (msg) {
+                /*if(msg.to == MyRoom){
+                if (msg.msg == " 正在輸入...") {
+                  $("#isTypeing").html("")
+                } else {
+                  $("#isTypeing").html(msg.msg)
+                }
+              }*/
+                console.log(msg)
+
+            });
+            socket.on('typeing-end', function (msg) {
+                /*if(msg.to == MyRoom){
+                if (msg.msg == " 正在輸入...") {
+                  $("#isTypeing").html("")
+                } else {
+                  $("#isTypeing").html(msg.msg)
+                }
+              }*/
+                console.log(msg)
+            });
 
 
-        });
+            socket.on("connect", () => {
+                isConnected = true
+                console.log(socket.id);
+                console.log("connected")
+                $("#statue_select").val("statue_Green:online")
+                $("#statue_select").attr("disabled", false)
+                $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle")
+
+                $(".messages").append("<li class='success'>裝置已連接到伺服器</li>")
+                BS_Toast.show({ "title": "已連線到伺服器", "img": "bi-cloud-fill" }, { "html": "裝置已連接到伺服器" })
+                window.scrollTo(0, document.body.scrollHeight);
+
+                document.getElementById("connectStatue").innerHTML = "已連線"
+                document.getElementById("connectStatue").style.color = "#39ef2f"
+                document.getElementById("isTypeing").innerHTML = " "
+
+
+            });
 
 
 
-        socket.on("disconnect", () => {
-            isConnected = false
-            $("#statue_select").val("statue_White:disconnect")
-            $("#statue_select").attr("disabled", true)
-            $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
-            console.log("disconnected")
-            BS_Toast.show({ "title": "未連線到伺服器", "img": "bi-cloud-slash-fill" }, { "html": "裝置未連接到伺服器,正在嘗試連接..." })
+            socket.on("disconnect", () => {
+                isConnected = false
+                $("#statue_select").val("statue_White:disconnect")
+                $("#statue_select").attr("disabled", true)
+                $("#statue-circle").attr("class", "position-absolute top-0 start-100 translate-middle p-2 bg-light border border-light rounded-circle")
+                console.log("disconnected")
+                BS_Toast.show({ "title": "未連線到伺服器", "img": "bi-cloud-slash-fill" }, { "html": "裝置未連接到伺服器,正在嘗試連接..." })
 
 
-            $(".messages").append("<li class='warn'>裝置未連接到伺服器,正在嘗試連接...</li>")
+                $(".messages").append("<li class='warn'>裝置未連接到伺服器,正在嘗試連接...</li>")
 
-            window.scrollTo(0, document.body.scrollHeight);
-            document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
-            document.getElementById("connectStatue").style.color = "#ce3434"
-            document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
-        });
+                window.scrollTo(0, document.body.scrollHeight);
+                document.getElementById("connectStatue").innerHTML = "未連線 / 已斷線"
+                document.getElementById("connectStatue").style.color = "#ce3434"
+                document.getElementById("isTypeing").innerHTML = "裝置未連接到伺服器，無法傳送訊息"
+            });
 
 
-        //==============contextmenu==============//
+            //==============contextmenu==============//
 
-        /*  
-        <div id="contextmenu" style="display: none;">
-          <div id="content-tool"></div>
-          <ul id="contextmenu-ul">
-     
-          </ul>
-        </div>*/
-        /*  window.oncontextmenu = function (e) {
-              contextmenu.x = e.clientX;
-              contextmenu.y = e.clientY;
-              e.preventDefault()
-              contextmenu.show()
-              console.log(contextmenu)
-          }
-          document.onclick = function (e) {
-              var e = e || window.event;
-              contextmenu.menu.hide()
-          }
-          var contextmenu = {
-              menu: $("#contextmenu"),
-              x: 0,
-              y: 0,
-              set: function (count, text, callback) {
-                  //count:num,text:[],callback:[]
-  
-                  for (let i = 0; i < count; i++) {
-  
-                      $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
-                  }
-  
-                  console.log("contextmenu Build successed!")
-              },
-  
-              show: function () {
-  
-                  //選單出現後的位置
-                  contextmenu.menu.css("display", "block")
-                  contextmenu.menu.css("left", contextmenu.x )
-                  contextmenu.menu.css("top", contextmenu.y )
-  
-                  contextmenu.menu.show()
+            /*  
+            <div id="contextmenu" style="display: none;">
+              <div id="content-tool"></div>
+              <ul id="contextmenu-ul">
+         
+              </ul>
+            </div>*/
+            /*  window.oncontextmenu = function (e) {
+                  contextmenu.x = e.clientX;
+                  contextmenu.y = e.clientY;
+                  e.preventDefault()
+                  contextmenu.show()
+                  console.log(contextmenu)
               }
-          }
-          contextmenu.set(1, ["重啟"], ["location.reload()"])
-  */
-        var menu = $("#contextmenu");
-        document.oncontextmenu = function (e) {
-            var e = e || window.event;
-            //滑鼠點的座標
-            var oX = e.clientX;
-            var oY = e.clientY;
-            //選單出現後的位置
-            menu.css("display","block");
-            menu.css("left",oX + "px");
-            menu.css("top",oY + "px");
-            //阻止瀏覽器預設事件
-            return false;//一般點選右鍵會出現瀏覽器預設的右鍵選單，寫了這句程式碼就可以阻止該預設事件。
-        }
-        document.onclick = function (e) {
-            var e = e || window.event;
-            menu.hide()
-        }
-        menu.on("click",function (e) {
-            var e = e || window.event;
-            e.cancelBubble = true;
-        })
-        function setMenu(n,t,c) {
-            //5,display,...(code)
-            for(i=0;i<n;i++){
-
-                $("#contextmenu-ul").append(`<li class="list-group-item list-group-item-action" onclick="${c[i]}">${t[i]}</li>`)
+              document.onclick = function (e) {
+                  var e = e || window.event;
+                  contextmenu.menu.hide()
+              }
+              var contextmenu = {
+                  menu: $("#contextmenu"),
+                  x: 0,
+                  y: 0,
+                  set: function (count, text, callback) {
+                      //count:num,text:[],callback:[]
+      
+                      for (let i = 0; i < count; i++) {
+      
+                          $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
+                      }
+      
+                      console.log("contextmenu Build successed!")
+                  },
+      
+                  show: function () {
+      
+                      //選單出現後的位置
+                      contextmenu.menu.css("display", "block")
+                      contextmenu.menu.css("left", contextmenu.x )
+                      contextmenu.menu.css("top", contextmenu.y )
+      
+                      contextmenu.menu.show()
+                  }
+              }
+              contextmenu.set(1, ["重啟"], ["location.reload()"])
+      */
+            var menu = $("#contextmenu");
+            document.oncontextmenu = function (e) {
+                var e = e || window.event;
+                //滑鼠點的座標
+                var oX = e.clientX;
+                var oY = e.clientY;
+                //選單出現後的位置
+                menu.css("display", "block");
+                menu.css("left", oX + "px");
+                menu.css("top", oY + "px");
+                //阻止瀏覽器預設事件
+                return false;//一般點選右鍵會出現瀏覽器預設的右鍵選單，寫了這句程式碼就可以阻止該預設事件。
             }
-            
-        }
-        setMenu(2,["重新載入","收回訊息"],["location.reload()","console.log('ooz')"])
+            document.onclick = function (e) {
+                var e = e || window.event;
+                menu.hide()
+            }
+            menu.on("click", function (e) {
+                var e = e || window.event;
+                e.cancelBubble = true;
+            })
+            function setMenu(n, t, c) {
+                //5,display,...(code)
+                for (i = 0; i < n; i++) {
 
-        //==============Toast notification============//
-        /*  <div id="toast">
-        
+                    $("#contextmenu-ul").append(`<li class="list-group-item list-group-item-action" onclick="${c[i]}">${t[i]}</li>`)
+                }
+
+            }
+            setMenu(2, ["重新載入", "收回訊息"], ["location.reload()", "console.log('ooz')"])
+
+            //==============Toast notification============//
+            /*  <div id="toast">
+            
+            </div>*/
+
+            /*<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" id=toast>
+          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <img src="..." class="rounded me-2" alt="...">
+              <strong class="me-auto">Bootstrap</strong>
+              <small>11 mins ago</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              Hello, world! This is a toast message.
+            </div>
+          </div>
         </div>*/
 
-        /*<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" id=toast>
-      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          Hello, world! This is a toast message.
-        </div>
-      </div>
-    </div>*/
 
-
-        //header,footer:obj
-        /*
-        Like:
-      
-        header={
-        title:'@group-01',
-        time:'現在',
-        img:'group.svg'
-      }
-      body={
-        html:`Bob send a file...`
-      }
-      
-      
-        
-        */
+            //header,footer:obj
+            /*
+            Like:
+          
+            header={
+            title:'@group-01',
+            time:'現在',
+            img:'group.svg'
+          }
+          body={
+            html:`Bob send a file...`
+          }
+          
+          
+            
+            */
 
 
 
 
 
 
-        var BS_Toast = {
-            toast_id: 0,
-            show: function (header, body) {
-                $("#toast").append(` 
+            var BS_Toast = {
+                toast_id: 0,
+                show: function (header, body) {
+                    $("#toast").append(` 
             <div id='BS-Toast-${BS_Toast.toast_id}' class="toast" role="alert" aria-live="assertive" aria-atomic="true">
               <div class="toast-header" >
                 <i class='bi ${header.img} ${header.imgclass}'></i>&nbsp;
@@ -2413,36 +2467,67 @@
             <div class="toast-body">${body.html}</div>
             </div>`)
 
-                let Thistoast = new bootstrap.Toast(document.getElementById(`BS-Toast-${BS_Toast.toast_id}`))
+                    let Thistoast = new bootstrap.Toast(document.getElementById(`BS-Toast-${BS_Toast.toast_id}`))
 
-                Thistoast.show()
+                    Thistoast.show()
 
-                BS_Toast.toast_id += 1
+                    BS_Toast.toast_id += 1
+                }
             }
-        }
 
 
-        //width setting
+            //width setting
 
-        $(".bottom").css("width", $(".tab-content").css("width"))
-        $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-
-        window.onresize = function () {
             $(".bottom").css("width", $(".tab-content").css("width"))
             $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
-            /*if (700 <= window.innerWidth < 936) {
-                console.log("700-936")
-                $("#v-pills-tab").appendTo($("#chat-tabs"));
-                $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-                $("#offcanvas-toggle").hide()
-            }else if(700 > window.innerWidth ){
-                console.log("<700")
-                $("#offcanvas-toggle").show()
-                $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-            }else{
-                console.log(">936")
-                $("#offcanvas-toggle").hide()
-            }*/
+
+            window.onresize = function () {
+                $(".bottom").css("width", $(".tab-content").css("width"))
+                $("#v-pills-tab").css("top", $(".navbar-dark").css("height"))
+                /*if (700 <= window.innerWidth < 936) {
+                    console.log("700-936")
+                    $("#v-pills-tab").appendTo($("#chat-tabs"));
+                    $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+                    $("#offcanvas-toggle").hide()
+                }else if(700 > window.innerWidth ){
+                    console.log("<700")
+                    $("#offcanvas-toggle").show()
+                    $("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+                }else{
+                    console.log(">936")
+                    $("#offcanvas-toggle").hide()
+                }*/
+                //width => tabs display
+
+                if (window.innerWidth < 800) {
+                    console.log("<800")
+                    //    console.log("700-936")
+                    $("#v-pills-tab").appendTo($("#chat-tabs"));
+                    $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+                    $("#offcanvas-toggle").hide()
+                    // $("#offcanvas-toggle").show()
+                    //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+                    // }else if(700 > window.innerWidth ){
+                    //     console.log("<700")
+
+                } else {
+                    console.log(">=800")
+                    //console.log(">936")
+                    $("#offcanvas-toggle").hide()
+                }
+
+                $(".bottom").css("width", $(".tab-content").css("width"))
+
+            }
+
+
+
+            //onblur => notifications.show() .etc
+            window.onblur = function () { notifications = true }
+
+            window.onfocus = function () { notifications = false }
+
+
             //width => tabs display
 
             if (window.innerWidth < 800) {
@@ -2462,71 +2547,40 @@
                 $("#offcanvas-toggle").hide()
             }
 
-            $(".bottom").css("width", $(".tab-content").css("width"))
 
-        }
-
-
-
-        //onblur => notifications.show() .etc
-        window.onblur = function () { notifications = true }
-
-        window.onfocus = function () { notifications = false }
-
-
-        //width => tabs display
-
-        if (window.innerWidth < 800) {
-            console.log("<800")
-            //    console.log("700-936")
-            $("#v-pills-tab").appendTo($("#chat-tabs"));
-            $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-            $("#offcanvas-toggle").hide()
-            // $("#offcanvas-toggle").show()
-            //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-            // }else if(700 > window.innerWidth ){
-            //     console.log("<700")
-
-        } else {
-            console.log(">=800")
-            //console.log(">936")
-            $("#offcanvas-toggle").hide()
-        }
-
-
-        if ($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true') {
-            $("#dl-file-2").attr("checked", true)
-            $("#dl-file-1").attr("checked", false)
-            $("#joinRoom").hide();
-            $("#createRoom").show();
-        } else
-            if ($.UrlParam("join") == 'true' && $.UrlParam("create") !== 'true') {
-                $("#dl-file-2").attr("checked", false)
-                $("#dl-file-1").attr("checked", true)
-                $("#joinRoom").show();
-                $("#createRoom").hide();
+            if ($.UrlParam("create") == 'true' && $.UrlParam("join") !== 'true') {
+                $("#dl-file-2").attr("checked", true)
+                $("#dl-file-1").attr("checked", false)
+                $("#joinRoom").hide();
+                $("#createRoom").show();
             } else
-                if ($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true') {
-                    //$("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
-                    socket.disconnect()
-                    $("#fullpage-alert").html(`
+                if ($.UrlParam("join") == 'true' && $.UrlParam("create") !== 'true') {
+                    $("#dl-file-2").attr("checked", false)
+                    $("#dl-file-1").attr("checked", true)
+                    $("#joinRoom").show();
+                    $("#createRoom").hide();
+                } else
+                    if ($.UrlParam("create") == 'true' && $.UrlParam("join") == 'true') {
+                        //$("body").html("<h2>: ( 系統發生錯誤!</h2><p>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a>並重試</p>")
+                        socket.disconnect()
+                        $("#fullpage-alert").html(`
                     <center style="margin-top:45vh">
                     <h1>系統發生錯誤</h1>
                     <h3>請前往<a href='https://jerry20200815.herokuapp.com'>主頁</a></h3>
                     </center>
                     `).show()
-                }
+                    }
 
-        if ($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()) {
-            $("body").html("<h2>暫時不支援行動裝置</h2><p>請使用桌上型電腦開啟此網站</p>")
-            alert("暫時不支援行動裝置，請使用桌上型電腦開啟此網站")
-        }
+            if ($.UrlParam("mobile") == "true" && window.mobileAndTabletCheck()) {
+                $("body").html("<h2>暫時不支援行動裝置</h2><p>請使用桌上型電腦開啟此網站</p>")
+                alert("暫時不支援行動裝置，請使用桌上型電腦開啟此網站")
+            }
 
-        //warning msg to console.
-        console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
-        console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
-        console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
-        console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
+            //warning msg to console.
+            console.log("%c住手! STOP!", "color: red; font-family:sans-serif; font-size: 3rem;-webkit-text-stroke: 1px black;font-weight:bold; border: 3px solid #000 ; border-radius: 7px ;"); console.log("%c你知道這是什麼嗎?\n你知道如果將代碼貼在這裡，可能會造成嚴重的後果嗎?\n如果你複製/貼上任何代碼，你的聊天紀錄、個人資訊均有可能外洩，甚至危害伺服器與其他使用者的裝置", "color: red; font-family:sans-serif; font-size: 20px;"); console.log("%c請勿將任何代碼貼在這裡!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%cDO NOT PASTE ANY CODE HERE!", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000"); console.log("%c現在，請重新啟動瀏覽器\n(放心!一切都不會改變)", "color: yellow; font-family:sans-serif; font-size: 20px;background:#000");
+            console.group("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size:20px;");
+            console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
+            console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
 
     </script>
 </body>
