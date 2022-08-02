@@ -1791,10 +1791,10 @@
                                 <td style="padding:5px">
                                     <button class="btn btn-secondary" data-private="${msg.userID[r]}"
                                     onclick="socket.emit('join PrivateRoom',{
-                                        'userName':'${msg.userID[r]}"',
+                                        'userName':'${msg.userID[r]}',
                                         'private':true,
-                                        'myID':localStorage.getItem("myID"),
-                                        'myNickname':localStorage.getItem("myNickname")
+                                        'myID':localStorage.getItem('myID'),
+                                        'myNickname':localStorage.getItem('myNickname')
                                     })">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
