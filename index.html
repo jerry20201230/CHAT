@@ -1533,6 +1533,71 @@
             $('#create-statue').append('房間名稱 ' + msg.name + " 已經被使用，" + '請再試一次<br>')
         })
 
+
+        socket.on("join PrivateRoom", msg => {
+            room_num++
+            $("#room-ctrl-add").before(`<button class="nav-link" id="room-ctrl-${room_num}" data-bs-toggle="pill" data-bs-target="#room-tab-${room_num}" type="button" role="tab" aria-controls="room-tab-${room_num}" aria-selected="true" onclick="MyRoom = $(this).attr('data-room');console.log($(this).attr('data-room'))" data-room=private-with-${msg.userID}>${msg.userNickname}<br><small>(${msg.userID})</small></button>`)
+            $("#room-tab-add").before(`<div class="tab-pane fade show" id="room-tab-${room_num}" role="tabpanel" aria-labelledby="room-ctrl-${room_num}" data-room="private-with-${msg.userID}"></div>`)
+            $("#room-tab-" + room_num).html(`
+      <div>
+            <ul class="messages" data-room="private-with-${msg.userID}">
+              <li>聊天室:${msg.userNickname} (@${msg.userID})</li>
+
+            </ul>
+          </div>
+          <div class="bottom" data-room="private-with-${msg.userID}">
+            <label id="isTypeing" style="backdrop-filter: blur(10px);background: rgba(0, 0, 0, 0.15);"></label>
+
+            <div class="bottom-bar">
+
+<button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal-6"> <i class="bi bi-list"></i></button>
+
+          <div class="msg-form" action="" class="flex" style="width:100%">
+    
+    
+    
+    
+    
+            <input class="input" autocomplete="off" data-room="private-with-${msg.userID}" placeholder="輸入新訊息" 
+            onfocus="input_focus=true; input_room = MyRoom"
+            oninput="
+              socket.emit(' typeing', {'id':socket.id,'room':MyRoom});
+              input_room = MyRoom
+                "
+                onblur="
+              socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});
+              input_focus = false;
+              input_room = MyRoom
+              ">
+
+
+                <button class="btn btn-outline-dark"
+                onclick="submit_chat(MyRoom)"
+                
+                
+                
+                
+                >送出訊息</button>
+                </div>
+            </div>
+          </div>
+
+      
+      
+      
+      `)
+            $(`#room-ctrl-${room_num}`).click()
+
+            $(".bottom").css("width", $(".tab-content").css("width"))
+
+            try {
+                BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": room.msg.replace("<!s>", "&nbsp;").replace(">", "&gt;").replace("<", "&lt;") })
+            } catch (e) {
+                console.log(e)
+                BS_Toast.show({ "title": "歡迎加入&nbsp;" + room.name, "img": "bi-bell-fill" }, { "html": "歡迎加入&nbsp;" + room.name })
+
+            }
+        })
         //img input
         var img = $('#img');
         var isfile = false
@@ -1728,7 +1793,8 @@
                                     onclick="socket.emit('join PrivateRoom',{
                                         'userName':'${msg.userID[r]}"',
                                         'private':true,
-                                        'myID':localStorage.getItem("myID")
+                                        'myID':localStorage.getItem("myID"),
+                                        'myNickname':localStorage.getItem("myNickname")
                                     })">
                                         <i class="bi bi-person-plus-fill"></i>    
                                     </button>
@@ -1753,8 +1819,6 @@
                             <tr>
                             `)
                             }
-
-                            count++
                         } else {
 
 
@@ -2215,6 +2279,10 @@
             e.preventDefault()
             contextmenu.show()
         }
+        window.onclick = function(e) {
+            contextmenu.x = e.clientX;
+            contextmenu.y = e.clientY;
+        }
         var contextmenu = {
             menu:$("#contextmenu"),
             x: 0,
@@ -2224,7 +2292,7 @@
 
                 for (let i = 0; i < count; i++) {
 
-                    $("#contextmenu-ul").append(`<li onclick="${callback[i]}">${text[i]}</li>`)
+                    $("#contextmenu-ul").append(`<li style="background:#ccc" onclick="${callback[i]}">${text[i]}</li>`)
                 }
 
                 console.log("contextmenu Build successed!")
