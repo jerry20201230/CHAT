@@ -1437,6 +1437,7 @@
             </center>
             `).show()
             socket.disconnect()
+            $("#toast").remove()
 
         })
 
@@ -2215,7 +2216,7 @@
             contextmenu.show()
         }
         var contextmenu = {
-            menu: $("#contxtmenu"),
+            menu:$("#contextmenu"),
             x: 0,
             y: 0,
             set: function (count, text, callback) {
