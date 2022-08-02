@@ -27,7 +27,8 @@ var statue = ["線上"]
 var roomName = ["主聊天室", "example_room_1","example_room_2"]
 var roomID = ["@room-1", "@room-100","@room-404"]
 var roomPws = ["", "102030.","1121310"]
-var room_socketID = [["server"], ["server"]]
+var room_socketID = [["server"], ["server"],["server"]]
+var room_user = [["admin01"],["admin01"],["admin01"]]
 var room_typeing = [[], []]
 
 var room_setting_change = ["@admin01", "@admin01", "@admin01"]
@@ -178,6 +179,7 @@ io.on('connection', (socket) => {
         console.log(msg.id + "joined" + msg.room)
         nickname.push(msg.nickname)
         user.push(msg.id)
+        room_user[roomID.indexOf(msg.room)].push(msg.id)
         socketID.push(i)
         console.log(GetUserInRoom(msg.room))
         room_socketID[roomID.indexOf(msg.room)].push(i) //= Array.from(GetUserInRoom(msg.room)) //arrayRemove(room_socketID[roomID.indexOf(roomName[o])] ,i)
@@ -597,6 +599,7 @@ socket.on('disconnect', function () {
     console.log(room_socketID)
 
     room_socketID[o] = arrayRemove(room_socketID[o], i)
+    room_user[o] = arrayRemove(room_user[o],user[socketID.indexOf(i)])
 
     //console.log(Array.from(GetUserInRoom(roomID[o])))
     io.emit("sys-info chat message", { "to": roomName[o], "msg": nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + " ) 已離線", 'head': nickname[socketID.indexOf(i)] + " (" + user[socketID.indexOf(i)] + ") 已離線", "type": "leave" })
