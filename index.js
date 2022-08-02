@@ -169,7 +169,7 @@ io.on('connection', (socket) => {
   
     }
 
-    else if (roomPws[roomID.indexOf(msg.room)] == msg.pws && room_setting_how_to_join[roomID.indexOf(msg.room)].pws && !room_socketID[roomID.indexOf(msg.room)].includes(socket.id)) {
+    else if (roomPws[roomID.indexOf(msg.room)] == msg.pws && room_setting_how_to_join[roomID.indexOf(msg.room)].pws && !room_user[roomID.indexOf(msg.room)].includes(msg.id)) {
 
         socket.join(msg.room)
 
@@ -210,7 +210,7 @@ io.on('connection', (socket) => {
         io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
       }
 
-      else if (room_socketID[roomID.indexOf(msg.room)].includes(socket.id)) {
+      else if (room_user[roomID.indexOf(msg.room)].includes(msg.id)) {
         io.to(socket.id).emit("blocked connection", msg.room)
       } 
 
