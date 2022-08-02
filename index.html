@@ -662,8 +662,22 @@
                         <p><span id="create-statue"></span></p>
                     </div>
                     <div id="joinRoom">
-                        <span>輸入房間ID<input type="text" id="join-room-name" value="@room-"></span>
-                        <p><span>輸入房間密碼<input type="password" id="join-room-pws"></span></p>
+                        <span>
+                            輸入房間ID
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">@room-</span>
+                                <input type="number" id="join-room-name">
+                            </div>
+                        </span>
+                        <p>
+                            <span>輸入房間密碼
+                                
+                                <div class="mb-3">
+                                   <input type="password" id="join-room-pws" class="form-control">
+                                </div>
+                            </span>
+                        </p>
 
                         <p>
                         <div id="join-alert-2" class="alert alert-danger">請勿重複加入同一房間!</div>
@@ -676,7 +690,7 @@
              socket.emit('join',{
                 'id':localStorage.getItem('myID'),
                 'nickname':localStorage.getItem('myNickname'),
-                'room':$('#join-room-name').val(),
+                'room':'@room-'+$('#join-room-name').val(),
                 'pws':$('#join-room-pws').val()})
               $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
               }
@@ -1557,12 +1571,12 @@
             <ul class="messages" data-room="private-with-${msg.userID}">
               <li>聊天室:${msg.userNickname} (@${msg.userID})</li>
 
-              <li>
-                <div class="alert alert-info">
+              <li class=info>
+             
                     ※請確認是否要將 ${msg.userNickname}加入好友
                     <button class="btn btn-primary">加入</button>
                     <button class="btn btn-warning">拒絕</button>
-                </div>  
+               
               </li>
             </ul>
           </div>
