@@ -166,7 +166,8 @@ io.on('connection', (socket) => {
 
     if (roomName[roomID.indexOf(msg.room)] == -1) {
       io.to(socket.id).emit("room not found", msg.room)
-    } 
+    }     
+
     else if (roomPws[roomID.indexOf(msg.room)] !== msg.pws) {
       io.to(socket.id).emit("password incorrect", msg.room)
     }
@@ -176,10 +177,10 @@ io.on('connection', (socket) => {
   
     }
 
-    
-    else if (room_user[roomID.indexOf(msg.room)].includes(msg.id) && !room_socketID[roomID.indexOf(msg.room)].includes(socket.id)) {
+        else if (room_user[roomID.indexOf(msg.room)].includes(msg.id) && !room_socketID[roomID.indexOf(msg.room)].includes(socket.id)) {
       io.to(socket.id).emit("blocked connection", msg.room)
     } 
+
 
     else if (roomPws[roomID.indexOf(msg.room)] == msg.pws && room_setting_how_to_join[roomID.indexOf(msg.room)].pws && !room_user[roomID.indexOf(msg.room)].includes(msg.id)) {
 

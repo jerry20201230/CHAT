@@ -683,7 +683,7 @@
                         <div id="join-alert-2" class="alert alert-danger">請勿重複加入同一房間!</div>
                         </p>
                         <p><button class="btn btn-primary" onclick="
-              if(RoomID.includes($('#join-room-name').val())){
+              if(RoomID.includes('@room-'+$('#join-room-name').val())){
 
              $('#join-statue').append('<span class=text-danger>你已經加入了此房間</span><br>') }
               else{
@@ -692,7 +692,7 @@
                 'nickname':localStorage.getItem('myNickname'),
                 'room':'@room-'+$('#join-room-name').val(),
                 'pws':$('#join-room-pws').val()})
-              $('#join-statue').append('正在連線到聊天室:'+$('#join-room-name').val()+'<br>')
+              $('#join-statue').append('正在連線到聊天室: @room-'+$('#join-room-name').val()+'<br>')
               }
               ">確定</button></p>
                         <p><span id="join-statue"></span></p>

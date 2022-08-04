@@ -1,0 +1,4 @@
+<script>
+alert("xss-1")
+</script>
+<img src=oiuy.nn/785rehuver onerror=alert('xss-2')
