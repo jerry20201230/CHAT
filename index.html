@@ -1817,7 +1817,7 @@
 
             socket.on("UserList", function (msg) {
                 console.log(msg)
-                if (msg.to == MyRoom) {
+                if (msg.to == MyRoom || msg.to == "*") {
                     if (msg.for !== 'privateRoom') {
                         $("#PeopleOnLine").html("")
                         let count = 0
