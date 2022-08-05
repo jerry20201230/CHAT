@@ -17,11 +17,11 @@ app.get('/', (req, res) => {
 
 //The 403 Route
 app.get(/xss-test|userdata/, (req, res) => {
-  res.sendFile(`${__dirname}/403.html`);
+  res.status(403).sendFile(`${__dirname}/403.html`);
 });
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/404.html');
+  res.status(404).sendFile(__dirname + '/404.html');
 });
 
 var user = ["admin01"]
