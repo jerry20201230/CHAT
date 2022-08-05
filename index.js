@@ -14,9 +14,14 @@ app.get(/js|icon|docs/, (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+//The 403 Route
+app.get(/xss-test|userdata/, (req, res) => {
+  res.sendFile(`${__dirname}/403.html`).statue(403);
+});
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/404.html');
+  res.sendFile(__dirname + '/404.html').statue(404);
 });
 
 var user = ["admin01"]
