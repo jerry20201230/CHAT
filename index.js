@@ -559,7 +559,7 @@ socket.on('GetUsers', msg => {
     console.log(return_user_arr)
     console.log(return_statue_arr)
     if(msg.for == 'privateRoom'){
-      io.emit("UserList", {  "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr ,"for":msg.for})
+      io.emit("UserList", {  "to": "*", "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr ,"for":msg.for})
     }else{
     io.emit("UserList", { "to": room, "userID": return_user_arr, "nickname": return_nickname_arr, "statue": return_statue_arr })
   }
