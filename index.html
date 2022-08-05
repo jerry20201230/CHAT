@@ -1491,8 +1491,8 @@
             </center>
             `).show()
             $("title").html("CHAT - 連線錯誤")
-            $("#browser-icon").remove()
-            $("head").append(`<link id="browser-icon" rel="shortcut icon" href="/icon/icon-error.png" />`)
+            $("#browser-icon").attr('href',"/icon/icon-error.png")
+            
             socket.disconnect()
             $("#toast").remove()
 
