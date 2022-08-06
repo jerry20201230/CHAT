@@ -351,9 +351,9 @@
                             群組清單
                         </button>
 
-                        &nbsp;
+                       
                         <button id="offcanvas-toggle" class="btn btn-outline-light" type="button"
-                        data-bs-toggle="modal" data-bs-target="#modal-9">
+                        data-bs-toggle="modal" data-bs-target="#Modal-9">
                         儲存聊天
                     </button>
                     </div>
@@ -513,7 +513,15 @@
                             </div>
                         
                         </p>
-                        <p><span>確認房間密碼<input type="password" id="create-room-pws-2"></span></p>
+                        <p>
+                        
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">確認密碼</span>
+                                <input type="password" id="create-room-pws-2" class="form-control" placeholder="確認房間密碼" aria-label="確認房間密碼" >
+    
+                            </div>
+                        </p>
                         <p>
                         <div class="alert alert-danger">房間密碼請務必牢記!</div>
                         </p>
@@ -593,7 +601,14 @@
                                         <label class="form-check-label" for="room-setting-checkbox-2">歡迎訊息</label>
                                     </div>
                                     <div id="room-setting-box-1">
-                                        請輸入歡迎訊息:<input type="text" id="room-setting-input-1" placeholder="">
+                                        請輸入歡迎訊息:
+                                        <input placeholder="">
+                                        
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">歡迎訊息</span>
+                                <input type="text" id="room-setting-input-1" class="form-control" placeholder="輸入歡迎訊息" aria-label="輸入歡迎訊息" >
+    
+                            </div>
                                         <p>
                                         <div class="alert alert-info">如果不設定此格，系統將使用預設歡迎訊息</div>
                                         </p>
