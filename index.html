@@ -2659,7 +2659,11 @@
 
 
             //onblur => notifications.show() .etc
-            window.onblur = function () { notifications = true;  $("#browser-icon").attr('href',"/icon/icon-blur.png") }
+            window.onblur = function () { notifications = true;  
+                if(socket.connected){
+                $("#browser-icon").attr('href',"/icon/icon-blur.png")
+                }
+             }
 
             window.onfocus = function () { notifications = false;   
                 if(socket.connected){
