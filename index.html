@@ -2433,7 +2433,7 @@
                         let $body = 
                         `
                         <body>
-                            <div class="alert alert-danger">此為聊天紀錄存檔，一些資料(如投票)可能與線上資訊有落差</div>
+                        <div class="alert alert-danger" style="position: sticky;width: 100%;top: 0;z-index: 3000;">此為聊天紀錄存檔，一些資料(如投票)可能與線上資訊有落差</div>
                         <ul>${$(`ul[data-room="${MyRoom}"]`).html()}</ul>
                         </body>
                         </html>
@@ -2457,6 +2457,7 @@
                             thead,tfoot {background-color: #333;color: #fff;}
                             .text {border: 1px #333 solid;border-radius: 5px;max-height: 50vh;}   
                             ul {list-style-type: none;margin: 0;padding: 0;}   
+                            li{padding: 0.5rem 1rem;border-bottom: 1px #333 solid;}
                         </style>
                         </head>
                         `
