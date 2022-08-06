@@ -7,10 +7,7 @@ const io = require('socket.io')(http, {
 });
 const port = process.env.PORT || 3000;
 
-app.get(/js|icon|docs/, (req, res) => {
-  res.sendFile(`${__dirname}/${req.path}`);
-});
-app.get(/js/FileSaver.js, (req, res) => {
+app.get(/js|icon|docs|FileSave.js/, (req, res) => {
   res.sendFile(`${__dirname}/${req.path}`);
 });
 
