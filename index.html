@@ -351,6 +351,11 @@
                             群組清單
                         </button>
 
+                        &nbsp;
+                        <button id="offcanvas-toggle" class="btn btn-outline-light" type="button"
+                        data-bs-toggle="modal" data-bs-target="#modal-9">
+                        儲存聊天
+                    </button>
                     </div>
 
                 </div>
@@ -1331,6 +1336,59 @@
     </div>
 
 
+    <div class="modal fade" id="Modal-9" tabindex="-1" aria-labelledby="Modal-9Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modal9Label">儲存聊天</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+                <script>
+                    $("#chat-dl").on("click",function(){
+                        let $body = 
+                        `
+                        <body>
+                        ${$(`ul[data-room="${MyRoom}]"`).html()}
+                        </body>
+                        `
+                        let $head = `
+                        <!doctype html>
+                        <head>
+                        <meta charest=utf-8>
+                        <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.js' integrity='sha512-39Q5Yw4jtWPVkYu5Dry3HiRh6DWG4FDODb/rHF+X2Xp0kzhg9VgTyYV209uQ/EsqPDP/4dDvwm1rb8JgnAkHNg==' crossorigin='anonymous'><\/script>
+                        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.css' integrity='sha512-h1rwF0uB6r2IuEZcyjPrR53bBKN9Wb4yL+w3Rdlzmc3CkBF1gMSFvQIIstnu4bEtYDaKca5ke5S8UBAACRImyg==' crossorigin='anonymous'/>
+
+                        <title>${MyRoom} 的聊天紀錄</title>
+                        <style>
+                            body {margin: 8px;padding-bottom: 3rem;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
+                            .flex {display: flex;}
+                            .warn {background-color: #f4a3ab !important;}
+                            .success {background-color: #98f9b1 !important;}
+                            .info {background-color: #94e3ff !important;}
+                            table,td {border: 1px solid #333;}
+                            thead,tfoot {background-color: #333;color: #fff;}
+                            .text {border: 1px #333 solid;border-radius: 5px;max-height: 50vh;}      
+                        </style>
+                        </head>
+                        `
+                        let $html = $head+$body
+
+                        saveTextAs($html,MyRoom+"的聊天紀錄.html")
+
+                    })
+                </script>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+              <button type="button" class="btn btn-primary" id="chat-dl">下載</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -1383,6 +1441,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
+
+    <!--file saver-->
+    <script src="https://raw.githubusercontent.com/eligrey/FileSaver.js/master/dist/FileSaver.js"></script>
 
     <!--chart.js-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"
