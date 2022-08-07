@@ -446,7 +446,7 @@
               socket.emit('typeing-end',{'id':socket.id,'room':MyRoom});">
 
 
-                                <button disabled class="btn btn-outline-dark">送出訊息</button>
+                                <button disabled class="btn btn-outline-dark send-btn" >送出訊息</button>
                             </form>
                         </div>
                     </div>
@@ -1594,7 +1594,7 @@
               ">
 
 
-                <button class="btn btn-outline-dark"
+                <button class="btn btn-outline-dark send-btn"
                 onclick="submit_chat(MyRoom)"
                 
                 
@@ -2636,21 +2636,24 @@
                 //width => tabs display
 
                 if (window.innerWidth < 800) {
-                    console.log("<800")
-                    //    console.log("700-936")
-                    $("#v-pills-tab").appendTo($("#chat-tabs"));
-                    $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
-                    $("#offcanvas-toggle").hide()
-                    // $("#offcanvas-toggle").show()
-                    //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
-                    // }else if(700 > window.innerWidth ){
-                    //     console.log("<700")
+                console.log("<800")
+                //    console.log("700-936")
+                $("#v-pills-tab").appendTo($("#chat-tabs"));
+                $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
+                $("#offcanvas-toggle").hide()
+                $(".send-btn").html("<i class='bi bi-send'></i>")
+                // $("#offcanvas-toggle").show()
+                //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
+                // }else if(700 > window.innerWidth ){
+                //     console.log("<700")
 
-                } else {
-                    console.log(">=800")
-                    //console.log(">936")
-                    $("#offcanvas-toggle").hide()
-                }
+            } else {
+                console.log(">=800")
+                //console.log(">936")
+                $("#offcanvas-toggle").hide()
+                $(".send-btn").html("送出訊息")
+            }
+
 
                 $(".bottom").css("width", $(".tab-content").css("width"))
 
@@ -2679,6 +2682,7 @@
                 $("#v-pills-tab").appendTo($("#chat-tabs"));
                 $("#v-pills-tab").css("max-height", $("#navbarToggleExternalContent").css("height"))
                 $("#offcanvas-toggle").hide()
+                $(".send-btn").html("<i class='bi bi-send'></i>")
                 // $("#offcanvas-toggle").show()
                 //$("#v-pills-tab").appendTo($("#chat-tab-offcanvas"));
                 // }else if(700 > window.innerWidth ){
@@ -2688,6 +2692,7 @@
                 console.log(">=800")
                 //console.log(">936")
                 $("#offcanvas-toggle").hide()
+                $(".send-btn").html("送出訊息")
             }
 
 
