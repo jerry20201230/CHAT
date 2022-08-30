@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+//The 418 Route
+app.get(/teapot/, (req, res) => {
+  res.status(418).sendFile(`${__dirname}/418.html`);
+});
+
 //The 403 Route
 app.get(/xss-test|userdata/, (req, res) => {
   res.status(403).sendFile(`${__dirname}/403.html`);
