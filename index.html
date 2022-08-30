@@ -7,6 +7,8 @@
     <meta name="google-site-verification" content="ufrA26T5KMQ5TkSwY6HqQ0tJCCCcoCAXf8uhfxT1ljY" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">CHAT - 即時的聊天系統</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
     <link id="browser-icon" rel="shortcut icon" type="image/png" href="/icon/icon.png" />
     <!--BS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -380,7 +382,7 @@
 
             </div>
         </nav>
-
+<div class="alert alert-warning" id="window-warn" style="display: none;"></div>
 
 
 
@@ -2730,6 +2732,14 @@
             console.log("%c這是給開發人員的瀏覽器功能，可以測試程式\n(也可以執行邪惡的程式，造成嚴重的後果!)", "color: blue; font-family:sans-serif; font-size: 20px;")
             console.groupEnd("%c所以這是什麼?", "color: blue; font-family:sans-serif; font-size: 20px;");
 
+
+            if(location.host.includes("herokuapp")){
+                $("#window-warn").html(`因應heroku的政策調整，在2022/11/28之後，我們將完全遷移到render，網址是:<br>
+                <A href="https://chat-3yn0.onrender.com">https://chat-3yn0.onrender.com</a>
+                
+                
+                `).show()
+            }
     </script>
 </body>
 
